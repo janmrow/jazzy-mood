@@ -5,8 +5,8 @@ A visitor describes what they want to hear and gets one album they can listen to
 ## First release
 
 - One page, one text field, one result at a time. Visitors can use the page without an account. Keep the English interface clear and comfortable on a phone.
-- Start with albums across jazz rap, instrumental hip-hop and groove-oriented jazz. Treat late 1990s and 2000s releases as a starting point for discovery. The M0 sample determines the useful boundaries. Switching to tracks or narrowing to a single subgenre is a product decision.
-- The result shows the artist, album title, release year when verified, a short reason based on the catalogue, and a listening link. The app links out to listen. A clearly labelled search link is acceptable when a reliable direct link is unavailable.
+- Start with albums across jazz rap, instrumental hip-hop and groove-oriented jazz. Treat late 1990s and 2000s releases as a starting point for discovery (non-binding; E01 decides the boundary at M0 acceptance). The M0 sample determines the useful boundaries. Switching to tracks or narrowing to a single subgenre is a product decision.
+- The result shows the artist, album title, release year when verified, a short reason based on the catalogue, and a listening link. The app links out to listen. A clearly labelled search link is acceptable when a reliable direct link is unavailable. Before release, check that a linked page plays the full record rather than a pitched-up upload or a short preview.
 - Run on the existing Mikrus 2.1 under an included HTTPS subdomain. The public release must work at zero additional operating cost, including with the decision provider disabled.
 - The owner decides when the experience is good enough to share. Use the live demo and playtest feedback to decide where to invest next.
 
@@ -29,10 +29,10 @@ Use these IDs in the backlog, test names or test descriptions when they clarify 
 
 ## Catalogue quality
 
-Start with a sample of about 30 albums. Expand to a first useful catalogue of roughly 60–100 albums if the sample works, then work towards a few hundred when they add recommendation coverage. The measure of coverage is the range of requests that get several plausible results.
+Start with a sample of about 30 albums (non-binding size; E01 decides the boundary at M0 acceptance). Expand to a first useful catalogue of roughly 60–100 albums if the sample works, then work towards a few hundred when they add recommendation coverage. The measure of coverage is the range of requests that get several plausible results.
 
 - Record a stable ID, artist, title, release year or an explicit unknown value, and a source for identity. Distinguish an original release from reissues and remove duplicates.
-- Keep a small vocabulary for energy, mood, groove and vocal presence. Use unknown for missing evidence. Keep the basis for descriptive claims separate from identity metadata. A generated suggestion is a draft pending evidence or a listening check.
+- Keep a small vocabulary for energy (`calm`, `moderate`, `energetic`), mood (`late-night`, `warm`, `dark`, `bright`, `gritty`, `smooth`), groove (`steady`, `swung`, `broken`, `free`) and vocal presence (`instrumental`, `vocal`). Use `unknown` for missing evidence; `unknown` never satisfies a hard constraint. Use `;` to separate multiple mood or groove labels; `unknown` must stand alone and never be combined. `instrumental` means strictly no vocal sound of any kind, including samples, spoken word and backing vocals. Keep the basis for descriptive claims separate from identity metadata. A generated suggestion is a draft pending evidence or a listening check. The M0 validator on the product branch enforces this vocabulary.
 - Use an offline import and validation step. Research and model assistance can help collect and normalize candidates. The owner listens to a representative sample, including records the importer flagged, and decides whether the data supports the product.
 - Record the source and reuse terms before including data in the release. Start from verified metadata and permitted metadata sources. Use artwork only after a rights decision.
 
