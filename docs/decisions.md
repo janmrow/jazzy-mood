@@ -20,7 +20,7 @@ Record new decisions here when they materially change user behaviour, deployment
 | --- | --- | --- |
 | **E01** | Final catalogue boundary and useful coverage | M0 compares mood and intent coverage across about 30 records. Check rights and sourcing effort, how well the data supports tags, and whether the owner enjoys the picks. |
 | **E02** | Whether to enable decision inference for visitors | M3 compares local and model-assisted picks on the same synthetic descriptions. Check fit, hard constraints, response time, terms for visitor text and actual free-plan behaviour. Enable the runtime provider only after the owner accepts the result. |
-| **E03** | Runtime budgets for the actual VPS | M1 records basic headroom and public route behaviour. M4 verifies the release image, the latency baseline and the recovery steps. Change resources only in response to measured evidence. |
+| **E03** | Runtime budgets for the actual VPS | M1 records basic headroom and public route behaviour, including the checked viewport widths. M3 sets the P06 response deadline value and the per-request caps. M4 verifies the release image, the latency baseline and the recovery steps, and sets the release latency threshold from that baseline. Change resources only in response to measured evidence. |
 
 ### Model options for E02
 
