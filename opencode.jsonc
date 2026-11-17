@@ -1,0 +1,15 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "delivery",
+  "permissions": [
+    { "action": "external_directory", "resource": "*", "effect": "ask" },
+    { "action": "read", "resource": "*.env", "effect": "deny" },
+    { "action": "read", "resource": "*.env.*", "effect": "deny" },
+    { "action": "read", "resource": "*.env.example", "effect": "allow" },
+    { "action": "shell", "resource": "git push *", "effect": "deny" },
+    { "action": "shell", "resource": "git reset --hard *", "effect": "deny" },
+    { "action": "shell", "resource": "git clean *", "effect": "deny" },
+    { "action": "shell", "resource": "ssh *", "effect": "deny" },
+    { "action": "shell", "resource": "scp *", "effect": "deny" }
+  ]
+}
