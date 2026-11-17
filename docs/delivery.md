@@ -23,9 +23,25 @@
 | First complete product slice, API contract, data source or migration, inference, privacy, cost controls, deployment, or delivery and CI gates | `quality-review` and `engineering-review` |
 | Editorial correction that changes no requirement or rule | Implementer's diff check |
 
-Use a staged snapshot to give the reviewers consistent input. Record the base commit and an index tree ID from `git write-tree`. Save `git diff --cached --no-ext-diff` to an ignored file under `.delivery/` named for that tree. Give each reviewer the same file, base, tree ID, item ID, criterion IDs and check evidence. Avoid including secrets or user data in the snapshot. Give neither reviewer the other's conclusions. Both can read relevant repository files. They work in separate OpenCode sessions and report in the background.
+Use a staged snapshot to give the reviewers consistent input. Record the base commit (`git rev-parse HEAD`) and an index tree ID from `git write-tree`. Save `git diff --cached --no-ext-diff` to an ignored file under `.delivery/` named for that tree (for example `.delivery/<tree_id>.diff`). Give each reviewer the same file, base commit, tree ID, item ID, criterion IDs and check evidence. Avoid including secrets or user data in the snapshot. Give neither reviewer the other's conclusions. Both can read relevant repository files. They work in separate OpenCode sessions and report in the background.
 
-Wait for a `PASS` for the current tree from each required reviewer. A missing verdict, an unverifiable snapshot or a blocking finding keeps the commit pending. If the reviewer cannot assess the change, supply the missing evidence or report the blocker. Resolve blocking findings or seek a fresh verdict with evidence that resolves the objection. Document any consequential advisory finding you defer. If you make a material change, update the snapshot, rerun affected checks and get fresh required verdicts. Stop and hand off a clear blocker if repeated review or test failures prevent progress.
+### Review report format
+
+Each reviewer returns one report in this shape:
+
+```text
+verdict: PASS | CHANGES_REQUESTED | UNABLE_TO_REVIEW
+base_commit: <HEAD sha reviewed>
+tree_id: <git write-tree id reviewed>
+findings:
+  - severity: blocking | advisory
+    location: <file:line or scope>
+    consequence: <what breaks for the user or system>
+    criterion: <Pxx, Dxx, or workflow rule>
+checks_observed: <commands actually run and their result>
+```
+
+A report is valid only for the identical base commit and staged tree it names. A missing verdict, a report that names a different base commit or tree ID, an unverifiable snapshot, or any blocking finding keeps the commit pending. If the reviewer cannot assess the change, return `UNABLE_TO_REVIEW` and state the missing evidence. Resolve blocking findings or seek a fresh verdict with evidence that resolves the objection. Document any consequential advisory finding you defer. If you make a material change, take a new snapshot, rerun the affected checks, and get fresh required verdicts. Include the base commit, tree ID, staged file list, and check evidence with each request so the basis of the decision can be reproduced. Stop and hand off a clear blocker if repeated review or test failures prevent progress.
 
 The review step is a workflow instruction checked in the pilot. CI provides an independent check of the app once M1 introduces runnable code. If the pilot repeatedly misses review gates, inspect the session and tighten the workflow before considering a separate commit guard.
 
