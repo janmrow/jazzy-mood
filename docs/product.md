@@ -27,6 +27,16 @@ Use these IDs in the backlog, test names or test descriptions when they clarify 
 | **P07** | The form, messages, result and external link are usable at a narrow viewport and with a keyboard. Checked widths are recorded when M1-01 lands. Loading and errors can be understood without relying on colour alone. | Tab through the experience on a phone-sized viewport. Submit, read the status and reach the result or error. |
 | **P08** | Keep use anonymous. Recent album IDs need only the current browser session. If the decision provider is enabled, tell the visitor that their description may go to the decision provider. The app keeps descriptions out of its persistent storage and logs. | Read the notice and check log and database output after a test submission that contains a made-up unique phrase. |
 
+### Hard and soft requirements (M0)
+
+- Hard constraints must hold; otherwise there is no eligible result. The album must be in the catalogue with a recorded identity source. `No vocals` and `instrumental only` mean strictly no vocal sound of any kind, including samples, spoken word, and backing vocals. Only a vocals value of `instrumental` backed by evidence satisfies them. `Unknown` never satisfies a hard constraint. P02, P04.
+- Soft preferences only rank eligible albums. Mood, energy, and groove order the candidates but never disqualify one alone, and the reason must reflect the tags actually present. A broad mood may leave several plausible picks. P02, P04.
+- M0 adds no new matching dimensions. Genre switches, dates outside the sample, track-level picks, tempo, key, and other fine-grained features are non-binding context. Never claim they were matched.
+- No basis, no claim. Never state that a requirement was met without catalogue evidence. A partial match concerns soft preferences only (for example, groove fits but energy unverified); label it plainly. For a hard constraint, an unknown value excludes the album and is never a partial match. For a no-match case, say so and help the visitor revise the description. P04.
+- The M0 sample sets the working boundary; it can move after the M0 experiment and the owner's listening check (E01).
+
+Representative cases: an `instrumental only` request with one mood-matching vocal album and one weaker instrumental album picks the instrumental, because hard beats soft; with only the vocal album it reports no eligible result. `A quiet rainy evening, some groove` allows several plausible picks with reasons citing the groove and mood tags present. `1960s bebop`, outside the sample boundary, reports no eligible result and names the boundary instead of stretching a label.
+
 ## Catalogue quality
 
 Start with a sample of about 30 albums (non-binding size; E01 decides the boundary at M0 acceptance). Expand to a first useful catalogue of roughly 60–100 albums if the sample works, then work towards a few hundred when they add recommendation coverage. The measure of coverage is the range of requests that get several plausible results.
