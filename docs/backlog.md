@@ -3,6 +3,7 @@
 - **Active milestone** M0
 - **Milestone state** In delivery
 - **Accepted milestones** None
+- **Product branch** `deliver/m0` holds the M0 sample and trial; this branch holds harness and docs polish only.
 
 The delivery agent may choose and split items inside the active milestone. An item is ready once its dependencies are implemented, any named prerequisite decision is recorded and the work has enough evidence to begin. The owner sets the next milestone at acceptance. See [delivery](delivery.md) for state transitions and [product](product.md) for the `P01`–`P08` criteria.
 
@@ -38,7 +39,7 @@ Present a short recommendation on catalogue boundaries, whether albums are worth
 - **Depends on** Accepted M0
 - **Criteria** P01, P02, P05, P07
 
-Implement one English form calling the API, which returns an album from a tiny local fixture. Display the result, loading and a recoverable failure. Keep useful focus and keyboard behaviour. Include a cheap health endpoint. Add the project check command and CI to this first app slice. Use pytest for request validation and the successful response, and a Playwright test from form submission to displayed card. Both reviewers check this first complete product slice.
+Implement one English form calling the API, which returns an album from a tiny local fixture. Display the result, loading and a recoverable failure. Keep useful focus and keyboard behaviour. Include a cheap health endpoint at `/healthz`. Add the project check command and CI to this first app slice. Use pytest for request validation and the successful response, and a Playwright test from form submission to displayed card. Both reviewers check this first complete product slice.
 
 The owner can start it locally with documented commands, get a result, and verify that a blank submission or a simulated failure gives clear feedback. The playtest may use controlled test data. Mark the fixture clearly when demonstrating it.
 
