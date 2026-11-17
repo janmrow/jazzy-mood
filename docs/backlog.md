@@ -1,7 +1,7 @@
 # Backlog
 
 - **Active milestone** M0
-- **Milestone state** In delivery
+- **Milestone state** Awaiting acceptance (agent work complete; owner listening check and boundary decision open)
 - **Accepted milestones** None
 - **Product branch** `deliver/m0` holds the M0 sample and trial; harness and setup branches hold workflow and docs polish only and never carry product changes.
 
