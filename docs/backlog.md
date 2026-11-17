@@ -59,17 +59,17 @@ Build the production-shaped image off the server. Add the minimal Compose setup 
 | **M2-02 · Match descriptions locally** | Open | M2-01 | Match supported constraints, rank by evidence, choose among comparable matches and handle no eligible result. Test known constraints, no match and seeded variation. P02, P04, P06. |
 | **M2-03 · Add another pick and polish the result** | Open | M2-02 | Keep the description, avoid recent album IDs when an alternative exists, handle exhaustion, and open a suitable listening link. Verify one repeated request in the browser and do a short mobile playtest. P02, P03, P05, P07. |
 
-## M3 · Measure the model's value
+## M3 · Measure the provider's value
 
 | Work item | State | Depends on | Result and evidence |
 |---|---|---|---|
 | **M3-01 · Prepare the shared comparison set** | Open | Accepted M2 | Version 30–50 synthetic descriptions, expected constraints and a simple fit rubric. Record the local baseline against a fixed catalogue. P02–P04. |
-| **M3-02 · Integrate bounded interpretation and fallback** | Open | M3-01 | One typed provider call, a deadline, request limits, validated responses and a local fallback. Cover timeout, malformed output, free quota exhaustion and disabled mode with simulated results. P06, P08. |
+| **M3-02 · Integrate bounded interpretation and fallback** | Open | M3-01 | One typed provider call, a deadline, request limits, validated responses and a local fallback. Cover timeout, malformed output, free quota exhaustion and disabled mode with simulated results. Record the proxy client-identity finding for any per-client limit. P06, P08. |
 | **M3-03 · Compare and decide** | Open | M3-02 | Run the approved free trial with synthetic inputs. Compare the same examples and note fit, failures, response times, real plan settings and handling of visitor text. Record the owner's enable or disable decision, including a clear UI notice if enabled. P06, P08. |
 
 ## M4 · Release to friends
 
 | Work item | State | Depends on | Result and evidence |
 |---|---|---|---|
-| **M4-01 · Verify operations and recovery** | Open | Accepted M3 | Check the release image, log rotation, restart, backup, restore and rollback. Include a small load smoke test from outside the VPS with external inference disabled. |
+| **M4-01 · Verify operations and recovery** | Open | Accepted M3 | Check the release image, log rotation, restart, backup, restore and rollback. Include a small load smoke test from outside the VPS with external inference disabled. Review host and proxy logging before any privacy claim and confirm abuse behaviour. |
 | **M4-02 · Accept a release candidate** | Open | M4-01 | Hand over the release tag, test evidence, live URL or deployment steps and a short playtest. Verify mobile, keyboard, different moods, repeat requests, links and graceful fallback. The owner chooses when to share. P01–P08. |
