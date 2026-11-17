@@ -11,7 +11,7 @@ flowchart LR
 ```
 
 | Area | Agreed direction |
-|---|---|
+| --- | --- |
 | Browser | React, TypeScript and Vite. Build static assets. Keep form state and a bounded list of recent album IDs in the browser. Use plain English copy. |
 | Backend | Python, FastAPI and typed request and response validation. Start with one application process. Serve assets and the API together in production. |
 | Data | SQLite on local persistent storage. Use versioned schema changes and catalogue snapshots or source data. Verify imports before promoting them. Treat fixture data as a separate local test input. |

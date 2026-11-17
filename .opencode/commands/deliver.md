@@ -4,6 +4,8 @@ agent: delivery
 subagent: false
 ---
 
+# Deliver ready work
+
 Run the workflow in `docs/delivery.md`. Read `AGENTS.md` and find the active milestone in `docs/backlog.md`.
 
 Optional milestone argument: $ARGUMENTS

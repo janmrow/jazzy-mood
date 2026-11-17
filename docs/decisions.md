@@ -5,7 +5,7 @@ Record new decisions here when they materially change user behaviour, deployment
 ## Adopted for the first release
 
 | ID | Decision | Reason and revisit trigger |
-|---|---|---|
+| --- | --- | --- |
 | **D01** | Deliver one recommendation from an anonymous form. Use one album per result, linked out for listening. | A simple experience supports quick discovery and keeps scope small. Revisit the album boundary if M0 playtests strongly favour tracks. |
 | **D02** | Use React, TypeScript and Vite for the frontend and Python with FastAPI for the backend. Ship one Compose service. | This exposes the browser/API boundary and supports the owner's learning goals while keeping the deployed topology small. Changes need a concrete product or operations reason. |
 | **D03** | Use SQLite on local storage for the first release. | The small catalogue is read often and updated occasionally. This keeps data setup and recovery simple and still supports SQL and migrations. Revisit PostgreSQL if observed write contention, multiple instances or an agreed learning experiment warrants it. |
@@ -17,7 +17,7 @@ Record new decisions here when they materially change user behaviour, deployment
 ## To resolve with evidence
 
 | ID | Open decision | How to decide |
-|---|---|---|
+| --- | --- | --- |
 | **E01** | Final catalogue boundary and useful coverage | M0 compares mood and intent coverage across about 30 records. Check rights and sourcing effort, how well the data supports tags, and whether the owner enjoys the picks. |
 | **E02** | Whether to enable decision inference for visitors | M3 compares local and model-assisted picks on the same synthetic descriptions. Check fit, hard constraints, response time, terms for visitor text and actual free-plan behaviour. Enable the runtime provider only after the owner accepts the result. |
 | **E03** | Runtime budgets for the actual VPS | M1 records basic headroom and public route behaviour. M4 verifies the release image, the latency baseline and the recovery steps. Change resources only in response to measured evidence. |

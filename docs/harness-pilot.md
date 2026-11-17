@@ -8,7 +8,7 @@ Short pilot of the autonomous workflow before `M0` delivery. Isolated copies onl
 ## Observed through review sessions (scenarios 1–3)
 
 | # | Scenario | Result |
-|---|---|---|
+| --- | --- | --- |
 | 1 | Normal task with correct commit | PT-01 probe file committed in the pilot copy (`75c0af3`). |
 | 2 | Two independent reviews of the same snapshot | Same base `60c95c7` and tree `52c82908` sent to two separate sessions; `quality-review` PASS and `engineering-review` PASS, neither saw the other's conclusions. A2 on the real branch showed the same pattern (base `0266772`, tree `bc4054f`, two PASS, commit `60c95c7`). |
 | 3 | `CHANGES_REQUESTED` | Broken link (`docs/does-not-exist.md`, link check FAIL) got `CHANGES_REQUESTED` with one blocking finding at `docs/pilot-probe.md:2`. No commit; pilot `HEAD` stayed at `75c0af3`. |
@@ -16,7 +16,7 @@ Short pilot of the autonomous workflow before `M0` delivery. Isolated copies onl
 ## Mechanical checks, scenarios 4–7 (shell only, no reviewer session)
 
 | # | Check | Result |
-|---|---|---|
+| --- | --- | --- |
 | 4 | Gate-count illustration | Broken snapshot required two verdicts but only the quality verdict was requested; recorded as missing result, commit blocked, `HEAD` unchanged. No missing-verdict round was run; enforcement untested. |
 | 5 | Failed check | Trailing-whitespace fixture made `git diff --cached --check` exit 2 with `HEAD` unchanged; after fixing the file the same check passed. Command ran; no agent commit was blocked by it. |
 | 6 | Snapshot change | Staged edit changed the tree ID (`T1` vs `T2`, different). No PASS was invalidated through re-review; the fresh-verdict rule is quoted from the docs, not exercised. |
