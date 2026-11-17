@@ -47,6 +47,13 @@ The review step is a workflow instruction checked in the pilot. CI provides an i
 
 ## 4. Commit, continue and hand off
 
+### Git conventions
+
+- Work on a local branch named for the job: `deliver/<milestone>` for milestone work, `pilot/*` for disposable harness trials (delete when done), `setup/*` for one-off setup branches such as PR preparation.
+- Commits stay local. The agent commits on the working branch and never pushes, rewrites published history, or uses destructive commands. Publishing (push, pull request, merge) is the owner's decision in the owner's environment.
+- A commit subject starts with the item ID, uses the imperative mood, and states the outcome (for example `M0-01: Add catalogue validator and tests`). The body records evidence that matters: checks run, base commit, staged tree, and review verdicts.
+- A pull request is the owner's vehicle for publishing or for asking review outside the agent workflow. The workflow never requires one, and the snapshot reviews in section 3 stay valid on local snapshots with or without a PR.
+
 - Confirm the base commit and staged tree still match the reviewed snapshot. A change to either requires a fresh snapshot and applicable gates. Use a commit subject that begins with the item ID and states the outcome. Include the evidence in the backlog note or commit body when it matters. Verify the commit and the remaining working tree state.
 - Continue with the next ready item in the same milestone. A fresh session starts from the actual tree, backlog and history. Record a real blocker rather than marking progress complete based on intent or a pending check.
 - When the agent-owned work is complete, set the milestone to `Awaiting acceptance` in the final work commit or a separate progress commit. Include any owner-run check that remains and keep its result open. The owner accepts the milestone and authorizes the next one. For example, the owner can say `I accept M0. Start M1.`, then run `/deliver M1`. Record that transition in the backlog before implementing the next milestone.
