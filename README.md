@@ -8,7 +8,22 @@ This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadma
 
 This starter is already committed in this repository. Open a terminal in the repository root, where `AGENTS.md` and `.opencode/` are located.
 
-Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap), and `.gitignore`. `catalog/` starts in M0; `backend/` and `frontend/` arrive with M1.
+Branch map: `main` is the last shared base. Product work for the active milestone lives on `deliver/m0`. This checkout (`setup/pr1-harness`) holds harness and docs polish only and never carries product changes. Check `git branch -a` and the backlog header before starting.
+
+Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap, catalogue-trial, harness-pilot, pull-requests), and `.gitignore`. `catalog/` starts in M0; `backend/` and `frontend/` arrive with M1. Their absence on this branch is expected.
+
+### Day one
+
+- Prerequisite: OpenCode with this repository open. `/deliver` is the project command defined in `.opencode/commands/deliver.md`. Type it in the OpenCode input, not in a plain shell. Use `/deliver M0` to name the milestone explicitly.
+- Plain-git fallback: without OpenCode, read the backlog header, make a small branch, edit, run `git diff --cached --check`, and hand the diff to the owner. Do not expect the snapshot and review machinery to run outside OpenCode.
+- First commands: `git branch -a`, `git log --oneline -8`, then read `docs/backlog.md`, `docs/product.md`, `docs/delivery.md`.
+- Language: conversation with the owner in Polish; documentation, code, tests, UI copy, commit subjects and bodies, and handoffs in plain English.
+- History note: `docs/harness-pilot.md` records a past workflow trial. Skip it on day one; it is not required to deliver M0.
+- Snapshot note: `docs/delivery.md` asks for `git write-tree` twice to prove the index did not change mid-capture. The two IDs must match before saving `.delivery/<tree_id>.diff`.
+
+### Checks
+
+At M0 there is no check command yet. Required checks are `git diff --cached --check` plus the manual inspection list in the backlog item, recorded as evidence. M1-01 introduces one check entry point and CI; its command will be documented here.
 
 Run **`/deliver`** to start the active milestone. The agent picks a ready item, makes and checks small changes, obtains the required review, and commits locally. When the milestone is ready, it hands you a build or a concrete review exercise. Use `/deliver M0` to name the active milestone explicitly. See [delivery](docs/delivery.md) for acceptance, resuming work and a pilot on a disposable branch.
 
