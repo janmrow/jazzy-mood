@@ -1,5 +1,6 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  // Permission denies are an accident guard, not a sandbox. Real boundary: credentials stay outside the agent workspace; the owner runs push and production.
   "default_agent": "delivery",
   "permissions": [
     { "action": "external_directory", "resource": "*", "effect": "ask" },

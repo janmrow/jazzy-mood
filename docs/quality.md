@@ -16,7 +16,7 @@ Use [product criteria](product.md#acceptance-criteria) and actual risk to select
 
 ## Local and CI checks
 
-Before the app exists, check the relevant documents and source data, and use `git diff --cached --check` on the proposed change. M1 introduces one check entry point, documented in the README, that CI runs as well. Include frontend type checking, the production build, pytest and the essential browser journey. Make CI report failure when a check fails. Use fixtures and a simulated provider in routine checks, even if a live provider has been configured on a developer's machine.
+Before the app exists, check the relevant documents and source data, and use `git diff --cached --check` on the proposed change. For M0, required checks are `git diff --cached --check` plus the backlog item's manual inspection list recorded as evidence. M1 introduces one check entry point, documented in the README, that CI runs as well. Include frontend type checking, the production build, pytest and the essential browser journey. Make CI report failure when a check fails. Use fixtures and a simulated provider in routine checks, even if a live provider has been configured on a developer's machine.
 
 Keep the automated suite small and meaningful. Derive assertions from expected behaviour and failures a visitor would notice. Use stable IDs and properties of recommendations as assertions. An exact title is appropriate only when the test fixture makes that choice meaningful. Reviewers should ask what would break if a test were removed or if a faulty change passed it.
 

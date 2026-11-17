@@ -20,8 +20,6 @@ Run **`/deliver`** to start the active milestone. The agent picks a ready item, 
 
 ## Your role
 
-- As product owner, choose the scope, make tradeoffs and decide when a version is ready to share.
-- As business analyst, turn observations into concrete examples. Describe the desired experience and what an unsuitable result looks like.
 - As quality engineer, try the app on a phone and with a keyboard, explore musical fit and failure states, and review acceptance and release evidence. The agent writes and reviews the code and automated tests.
 
 Example feedback: “The first pick matched my mood. When I asked for another, I wanted a different album with the same feel.” Add the desired outcome and ask the agent to update the criteria, tests and implementation as needed.
