@@ -12,7 +12,7 @@ This starter is already committed in this repository. Open a terminal in the rep
 opencode
 ```
 
-Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap), and `.gitignore`. `catalog/`, `backend/` and `frontend/` appear in later milestones.
+Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap), and `.gitignore`. `catalog/` starts in M0; `backend/` and `frontend/` arrive with M1.
 
 Use [OpenCode V2](https://opencode.ai/docs/migrate-v1/). Connect your coding provider locally if needed and select the exact model you want with `/models`. The repository leaves the model choice to you. If you select [Muse Spark 1.3 Contributor](https://dev.meta.ai/docs/muse-spark), check the model available to your account and use it with materials you are comfortable sharing for training. This choice is independent of the app's runtime model.
 

@@ -1,6 +1,6 @@
 # Architecture
 
-The release runs as one application service. A React page and the API share one origin. FastAPI owns recommendation behaviour and reads the catalogue from a local SQLite file. An optional decision provider interprets short descriptions. Music and metadata discovery run outside the live request path.
+The release runs as one application service. A React page and the API share one origin. FastAPI owns recommendation behaviour and reads the catalogue from a local SQLite file. An optional decision provider interprets short descriptions. Music and metadata discovery run outside the live request path. Across these docs, the optional external service is the *decision provider*; choosing from the catalogue without it is *local selection*.
 
 ```mermaid
 flowchart LR

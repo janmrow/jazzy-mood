@@ -27,7 +27,7 @@ Each review judges one frozen snapshot; any material change to it invalidates pr
 
 Catalogue sample and trial edits (M0-01/M0-02) are ordinary catalogue changes → `quality-review` only. The two-review gate starts at the first complete product slice and the other listed cases.
 
-Use a staged snapshot to give the reviewers consistent input. Record the base commit (`git rev-parse HEAD`) and an index tree ID from `git write-tree`. Capture the snapshot atomically: run `git write-tree` twice and require the same tree ID before saving the diff, proving the index did not change mid-capture. Save `git diff --cached --no-ext-diff` to an ignored file under `.delivery/` named for that tree (for example `.delivery/<tree_id>.diff`). Give each reviewer the same file, base commit, tree ID, item ID, criterion IDs and check evidence. Avoid including secrets or user data in the snapshot. Give neither reviewer the other's conclusions. Both can read relevant repository files. They work in separate OpenCode sessions and report in the background.
+Use a staged snapshot (a review snapshot; distinct from data backups in `operations.md`) to give the reviewers consistent input. Record the base commit (`git rev-parse HEAD`) and an index tree ID from `git write-tree`. Capture the snapshot atomically: run `git write-tree` twice and require the same tree ID before saving the diff, proving the index did not change mid-capture. Save `git diff --cached --no-ext-diff` to an ignored file under `.delivery/` named for that tree (for example `.delivery/<tree_id>.diff`). Give each reviewer the same file, base commit, tree ID, item ID, criterion IDs and check evidence. Avoid including secrets or user data in the snapshot. Give neither reviewer the other's conclusions. Both can read relevant repository files. They work in separate OpenCode sessions and report in the background.
 
 ### Review request template
 
@@ -99,6 +99,6 @@ For example, when asking the owner to review repeat behaviour, give the working 
 
 ## Pilot the harness
 
-Run a pilot for harness changes on a disposable branch in an isolated copy, with a temporary backlog and the same snapshot and review gates; see `docs/harness-pilot.md` for the executed pilot and its evidence.
+Run a pilot for future harness changes on a disposable branch in an isolated copy, with a temporary backlog and the same snapshot and review gates; see `docs/harness-pilot.md` for the executed pilot and its evidence.
 
 OpenCode project [commands](https://opencode.ai/docs/commands/), [agents](https://opencode.ai/docs/agents/) and [permissions](https://opencode.ai/docs/permissions/) provide the configuration used here. Check local and managed policy if a permitted development command is blocked. Run production steps from the owner's operations environment.

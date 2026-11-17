@@ -6,7 +6,7 @@
 
 The delivery agent may choose and split items inside the active milestone. An item is ready once its dependencies are implemented, any named prerequisite decision is recorded and the work has enough evidence to begin. The owner sets the next milestone at acceptance. See [delivery](delivery.md) for state transitions and [product](product.md) for the `P01`–`P08` criteria.
 
-Use `Open`, `Implemented` or `Blocked` on work items. Add one short note for a material result or a blocker. When splitting an item, use child IDs such as `M1-01a`, keep the parent outcome, and mark the parent implemented only when its acceptance evidence is complete. Use the item ID in the commit subject so progress can be found in Git.
+Use `Open`, `Implemented` or `Blocked` on work items. Milestone states (`In delivery`, `Awaiting acceptance`, `Accepted`) live with the Active milestone line above and are never interchangeable with item states. Add one short note for a material result or a blocker. When splitting an item, use child IDs such as `M1-01a`, keep the parent outcome, and mark the parent implemented only when its acceptance evidence is complete. Use the item ID in the commit subject so progress can be found in Git.
 
 ## M0 · Prove the catalogue
 

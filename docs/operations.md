@@ -28,9 +28,9 @@ See the [Mikrus offer](https://mikr.us/) and [subdomain setup guide](https://wik
 
 ## Backup, restart and rollback
 
-1. Keep the versioned catalogue source or import needed to rebuild SQLite and the image tag needed to run it. Store a consistent SQLite snapshot before catalogue migrations and keep a copy off the VPS on the owner's machine. Use [SQLite's backup mechanism](https://www.sqlite.org/backup.html) for a live database or stop writes before taking a file copy.
+1. Keep the versioned catalogue source or import needed to rebuild SQLite and the image tag needed to run it. Store a consistent SQLite data backup before catalogue migrations and keep a copy off the VPS on the owner's machine. Use [SQLite's backup mechanism](https://www.sqlite.org/backup.html) for a live database or stop writes before taking a file copy.
 2. Restore into an isolated directory or test volume first. Check database integrity and schema version, inspect the expected catalogue version and exercise one recommendation. Record the source of the backup, how long the restore took and the result.
-3. Restart the application with its persistent volume and exercise the form and links. Then deploy the prior image during a rollback rehearsal. Confirm schema compatibility first. If a migration makes the prior image incompatible, restore the matching snapshot before starting that image.
+3. Restart the application with its persistent volume and exercise the form and links. Then deploy the prior image during a rollback rehearsal. Confirm schema compatibility first. If a migration makes the prior image incompatible, restore the matching data backup before starting that image.
 4. For a service incident, check `/healthz`, the latest local logs and VPS resource use. Switch to local selection when the provider is the problem. If the release is unhealthy, roll back to the known image and compatible data, then verify the live link again.
 
 ## Evidence before sharing
