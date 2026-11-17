@@ -14,11 +14,11 @@ See the [Mikrus offer](https://mikr.us/) and [subdomain setup guide](https://wik
 
 ## Runtime modes and controls
 
-- Local mode is the default and requires no inference credentials. Keep deployment and provider settings outside source control. Keep live credentials away from the coding agents' workspace and put the true app credentials only in the runtime environment.
-- Enable model mode after M3 establishes benefit, account availability, known terms for visitor text and a provider-enforced no-overspend boundary. Use a free setup with paid overflow disabled. Handle provider quota responses with local selection. Recheck the actual configuration if the account, model or plan changes.
+- Local selection is the default and requires no inference credentials. Keep deployment and provider settings outside source control. Keep live credentials away from the coding agents' workspace and put the true app credentials only in the runtime environment.
+- Enable decision-provider mode after M3 establishes benefit, account availability, known terms for visitor text and a provider-enforced no-overspend boundary. Use a free setup with paid overflow disabled. Handle provider quota responses with local selection. Recheck the actual configuration if the account, model or plan changes.
 - Bound request size, provider calls and concurrent work. Use one short provider deadline and at most one provider call per valid request. Apply a global cap before starting an external call. A per-client limit can be added once the proxy's client identity is understood. Use only forwarding information from the trusted ingress when computing it.
-- Provide a setting for returning the app to local mode without code changes. Confirm that the site continues to recommend from the local catalogue when the provider is disabled or unreachable.
-- Show visitors a short description of any external inference near the form before enabling it. Keep prompts, raw provider responses and credentials out of application logs and stored data. Review the host and any proxy logging separately before making privacy claims.
+- Provide a setting for returning the app to local selection without code changes. Confirm that the site continues to recommend from the local catalogue when the provider is disabled or unreachable.
+- Show visitors a short description of any decision-provider use near the form before enabling it. Keep prompts, raw provider responses and credentials out of application logs and stored data. Review the host and any proxy logging separately before making privacy claims.
 
 ## Health and logs
 

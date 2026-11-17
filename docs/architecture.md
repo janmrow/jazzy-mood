@@ -14,11 +14,20 @@ flowchart LR
 | --- | --- |
 | Browser | React, TypeScript and Vite. Build static assets. Keep form state and a bounded list of recent album IDs in the browser. Use plain English copy. |
 | Backend | Python, FastAPI and typed request and response validation. Start with one application process. Serve assets and the API together in production. |
-| Data | SQLite on local persistent storage. Use versioned schema changes and catalogue snapshots or source data. Verify imports before promoting them. Treat fixture data as a separate local test input. |
+| Data | SQLite on local persistent storage. Use versioned schema changes and catalogue exports or source data. Verify imports before promoting them. Treat fixture data as a separate local test input. |
 | Runtime | One Docker Compose service and a persistent data volume on Mikrus 2.1. Build the image off the VPS for its architecture. Use the included HTTPS subdomain. |
 | Verification | pytest, Playwright with TypeScript, one local check entry point and CI. Keep the same app contracts in local development and the release image. |
 
 Keep public endpoints, provider interpretation and selection logic distinct enough to test. Add dependencies when they solve an observed need in the active milestone. Make dependency and implementation choices inside the agreed stack. Changes to the stack, service topology, cost ceiling or production data boundaries require a decision by the owner.
+
+## Terms
+
+- *Decision provider*: the optional external service that interprets short descriptions into typed intent signals. Older text also says `external model`, `inference provider`, `free model`, `model mode` or `external inference` for this. New text uses `decision provider` only.
+- *Local selection*: choosing from the catalogue without the decision provider. Older text also says `local mode` or `local path` for this.
+- *Review snapshot*: the frozen staged diff judged by one review (`docs/delivery.md`), stored under `.delivery/`. It is distinct from data backups and catalogue exports.
+- *Catalogue export*: versioned catalogue source, import or data backup. Do not call it a snapshot in new text.
+- `catalog/` is the code and data directory; `catalogue` is prose for the music collection.
+- *Typed intent signals*: energy, a small mood or rhythm set, and instrumental preference. Older text also says `typed model-assisted decisions` for this.
 
 ## Recommendation path
 

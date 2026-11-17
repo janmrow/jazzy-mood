@@ -22,12 +22,12 @@ Keep the automated suite small and meaningful. Derive assertions from expected b
 
 ## Model and catalogue evaluation
 
-Use 30–50 synthetic descriptions with a frozen catalogue and recorded matcher and model versions. Include varied energy, rhythm, ambiguity, explicit constraints, thin catalogue coverage and repeats. A small English set is the release baseline. Add representative Polish descriptions if evaluating a later language claim.
+Use 30–50 synthetic descriptions with a frozen catalogue and recorded matcher and provider versions. Include varied energy, rhythm, ambiguity, explicit constraints, thin catalogue coverage and repeats. A small English set is the release baseline. Add representative Polish descriptions if evaluating a later language claim.
 
 1. Record eligible results or expected boundaries for each example. Some cases can have several good picks. Treat a violated explicit constraint as a failure.
-2. Compare the local and model-assisted paths on the same set. Score musical fit as 0 for unsuitable, 1 for plausible or 2 for strong. Record unsupported reasons, repeated choices, no-match results, response time and provider errors.
+2. Compare the local-selection and provider-assisted paths on the same set. Score musical fit as 0 for unsuitable, 1 for plausible or 2 for strong. Record unsupported reasons, repeated choices, no-match results, response time and provider errors.
 3. Ask the owner to listen to a representative sample and judge usefulness without seeing which method made each pick when practical. Record important disagreements.
-4. Keep the free model enabled for visitors only if the owner accepts its contribution, cost boundary and data handling. Preserve the local mode and rerun a targeted comparison when the catalogue, prompt or model changes materially.
+4. Keep the free decision provider enabled for visitors only if the owner accepts its contribution, cost boundary and data handling. Preserve local selection and rerun a targeted comparison when the catalogue, prompt or provider changes materially.
 
 ## Owner playtest
 
