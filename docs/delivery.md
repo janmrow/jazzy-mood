@@ -14,6 +14,7 @@
 - Keep the change small enough to explain and verify. A typical commit finishes one slice of behaviour, one data improvement or one operational change. Include affected docs and tests when needed.
 - Use the matching checks from [quality](quality.md). Record commands, results and any check that could not be run. Resolve required check failures before marking a change implemented. Use real acceptance criteria as the basis of test expectations.
 - Stage only the files that belong to the change. Include the backlog update in the staged snapshot. Run `git diff --cached --check`, inspect the staged file list and confirm that new files are included. If the change is incomplete, its staged status remains provisional until the gates pass.
+- Run tests after the final staging, against the staged state. `git diff` (worktree vs index) must show no changes to the reviewed files when tests run and when reviews are requested. A worktree edit afterwards means re-stage, re-run the affected checks, and take a fresh snapshot.
 
 ## 3. Review rules
 
@@ -23,7 +24,7 @@
 | First complete product slice, API contract, data source or migration, inference, privacy, cost controls, deployment, or delivery and CI gates | `quality-review` and `engineering-review` |
 | Editorial correction that changes no requirement or rule | Implementer's diff check |
 
-Use a staged snapshot to give the reviewers consistent input. Record the base commit (`git rev-parse HEAD`) and an index tree ID from `git write-tree`. Save `git diff --cached --no-ext-diff` to an ignored file under `.delivery/` named for that tree (for example `.delivery/<tree_id>.diff`). Give each reviewer the same file, base commit, tree ID, item ID, criterion IDs and check evidence. Avoid including secrets or user data in the snapshot. Give neither reviewer the other's conclusions. Both can read relevant repository files. They work in separate OpenCode sessions and report in the background.
+Use a staged snapshot to give the reviewers consistent input. Record the base commit (`git rev-parse HEAD`) and an index tree ID from `git write-tree`. Capture the snapshot atomically: run `git write-tree` twice and require the same tree ID before saving the diff, proving the index did not change mid-capture. Save `git diff --cached --no-ext-diff` to an ignored file under `.delivery/` named for that tree (for example `.delivery/<tree_id>.diff`). Give each reviewer the same file, base commit, tree ID, item ID, criterion IDs and check evidence. Avoid including secrets or user data in the snapshot. Give neither reviewer the other's conclusions. Both can read relevant repository files. They work in separate OpenCode sessions and report in the background.
 
 ### Review report format
 
@@ -53,8 +54,10 @@ The review step is a workflow instruction checked in the pilot. CI provides an i
 - Commits stay local. The agent commits on the working branch and never pushes, rewrites published history, or uses destructive commands. Publishing (push, pull request, merge) is the owner's decision in the owner's environment.
 - A commit subject starts with the item ID, uses the imperative mood, and states the outcome (for example `M0-01: Add catalogue validator and tests`). The body records evidence that matters: checks run, base commit, staged tree, and review verdicts.
 - A pull request is the owner's vehicle for publishing or for asking review outside the agent workflow. The workflow never requires one, and the snapshot reviews in section 3 stay valid on local snapshots with or without a PR.
+- Integrate published branches with merge commits, not squash or rebase, so review evidence stays traceable to its base and tree SHAs.
+- Merging a pull request publishes code; it never accepts a milestone. Acceptance is the owner's explicit statement, recorded in the backlog before the next milestone starts.
 
-- Confirm the base commit and staged tree still match the reviewed snapshot. A change to either requires a fresh snapshot and applicable gates. Use a commit subject that begins with the item ID and states the outcome. Include the evidence in the backlog note or commit body when it matters. Verify the commit and the remaining working tree state.
+- Confirm the base commit and staged tree still match the reviewed snapshot. Before committing, confirm `git diff` shows no unstaged changes to the reviewed files, and that every required report names the current base commit and tree ID and carries all fields from the report shape; a report missing any of them counts as missing. A change to either requires a fresh snapshot and applicable gates. Use a commit subject that begins with the item ID and states the outcome. The commit body always records the base commit, the tree ID, and the verdicts, so the evidence survives without the local `.delivery/` file. Verify the commit and the remaining working tree state, including that `git rev-parse <commit>^{tree}` equals the reviewed tree ID.
 - Continue with the next ready item in the same milestone. A fresh session starts from the actual tree, backlog and history. Record a real blocker rather than marking progress complete based on intent or a pending check.
 - When the agent-owned work is complete, set the milestone to `Awaiting acceptance` in the final work commit or a separate progress commit. Include any owner-run check that remains and keep its result open. The owner accepts the milestone and authorizes the next one. For example, the owner can say `I accept M0. Start M1.`, then run `/deliver M1`. Record that transition in the backlog before implementing the next milestone.
 
