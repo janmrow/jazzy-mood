@@ -71,5 +71,5 @@ Build the production-shaped image off the server. Add the minimal Compose setup 
 
 | Work item | State | Depends on | Result and evidence |
 |---|---|---|---|
-| **M4-01 · Verify operations and recovery** | Open | Accepted M3 | Check the release image, log rotation, restart, backup, restore and rollback. Include a small load smoke test from outside the VPS with external inference disabled. Review host and proxy logging before any privacy claim and confirm abuse behaviour. |
+| **M4-01 · Verify operations and recovery** | Open | Accepted M3 | Check the release image, log rotation, restart, backup, restore and rollback. Include a small load smoke test from outside the VPS with the decision provider disabled. Review host and proxy logging before any privacy claim and confirm abuse behaviour. |
 | **M4-02 · Accept a release candidate** | Open | M4-01 | Hand over the release tag, test evidence, live URL or deployment steps and a short playtest. Verify mobile, keyboard, different moods, repeat requests, links and graceful fallback. The owner chooses when to share. P01–P08. |

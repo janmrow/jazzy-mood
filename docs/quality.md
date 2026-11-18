@@ -20,7 +20,7 @@ Before the app exists, check the relevant documents and source data, and use `gi
 
 Keep the automated suite small and meaningful. Derive assertions from expected behaviour and failures a visitor would notice. Use stable IDs and properties of recommendations as assertions. An exact title is appropriate only when the test fixture makes that choice meaningful. Reviewers should ask what would break if a test were removed or if a faulty change passed it.
 
-## Model and catalogue evaluation
+## Decision-provider and catalogue evaluation
 
 Use 30–50 synthetic descriptions with a frozen catalogue and recorded matcher and provider versions. Include varied energy, rhythm, ambiguity, explicit constraints, thin catalogue coverage and repeats. A small English set is the release baseline. Add representative Polish descriptions if evaluating a later language claim.
 
@@ -42,4 +42,4 @@ Send the agent a short observation with the expected outcome. It records whether
 
 ## Performance and follow-up experiments
 
-Run the initial k6 smoke test from another machine against the owner's test deployment. Use a little concurrent traffic, for example five simultaneous users for a minute, with external inference switched off. Record the 95th percentile latency, unexpected errors and VPS headroom. Set the release threshold using that baseline and the owner's experience. Measure external inference separately on a small sample. Later mutation tests can check whether the suite detects specific mistakes in ranking, eligibility or fallback.
+Run the initial k6 smoke test from another machine against the owner's test deployment. Use a little concurrent traffic, for example five simultaneous users for a minute, with the decision provider switched off. Record the 95th percentile latency, unexpected errors and VPS headroom. Set the release threshold using that baseline and the owner's experience. Measure decision-provider inference separately on a small sample. Later mutation tests can check whether the suite detects specific mistakes in ranking, eligibility or fallback.

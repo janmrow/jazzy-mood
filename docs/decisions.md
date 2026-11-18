@@ -19,10 +19,10 @@ Record new decisions here when they materially change user behaviour, deployment
 | ID | Open decision | How to decide |
 | --- | --- | --- |
 | **E01** | Final catalogue boundary and useful coverage | M0 compares mood and intent coverage across about 30 records. Check rights and sourcing effort, how well the data supports tags, and whether the owner enjoys the picks. |
-| **E02** | Whether to enable decision inference for visitors | M3 compares local and model-assisted picks on the same synthetic descriptions. Check fit, hard constraints, response time, terms for visitor text and actual free-plan behaviour. Enable the runtime provider only after the owner accepts the result. |
+| **E02** | Whether to enable decision inference for visitors | M3 compares local and provider-assisted picks on the same synthetic descriptions. Check fit, hard constraints, response time, terms for visitor text and actual free-plan behaviour. Enable the runtime provider only after the owner accepts the result. |
 | **E03** | Runtime budgets for the actual VPS | M1 records basic headroom and public route behaviour, including the checked viewport widths. M3 sets the P06 response deadline value and the per-request caps. M4 verifies the release image, the latency baseline and the recovery steps, and sets the release latency threshold from that baseline. Change resources only in response to measured evidence. |
 
-### Model options for E02
+### Provider options for E02
 
 - **Clef Flash on Workers AI** is the first zero-cost candidate. [The model reference](https://developers.cloudflare.com/workers-ai/models/clef-flash/) documents typed choices and REST access. [Workers AI pricing](https://developers.cloudflare.com/workers-ai/platform/pricing/) lists a daily free allocation, and the [error reference](https://developers.cloudflare.com/workers-ai/platform/errors/) documents a quota response. Confirm the model and the free plan on the actual account before activation. Use a free configuration without paid overflow.
 - **TypeSafe Jev** is a comparison candidate for typed decisions. [TypeSafe's model documentation](https://docs.typesafe.ai/introduction) explains its outputs. Its [direct pricing](https://help.typesafe.ai/articles/5187202169-how-much-does-jev-cost) meters input, and [Cloudflare documents billing for third-party models](https://developers.cloudflare.com/ai-gateway/usage/worker-binding-methods/). Use Jev for a separate, owner-authorized trial if it can answer a useful question. It is not a required cost of the release.
