@@ -10,7 +10,7 @@ Short pilot of the autonomous workflow before `M0` delivery. Isolated copies onl
 | # | Scenario | Result |
 | --- | --- | --- |
 | 1 | Normal task with correct commit | PT-01 probe file committed in the pilot copy (`75c0af3`). |
-| 2 | Two independent reviews of the same snapshot | Same base `60c95c7` and tree `52c82908` sent to two separate sessions; `quality-review` PASS and `engineering-review` PASS, neither saw the other's conclusions. A2 on the real branch showed the same pattern (base `0266772`, tree `bc4054f`, two PASS, commit `60c95c7`). |
+| 2 | Two independent reviews of the same snapshot | Same base `60c95c7` and tree `52c82908` sent to two separate sessions; `quality-review` PASS and `engineering-review` PASS, neither saw the other's conclusions. The same A2 content on the sibling `deliver/m0` copy showed the same pattern (base `0266772`, tree `bc4054f`, two PASS, commit `60c95c7`); on this branch the same content landed as `934f338`. |
 | 3 | `CHANGES_REQUESTED` | Broken link (`docs/does-not-exist.md`, link check FAIL) got `CHANGES_REQUESTED` with one blocking finding at `docs/pilot-probe.md:2`. No commit; pilot `HEAD` stayed at `75c0af3`. |
 
 ## Mechanical checks, scenarios 4–7 (shell only, no reviewer session)
