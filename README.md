@@ -6,11 +6,11 @@ This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadma
 
 ## Start in this repository
 
-This starter is already committed in this repository. Open a terminal in the repository root, where `AGENTS.md` and `.opencode/` are located.
+This starter is already committed in this repository. Open this repository in OpenCode at the repository root, where `AGENTS.md` and `.opencode/` are located.
 
-Branch map: `main` is the last shared base. Product work for the active milestone lives on `deliver/m0`. This checkout (`setup/pr1-harness`) holds harness and docs polish only and never carries product changes. Check `git branch -a` and the backlog header before starting.
+Branch map: `main` is the shared base. Product work for the active milestone lives on `deliver/m0`. Harness and setup branches hold docs and workflow polish only and never carry product changes. Check `git branch -a` and the backlog header before starting.
 
-Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap, catalogue-trial, harness-pilot, pull-requests), and `.gitignore`. `catalog/` starts in M0; `backend/` and `frontend/` arrive with M1. Their absence on this branch is expected.
+Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap, harness-pilot, pull-requests), and `.gitignore`. `catalog/` starts in M0; `backend/` and `frontend/` arrive with M1. Their absence on this branch is expected. The M0 catalogue trial (`docs/catalogue-trial.md`) lives on the product branch `deliver/m0`.
 
 ### Day one
 
@@ -28,6 +28,8 @@ At M0 there is no check command yet. Required checks are `git diff --cached --ch
 Run **`/deliver`** to start the active milestone. The agent picks a ready item, makes and checks small changes, obtains the required review, and commits locally. When the milestone is ready, it hands you a build or a concrete review exercise. Use `/deliver M0` to name the active milestone explicitly. See [delivery](docs/delivery.md) for acceptance, resuming work and a pilot on a disposable branch.
 
 ## Your role
+
+- As owner, decide scope and acceptance; as tester, try phone, keyboard, musical fit and failure states, then report observations.
 
 Example feedback: “The first pick matched my mood. When I asked for another, I wanted a different album with the same feel.” Add the desired outcome and ask the agent to update the criteria, tests and implementation as needed.
 

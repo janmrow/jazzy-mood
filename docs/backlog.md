@@ -3,7 +3,7 @@
 - **Active milestone** M0
 - **Milestone state** In delivery
 - **Accepted milestones** None
-- **Product branch** `deliver/m0` holds the M0 sample and trial; this branch holds harness and docs polish only.
+- **Product branch** `deliver/m0` holds the M0 sample and trial; harness and setup branches hold workflow and docs polish only and never carry product changes.
 
 The delivery agent may choose and split items inside the active milestone. An item is ready once its dependencies are implemented, any named prerequisite decision is recorded and the work has enough evidence to begin. The owner sets the next milestone at acceptance. See [delivery](delivery.md) for state transitions and [product](product.md) for the `P01`–`P08` criteria.
 
