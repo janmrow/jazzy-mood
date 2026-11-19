@@ -38,7 +38,18 @@ differ from the validated view.
 
 Validation never proves reuse rights. Rows with ``tag_status`` set to
 ``proposed`` or a ``reuse_note`` containing ``needs-review`` are
-reported for a manual check.
+reported for a manual check. Release use requires ``confirmed`` tags;
+``proposed`` rows must never be promoted as ground truth.
+
+Future importer notes (M2-01): ``validate_file`` returns
+``(errors, reviews, count)`` and signals an unreadable file with a
+``ReadError(str)`` first element, so callers must branch on
+``isinstance(errors[0], ReadError)`` before treating errors as row
+problems. There is no schema version column yet; additive evolution
+(link, artwork, new labels) must arrive with a versioned schema
+change. Always validate with :func:`check_multi` or
+:func:`validate_file`, never normalize with :func:`split_labels`
+alone.
 
 Usage::
 
@@ -78,10 +89,15 @@ STATUS_VALUES = {"confirmed", "proposed"}
 
 ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 YEAR_PATTERN = re.compile(r"^(\d{4}|unknown)$")
-VOCAL_WORD = re.compile(r"\bvocal(s|ist)?\b|\brap\b|\bsing\b|\bsinging\b|\bsung\b|\bspoken\b|\bsample(d|s)?\b|\bdialogue\b", re.IGNORECASE)
+VOCAL_WORD = re.compile(
+    r"\bvocal(s|ist)?\b|\brap\b|\bsing\b|\bsinging\b|\bsings\b|\bsang\b|\bsung\b"
+    r"|\bspoken\b|\bsample(d|s)?\b|\bsampling\b|\brapping\b|\bdialogue\b"
+    r"|\bvoice(s)?\b|\blyric(s)?\b|\bchoir\b|\bchorus\b|\bMC\b|\bemcee\b",
+    re.IGNORECASE,
+)
+SOUND_WORD = r"vocal(s|ist)?|rap|sing|singing|sings|sang|sung|spoken|sample(d|s)?|sampling|rapping|dialogue|voice(s)?|lyric(s)?|choir|chorus|MC|emcee"
 NO_VOCAL_WORD = re.compile(
-    r"\b(no|without|non)\b[\w\s,;/-]*?\b(vocal(s|ist)?|rap|sing|singing|sung|spoken|sample(d|s)?|dialogue)\b"
-    r"|\b(vocal(s)?|rap|singing|sung|spoken|sample(d|s)?|dialogue)-free\b",
+    rf"\b(no|without|non)\b[\w\s,;/-]*?\b({SOUND_WORD})\b|\b({SOUND_WORD})-free\b",
     re.IGNORECASE,
 )
 
@@ -94,16 +110,22 @@ class ReadError(str):
 
 
 def split_labels(raw: str) -> list[str]:
-    return [part.strip() for part in raw.split(";") if part.strip()]
+    """Split a ``;``-separated field, keeping empty segments visible.
+
+    Empty strings in the result mean the input had ``;;`` or a leading
+    or trailing ``;`` and must be treated as invalid. Use
+    :func:`check_multi` for validation; do not normalize with this
+    function alone.
+    """
+    return [part.strip() for part in raw.split(";")]
 
 
 def check_multi(value: str, allowed: set[str], column: str, where: str) -> list[str]:
     if not value.strip():
         return [f"{where}: {column} is blank"]
-    parts = value.strip().split(";")
-    if any(not part.strip() for part in parts):
+    labels = split_labels(value)
+    if any(label == "" for label in labels):
         return [f"{where}: {column} has an empty segment"]
-    labels = [part.strip() for part in parts]
     problems = [f"{where}: {column} has unknown value {label!r}" for label in labels if label not in allowed]
     if "unknown" in labels and len(labels) > 1:
         problems.append(f"{where}: {column} mixes 'unknown' with other labels")

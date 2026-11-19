@@ -257,3 +257,36 @@ def test_instrumental_with_denied_sample_basis_passes(tmp_path):
     path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
     errors, _, _ = validate_file(path)
     assert errors == []
+
+
+def test_split_labels_keeps_empty_segments():
+    from tools.validate_catalog import split_labels
+
+    assert split_labels("warm;;dark") == ["warm", "", "dark"]
+    assert split_labels("steady;") == ["steady", ""]
+
+
+@pytest.mark.parametrize(
+    "basis",
+    [
+        "Beautiful voices throughout",
+        "Includes the full lyrics sheet",
+        "Features a guest MC",
+        "Choir enters in the final track",
+        "Sings the chorus over the loop",
+    ],
+)
+def test_instrumental_with_uncovered_vocal_words_is_rejected(tmp_path, basis):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_basis")] = basis
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any("contradicts" in line for line in errors)
+
+
+def test_instrumental_with_denied_lyrics_basis_passes(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_basis")] = "No lyrics; verified instrumental trio"
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert errors == []
