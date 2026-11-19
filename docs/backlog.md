@@ -37,9 +37,10 @@ Present a short recommendation on catalogue boundaries, whether albums are worth
 
 ### M1-01 · Build and check a complete form-to-result flow
 
-- **State** Open
+- **State** Implemented
 - **Depends on** Accepted M0
 - **Criteria** P01, P02, P05, P07
+- **Result** Single-origin form-to-result slice on a 3-row synthetic fixture (FIX-001 to FIX-003, clearly marked fixture, local selection only). FastAPI validates trimmed 1–500 characters with bounded recent_ids and exposes cheap `/healthz`; React page shows result, loading and recoverable error with focus and keyboard support. `./scripts/check.sh` runs pytest (71 passed: 60 catalogue + 11 API), `tsc --noEmit`, production build and Playwright (10 passed: 5 chromium + 5 mobile covering valid, blank, failure-retry, loading guard and keyboard focus).
 
 Implement one English form calling the API, which returns an album from a tiny local fixture. Display the result, loading and a recoverable failure. Keep useful focus and keyboard behaviour. Include a cheap health endpoint at `/healthz`. Add the project check command and CI to this first app slice. Use pytest for request validation and the successful response, and a Playwright test from form submission to displayed card. Both reviewers check this first complete product slice.
 
