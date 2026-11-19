@@ -37,7 +37,7 @@ Use these IDs in the backlog, test names or test descriptions when they clarify 
 
 ### Hard and soft requirements (M0)
 
-- Hard constraints must hold; otherwise there is no eligible result. The album must be in the catalogue with a recorded identity source. `No vocals` and `instrumental only` mean strictly no vocal sound of any kind, including samples, spoken word, and backing vocals. Only a vocals value of `instrumental` backed by evidence satisfies them. `Unknown` never satisfies a hard constraint. P02, P04.
+- Hard constraints must hold; otherwise there is no eligible result. The album must be in the catalogue with a recorded identity source. `No vocals` and `instrumental only` mean strictly no vocal sound of any kind, including rap, sung or spoken parts, samples, dialogue, and backing vocals. Only a vocals value of `instrumental` backed by evidence satisfies them. `Unknown` never satisfies a hard constraint. P02, P04.
 - Soft preferences only rank eligible albums. Mood, energy, and groove order the candidates but never disqualify one alone, and the reason must reflect the tags actually present. A broad mood may leave several plausible picks. P02, P04.
 - M0 adds no new matching dimensions. Genre switches, dates outside the sample, track-level picks, tempo, key, and other fine-grained features are non-binding context. Never claim they were matched.
 - No basis, no claim. Never state that a requirement was met without catalogue evidence. A partial match concerns soft preferences only (for example, groove fits but energy unverified); label it plainly. For a hard constraint, an unknown value excludes the album and is never a partial match. For a no-match case, say so and help the visitor revise the description. P04.

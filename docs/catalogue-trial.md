@@ -93,16 +93,24 @@ never qualifies for a hard requirement.
 
 ## Owner next steps
 
-1. Listen to the 10 cases above; priority rows are M0-005, M0-006 and
-   M0-026 (vocal presence on sample-based records) and M0-012 (unknown
-   vocals). Confirm or correct each proposed tag.
+1. Listen to the 10 cases above. Priority rows: M0-012 (holds a vocal
+   loop, must stay `unknown`), M0-005, M0-006 and M0-026 (vocal presence
+   on sample-based records under the strict rule), M0-011 (confirm
+   track-by-track, neighbours carry vocals). Re-listen grooves: M0-010
+   (`free` vs steady/broken pulse) and M0-020 (`free` vs steady pocket),
+   plus M0-016 (steady vs swung) and the calm borderline M0-030.
+   Confirm or correct each proposed tag.
 2. Spot-check 2–3 identity sources (MusicBrainz links in
-   `catalog/m0-sample.csv`) and years, including the 1969 anchor M0-001.
+   `catalog/m0-sample.csv`) and years — including the 1969 anchor
+   M0-001 and the M0-022 year (1994 vs 1995 reissue variance).
 3. Record each correction with the feedback format below (input,
-   observed, expected, impact).
-4. Decide the catalogue boundary (E01): keep the 1969 record and the
-   edge rows in scope, call pure instrumental hip-hop the first widening
-   priority, and confirm bebop and female vocal jazz stay out of scope.
+   observed, expected, impact). `impact` is triage help, not a test:
+   write what you wanted in plain words and the agent maps it to a
+   criterion, bug, or new work item.
+4. Decide the catalogue boundary ([E01](decisions.md)): keep the 1969
+   record and the edge rows in scope, call pure instrumental hip-hop
+   the first widening priority, and confirm bebop and female vocal
+   jazz stay out of scope.
 5. Accept the milestone by saying `I accept M0. Start M1.` No release use
    may consume `proposed` rows as truth; M2-01 must enforce
    `confirmed`-only imports.
@@ -114,6 +122,15 @@ input: <the exact description tried>
 observed: <the album and reason shown>
 expected: <the album or behaviour wanted>
 impact: <what this changes: criterion, bug, or new work>
+```
+
+Filled example (a tag correction from the listening check):
+
+```text
+input: Instrumental only, steady groove for working.
+observed: M0-020 returned as instrumental, groovy pick.
+expected: M0-020 feels like steady pocket funk, not free-time playing.
+impact: Confirm groove steady instead of free; reason should cite steady, still fit 1 proposed.
 ```
 
 ## Recommendation
