@@ -28,9 +28,13 @@ Columns (all required in the header):
 - ``tag_basis``: basis for the descriptive claims. Required when
   ``tag_status`` is ``confirmed`` or when any descriptive tag is not
   ``unknown``.
-- ``tag_status``: ``confirmed`` or ``proposed``. ``proposed`` means a
-  draft pending evidence or a listening check and flags the row for
-  review.
+- ``tag_status``: ``confirmed``, ``sourced`` or ``proposed``.
+  ``proposed`` means a draft pending evidence or a listening check and
+  flags the row for review. ``sourced`` means two independent reputable
+  sources agree on the tags, or one strong source agrees with MusicBrainz
+  identity, with each source cited in ``tag_basis`` (D08); ``sourced``
+  rows pass without a review flag. ``confirmed`` means an owner
+  listening check on top of sources.
 
 No extra columns are accepted. Empty ``;`` segments (``warm;;dark``,
 leading or trailing ``;``) are rejected so the stored tag set cannot
@@ -38,8 +42,9 @@ differ from the validated view.
 
 Validation never proves reuse rights. Rows with ``tag_status`` set to
 ``proposed`` or a ``reuse_note`` containing ``needs-review`` are
-reported for a manual check. Release use requires ``confirmed`` tags;
-``proposed`` rows must never be promoted as ground truth.
+reported for a manual check. Release use requires ``sourced`` or
+``confirmed`` tags; ``proposed`` rows must never be promoted as ground
+truth.
 
 Future importer notes (M2-01): ``validate_file`` returns
 ``(errors, reviews, count)`` and signals an unreadable file with a
@@ -88,7 +93,7 @@ ENERGY_VALUES = {"calm", "moderate", "energetic", "unknown"}
 MOOD_VALUES = {"late-night", "warm", "dark", "bright", "gritty", "smooth", "unknown"}
 GROOVE_VALUES = {"steady", "swung", "broken", "free", "unknown"}
 VOCALS_VALUES = {"instrumental", "vocal", "unknown"}
-STATUS_VALUES = {"confirmed", "proposed"}
+STATUS_VALUES = {"confirmed", "sourced", "proposed"}
 
 ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 YEAR_PATTERN = re.compile(r"^(\d{4}|unknown)$")
@@ -238,10 +243,12 @@ def validate_rows(rows: list[dict[str, str]]) -> tuple[list[str], list[str]]:
         tags = {column: row.get(column, "").strip() for column in DESCRIPTIVE}
         if status == "confirmed" and not basis:
             errors.append(f"{where}: confirmed tags need a tag_basis")
+        if status == "sourced" and not basis:
+            errors.append(f"{where}: sourced tags need a tag_basis citing each source")
         if any(value and value != "unknown" for value in tags.values()) and not basis:
             errors.append(f"{where}: non-unknown tags need a tag_basis")
-        if all(value == "unknown" for value in tags.values()) and status == "confirmed":
-            errors.append(f"{where}: confirmed status with all tags unknown is contradictory")
+        if all(value == "unknown" for value in tags.values()) and status in ("confirmed", "sourced"):
+            errors.append(f"{where}: {status} status with all tags unknown is contradictory")
         errors.extend(_vocal_claim_problem(vocals, basis, where))
 
         if status == "proposed":

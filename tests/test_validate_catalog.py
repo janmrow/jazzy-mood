@@ -376,3 +376,38 @@ def test_vocal_with_affirmed_mention_plus_rule_reference_passes(tmp_path):
     path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
     errors, _, _ = validate_file(path)
     assert errors == []
+
+
+def test_sourced_with_cited_basis_passes_clean(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_status")] = "sourced"
+    fields[HEADER.split(",").index("tag_basis")] = (
+        "MusicBrainz identity plus Discogs credits and Last.fm top tags agree; "
+        "no vocalists credited, tagged instrumental"
+    )
+    path = write_fields_csv(tmp_path, fields)
+    errors, reviews, count = validate_file(path)
+    assert errors == []
+    assert reviews == []
+    assert count == 1
+
+
+def test_sourced_without_basis_is_rejected(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_status")] = "sourced"
+    fields[HEADER.split(",").index("tag_basis")] = ""
+    path = write_fields_csv(tmp_path, fields)
+    errors, _, _ = validate_file(path)
+    assert any("sourced tags need a tag_basis" in line for line in errors)
+
+
+def test_sourced_all_unknown_is_contradictory(tmp_path):
+    path = write_csv(
+        tmp_path,
+        f"""\
+        {HEADER}
+        M0-003,Quiet Band,Silence,unknown,https://example.org/s3,CC0,unknown,unknown,unknown,unknown,,sourced
+        """,
+    )
+    errors, _, _ = validate_file(path)
+    assert any("contradictory" in line for line in errors)

@@ -5,8 +5,8 @@ the full M0 sample in `catalog/m0-sample.csv` (M0-001 to M0-030). P02, P03, P04.
 
 ## Terms
 
-Result terms (`Eligible`, `Suitable`, `Plausible`, fit 0–2, `proposed` vs
-`confirmed`) follow [product](product.md#result-terms). Trial-specific
+Result terms (`Eligible`, `Suitable`, `Plausible`, fit 0–2, `proposed`
+vs `sourced` vs `confirmed`) follow [product](product.md#result-terms). Trial-specific
 rules: proposed tags count for ranking here, so every correct outcome
 below is a fit 1 claim that needs the owner listening check; `unknown`
 never qualifies for a hard requirement.
