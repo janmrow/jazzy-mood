@@ -71,10 +71,13 @@ therefore a fit 1 claim that needs the owner listening check.
    unknown) and M0-026 (Madlib, vocals unknown) must never be returned.
    Unknown is not a partial match for a hard constraint. P04.
 9. Strictness check: `Pure instrumental hip-hop, no voices at all.` No
-   eligible album in this sample: the two sample-based records (M0-005,
-   M0-006) carry vocal samples and are tagged vocal, and the uncertain
-   sample-based record (M0-026) is unknown and therefore excluded. Explain
-   the strict reading instead of bending it. P04.
+   eligible album in this sample for that narrow provenance subset: the
+   two sample-based records (M0-005, M0-006) carry vocal samples and are
+   tagged vocal, and the uncertain sample-based record (M0-026) is unknown
+   and therefore excluded. Note the 13 instrumentals above all satisfy a
+   plain `instrumental` hard constraint; only the pure sample-based
+   hip-hop subset has no eligible row. Explain the strict reading instead
+   of bending it. P04.
 10. Soft preference: `Smooth and steady, nothing harsh.` Plausible picks
     include M0-024 (smooth, steady, instrumental) and M0-029 (smooth,
     steady, vocal). M0-015 is smooth but swung, so it stays eligible only
@@ -111,16 +114,26 @@ impact: <what this changes: criterion, bug, or new work>
 ## Recommendation
 
 Keep the album as the unit. The 30-row sample covers jazz rap,
-sample-based instrumental hip-hop and groove-led jazz with enough
-contrast for vague moods, strict instrumental filtering and repeat
-picks on both the energetic and warm sides. That matches the product
-direction for the first release.
+sample-based hip-hop with strict vocal tagging, and groove-led
+jazz and funk with enough contrast for vague moods, strict
+instrumental filtering and repeat picks on both the energetic and
+warm sides. That matches the product direction for the first release.
+Note the limit inside that coverage: no pure sample-based
+instrumental hip-hop is eligible (M0-005 and M0-006 are tagged vocal
+for vocal samples, M0-026 is unknown), so that narrow request still
+has no match in case 9.
 
 Keep all 30 candidates for now. None is out of scope on style or era:
 the 1969 record anchors the late-night mood, and the 1990s and 2000s
-records carry the proposed discovery range. The two gaps above (1960s
-bebop, female vocal jazz) are outside the agreed starting styles and do
-not require new imports for M1.
+records carry the proposed discovery range. The three gaps above
+(1960s bebop, female vocal jazz, pure instrumental hip-hop) need an
+explicit boundary call: the first two sit outside the agreed starting
+styles and do not require new imports for M1, while the third sits
+inside the starting styles and sets the first widening priority after
+the listening check. Repeat depth is strong for energetic grit and
+warm vocal requests but thinner for late-night-only, smooth-only,
+free-groove or swung requests, so do not claim broad repeat coverage
+beyond the tested cases.
 
 Before widening the import, improve the data in this order: first
 complete the owner listening check on all proposed tags, with strict
