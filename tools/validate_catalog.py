@@ -47,9 +47,12 @@ Future importer notes (M2-01): ``validate_file`` returns
 ``isinstance(errors[0], ReadError)`` before treating errors as row
 problems. There is no schema version column yet; additive evolution
 (link, artwork, new labels) must arrive with a versioned schema
-change. Always validate with :func:`check_multi` or
-:func:`validate_file`, never normalize with :func:`split_labels`
-alone.
+change. Known P04 trade-offs for M2-01 hardening: bare ``hum`` is
+deliberately not a vocal word (avoids false positives on non-vocal
+hum), benign wording such as ``chorus form`` may need rewording, and
+clause-scoped double negatives are approximate. Always validate with
+:func:`check_multi` or :func:`validate_file`, never normalize with
+:func:`split_labels` alone.
 
 Usage::
 
@@ -90,16 +93,67 @@ STATUS_VALUES = {"confirmed", "proposed"}
 ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 YEAR_PATTERN = re.compile(r"^(\d{4}|unknown)$")
 VOCAL_WORD = re.compile(
-    r"\bvocal(s|ist)?\b|\brap\b|\bsing\b|\bsinging\b|\bsings\b|\bsang\b|\bsung\b"
-    r"|\bspoken\b|\bsample(d|s)?\b|\bsampling\b|\brapping\b|\bdialogue\b"
-    r"|\bvoice(s)?\b|\blyric(s)?\b|\bchoir\b|\bchorus\b|\bMC\b|\bemcee\b",
+    r"\bvocal(s|ist(s)?)?\b|\brap(ped|ping|per|s)?\b|\bsing\b|\bsinging\b|\bsings\b|\bsang\b|\bsung\b|\bsinger(s)?\b"
+    r"|\bspoken\b|\bsample(d|s)?\b|\bsampling\b|\bdialogue(s)?\b"
+    r"|\bvoice(s|d)?\b|\blyric(s)?\b|\bchoir(s)?\b|\bchorus(es)?\b|\bMCs?\b|\bemcee(s)?\b"
+    r"|\bbeatbox(ing|er(s)?|ed)?\b|\bwhistl(e|es|ing|ed)\b|\bhum(ming|med|s)\b"
+    r"|\byodel(l)?(ing|led|s|er)?\b|\bscat(ting|s)?\b|\ba[-\s]?capp?ella\b",
     re.IGNORECASE,
 )
-SOUND_WORD = r"vocal(s|ist)?|rap|sing|singing|sings|sang|sung|spoken|sample(d|s)?|sampling|rapping|dialogue|voice(s)?|lyric(s)?|choir|chorus|MC|emcee"
+SOUND_WORD = (
+    r"vocal(s|ist(s)?)?|rap(ped|ping|per|s)?|sing|singing|sings|sang|sung|singer(s)?"
+    r"|spoken|sample(d|s)?|sampling|dialogue(s)?|voice(s|d)?|lyric(s)?"
+    r"|choir(s)?|chorus(es)?|MCs?|emcee(s)?|beatbox(ing|er(s)?|ed)?"
+    r"|whistl(e|es|ing|ed)|hum(ming|med|s)|yodel(l)?(ing|led|s|er)?"
+    r"|scat(ting|s)?|a[-\s]?capp?ella"
+)
 NO_VOCAL_WORD = re.compile(
     rf"\b(no|without|non)\b[\w\s,;/-]*?\b({SOUND_WORD})\b|\b({SOUND_WORD})-free\b",
     re.IGNORECASE,
 )
+NEGATED_DENIAL_WORD = re.compile(r"\bnot\b|n['\u2019]t\b|\bnever\b", re.IGNORECASE)
+
+
+def _denial_spans(basis: str) -> list[tuple[int, int]]:
+    """Spans of vocal denials such as ``no vocals`` or ``vocal-free``.
+
+    A denial in a clause containing ``not``/``n't``/``never`` (for
+    example ``not without vocals`` or ``isn't without vocals``) is a
+    double negative that affirms vocals, so it is not a denial span.
+    Only the current clause (after the last ``.`` or ``;``) is checked,
+    so ``Not a remix. Without vocals`` still counts as a denial.
+    """
+    spans = []
+    for match in NO_VOCAL_WORD.finditer(basis):
+        clause = re.split(r"[.;]", basis[: match.start()])[-1]
+        if NEGATED_DENIAL_WORD.search(clause):
+            continue
+        spans.append(match.span())
+    return spans
+
+
+def _vocal_claim_problem(vocals: str, basis: str, where: str) -> list[str]:
+    """Check a ``tag_basis`` against the ``vocals`` tag (P04).
+
+    Every vocal-word mention must be covered by a denial for
+    ``instrumental`` to hold, so ``No lyrics; whistling melody`` still
+    fails. Symmetrically, ``vocal`` fails when the basis only denies
+    vocals, such as ``No vocals; instrumental only``.
+    """
+    hits = list(VOCAL_WORD.finditer(basis))
+    if not hits:
+        return []
+    denials = _denial_spans(basis)
+    affirmed = [
+        hit
+        for hit in hits
+        if not any(start <= hit.start() and hit.end() <= end for start, end in denials)
+    ]
+    if vocals == "instrumental" and affirmed:
+        return [f"{where}: vocals 'instrumental' contradicts a tag_basis mentioning vocals"]
+    if vocals == "vocal" and not affirmed:
+        return [f"{where}: vocals 'vocal' contradicts a tag_basis denying vocals"]
+    return []
 
 DESCRIPTIVE = ("energy", "mood", "groove", "vocals")
 
@@ -188,8 +242,7 @@ def validate_rows(rows: list[dict[str, str]]) -> tuple[list[str], list[str]]:
             errors.append(f"{where}: non-unknown tags need a tag_basis")
         if all(value == "unknown" for value in tags.values()) and status == "confirmed":
             errors.append(f"{where}: confirmed status with all tags unknown is contradictory")
-        if vocals == "instrumental" and VOCAL_WORD.search(basis) and not NO_VOCAL_WORD.search(basis):
-            errors.append(f"{where}: vocals 'instrumental' contradicts a tag_basis mentioning vocals")
+        errors.extend(_vocal_claim_problem(vocals, basis, where))
 
         if status == "proposed":
             reviews.append(f"{where}: tag_status proposed, needs evidence or listening check")

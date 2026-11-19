@@ -155,7 +155,7 @@ Validator run is clean for the 30-row sample with every row flagged for
 the listening check: `python3 tools/validate_catalog.py
 catalog/m0-sample.csv` reports `OK checked 30 rows: 30 need review`.
 A clean validator run means schema-clean only; it says nothing about
-musical truth. Pytest reports `34 passed`. The trial above references
+musical truth. Pytest reports `56 passed`. The trial above references
 M0-001 to M0-030. Boundaries and tag corrections stay open until the
 owner completes the listening check and accepts the catalogue boundary
 (E01). Release use requires `confirmed` tags; `proposed` rows must never

@@ -290,3 +290,58 @@ def test_instrumental_with_denied_lyrics_basis_passes(tmp_path):
     path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
     errors, _, _ = validate_file(path)
     assert errors == []
+
+
+@pytest.mark.parametrize(
+    "basis",
+    [
+        "beatboxing and percussion only",
+        "Features MCs on every track",
+        "No lyrics; whistling melody",
+        "not without vocals",
+        "a cappella only",
+        "scat vocals, no lyrics",
+        "humming throughout",
+        "yodelling on track 2",
+        "guest rapper on track 3",
+        "he raps over the loop",
+        "isn't without vocals",
+        "it is definitely not the case that this is without vocals",
+    ],
+)
+def test_instrumental_with_edge_vocal_words_is_rejected(tmp_path, basis):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_basis")] = basis
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any("contradicts" in line for line in errors)
+
+
+def test_instrumental_with_denial_after_other_sentence_passes(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_basis")] = (
+        "Not a remix. Without vocals; verified instrumental trio"
+    )
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert errors == []
+
+
+def test_vocal_with_denying_basis_is_contradictory(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("vocals")] = "vocal"
+    fields[HEADER.split(",").index("tag_basis")] = "No vocals; instrumental only"
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any("contradicts" in line for line in errors)
+
+
+def test_vocal_with_affirmed_mention_plus_rule_reference_passes(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("vocals")] = "vocal"
+    fields[HEADER.split(",").index("tag_basis")] = (
+        "Sample collage with dialogue; tagged vocal under the strict no-vocals rule"
+    )
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert errors == []

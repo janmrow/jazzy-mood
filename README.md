@@ -4,6 +4,9 @@ Describe what you want to hear and get one album from a curated jazz and hip-hop
 
 This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadmap.md) takes it from a small sample to a public release on an existing Mikrus 2.1 with no additional running costs. The product comes first. The project also gives you a real system on which to practise acceptance testing, release checks, observability and recovery.
 
+## Where M0 stands
+
+The M0 sample holds 30 albums in `catalog/m0-sample.csv`, each with a recorded identity source and proposed mood tags awaiting the owner listening check. The [catalogue trial](docs/catalogue-trial.md) maps 10 request types against the full sample with a boundary recommendation. `tools/validate_catalog.py` plus 56 pytest tests guard the CSV shape and vocabulary. The milestone is `Awaiting acceptance` in the [backlog](docs/backlog.md): the remaining step is the owner listening check and the catalogue boundary decision (E01), then M1 builds the first form-to-result slice.
 ## Start in this repository
 
 This starter is already committed in this repository. Open this repository in OpenCode at the repository root, where `AGENTS.md` and `.opencode/` are located.
