@@ -74,6 +74,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** workflow rule (check reliability)
 - **Result** `check.sh` refuses a port that already answers `/healthz`, verifies the ready server is its own (process alive plus `Uvicorn running` on that port in its log, with a short retry), uses a unique `mktemp` log shown only on failure, and fails fast when the backend dies. Probe: with a dummy `/healthz` occupant on the port, the script passes pytest/typecheck/build then aborts before any browser run with the port message. `./scripts/check.sh` green.
 
+### M1-01e · Explicit 404 for unknown API paths
+
+- **State** Implemented
+- **Depends on** M1-01d
+- **Criteria** operations (health and logs)
+- **Result** `GET/HEAD/POST/PUT/PATCH/DELETE/OPTIONS /api` and `/api/{path}` return JSON 404 (`{"detail": "Not Found"}`) instead of the mounted `index.html`, so typo'd API paths cannot mask as a healthy page. The fallback sits after all specific API routes and before the static mount. `check.sh` builds the frontend before pytest so the API tests run against the mounted single-origin app; probes: fallback removed fails with and without `dist`, closing the clean-checkout hole. `./scripts/check.sh` green: pytest 73 passed, Playwright 16 passed.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Open

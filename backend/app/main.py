@@ -134,6 +134,22 @@ def recommend(payload: RecommendationRequest, request: Request):
     return {"album": album, "mode": "local"}
 
 
+# Keep this fallback after all specific /api routes and before the
+# static mount: Starlette matches in registration order, so anything
+# defined after it would be shadowed by this catch-all.
+@app.api_route("/api", methods=["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
+@app.api_route("/api/{path:path}", methods=["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
+async def api_fallback():
+    """Explicit JSON 404 for unknown API paths.
+
+    The built frontend is mounted at "/" after the API routes, so without
+    this fallback a typo'd /api/... path would return index.html with
+    200 and mask the mistake from smoke tests and debugging. The body
+    matches Starlette's default 404 wording.
+    """
+    return JSONResponse(status_code=404, content={"detail": "Not Found"})
+
+
 def _frontend_dist() -> Path | None:
     root = Path(__file__).resolve().parents[2]
     dist = root / "frontend" / "dist"

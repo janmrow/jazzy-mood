@@ -27,14 +27,19 @@ cleanup() {
 }
 trap cleanup EXIT
 
-echo "== pytest =="
-python3 -m pytest -q
-
 echo "== frontend typecheck =="
 (cd frontend && npm run typecheck)
 
 echo "== frontend build =="
 (cd frontend && npm run build)
+
+# Build runs before pytest on purpose: with frontend/dist present the
+# backend serves the mounted single-origin app, so the API tests exercise
+# the same route-plus-mount stack as production (including the /api
+# fallback). Building first means a fallback removal fails here instead
+# of staying green behind an unmounted router.
+echo "== pytest =="
+python3 -m pytest -q
 
 echo "== browser journey (single origin on ${BASE_URL}) =="
 # Refuse a port that already answers: otherwise the readiness poll below

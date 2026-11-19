@@ -122,3 +122,18 @@ def test_rejected_input_stays_out_of_logs(caplog):
     assert oversized.headers.get("x-request-id")
     logged = "\n".join(record.getMessage() for record in caplog.records)
     assert unique_phrase not in logged
+
+
+def test_unknown_api_paths_return_json_404_not_index():
+    responses = [
+        client.get("/api/no-such-route"),
+        client.post("/api/no-such-route", json={"description": "x"}),
+        client.get("/api"),
+        client.options("/api/no-such-route"),
+    ]
+    for response in responses:
+        assert response.status_code == 404
+        assert response.headers["content-type"].startswith("application/json")
+        assert response.json() == {"detail": "Not Found"}
+    head_response = client.head("/api/no-such-route")
+    assert head_response.status_code == 404
