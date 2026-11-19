@@ -8,7 +8,7 @@ This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadma
 
 ## Where M0 stands
 
-The M0 sample holds 30 albums in `catalog/m0-sample.csv`, each with a recorded identity source and `proposed` mood tags: drafts pending evidence, not confirmed facts. A clean validator run means schema-clean only. The [catalogue trial](docs/catalogue-trial.md) maps 10 request types against the full sample with a boundary recommendation; result terms (`eligible`, `suitable`, `plausible`, fit 0–2) are defined in [product](docs/product.md#result-terms). `tools/validate_catalog.py` plus 56 pytest tests guard the CSV shape and vocabulary. The milestone is `Awaiting acceptance` in the [backlog](docs/backlog.md): the remaining step is the owner listening check and the catalogue boundary decision ([E01](docs/decisions.md)), then M1 builds the first form-to-result slice.
+The M0 sample holds 30 albums in `catalog/m0-sample.csv`, each with a recorded identity source and `proposed` mood tags: drafts pending evidence, not confirmed facts. A clean validator run means schema-clean only. The [catalogue trial](docs/catalogue-trial.md) maps 10 request types against the full sample with a boundary recommendation; result terms (`eligible`, `suitable`, `plausible`, fit 0–2) are defined in [product](docs/product.md#result-terms). `tools/validate_catalog.py` plus 57 pytest tests guard the CSV shape and vocabulary. The milestone is `Awaiting acceptance` in the [backlog](docs/backlog.md): the remaining step is the owner listening check and the catalogue boundary decision ([E01](docs/decisions.md)), then M1 builds the first form-to-result slice.
 
 Product work lives on branch `deliver/m0`; `main` receives it via PR 2 after owner review.
 

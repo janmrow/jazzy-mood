@@ -4,6 +4,7 @@ Each test builds a small CSV fixture, so a failure points at the exact
 check that broke. P02, P04.
 """
 
+import csv
 import textwrap
 
 import pytest
@@ -26,6 +27,21 @@ GOOD_ROW = (
 def write_csv(tmp_path, body):
     path = tmp_path / "sample.csv"
     path.write_text(textwrap.dedent(body), encoding="utf-8")
+    return str(path)
+
+
+def write_fields_csv(tmp_path, row_fields):
+    """Write one data row with csv.writer so commas inside fields are quoted.
+
+    The naive `",".join(fields)` technique corrupts comma-containing
+    values (e.g. a tag_basis of "scat vocals, no lyrics" becomes an
+    extra column). Tests covering such values must use this helper.
+    """
+    path = tmp_path / "sample.csv"
+    with open(path, "w", newline="", encoding="utf-8") as handle:
+        writer = csv.writer(handle)
+        writer.writerow(HEADER.split(","))
+        writer.writerow(row_fields)
     return str(path)
 
 
@@ -312,8 +328,23 @@ def test_instrumental_with_denied_lyrics_basis_passes(tmp_path):
 def test_instrumental_with_edge_vocal_words_is_rejected(tmp_path, basis):
     fields = GOOD_ROW.split(",")
     fields[HEADER.split(",").index("tag_basis")] = basis
-    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    path = write_fields_csv(tmp_path, fields)
     errors, _, _ = validate_file(path)
+    assert any("contradicts" in line for line in errors)
+
+
+def test_comma_fields_round_trip_without_column_shift(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("title")] = "Fantastic, Volume 2"
+    fields[HEADER.split(",").index("tag_basis")] = (
+        "Scat vocals, no lyrics; needs owner listening check"
+    )
+    fields[HEADER.split(",").index("tag_status")] = "proposed"
+    path = write_fields_csv(tmp_path, fields)
+    errors, _, count = validate_file(path)
+    assert count == 1
+    assert not any("extra values" in line for line in errors)
+    assert not any("is blank" in line for line in errors)
     assert any("contradicts" in line for line in errors)
 
 

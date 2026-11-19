@@ -16,7 +16,7 @@ Use `Open`, `Implemented` or `Blocked` on work items. Milestone states (`In deli
 - **State** Implemented
 - **Depends on** None
 - **Criteria** P02, P04
-- **Result** 30-row validated sample (13 instrumental, 15 vocal, 2 unknown); `tools/validate_catalog.py` reports OK 30 rows with 30 proposed rows pending the listening check; pytest 56 passed. A clean run means schema-clean only, not musically confirmed.
+- **Result** 30-row validated sample (13 instrumental, 15 vocal, 2 unknown); `tools/validate_catalog.py` reports OK 30 rows with 30 proposed rows pending the listening check; pytest 57 passed. A clean run means schema-clean only, not musically confirmed.
 
 Create `catalog/m0-sample.csv` with about 30 candidate albums across the proposed music styles. Record a stable candidate ID, artist, title, year when verified, identity source and relevant reuse notes. Add a small vocabulary to describe energy, mood, groove and vocals where evidence supports it. Record the basis for those attributes and allow unknown values. Use a documented convention for multiple tags so later import work is straightforward.
 
