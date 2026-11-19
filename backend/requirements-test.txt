@@ -1,0 +1,6 @@
+# Test-only dependencies: pytest suite plus httpx, which the FastAPI
+# TestClient needs. Kept out of requirements.txt so the M1-02 release
+# image does not ship test tooling (see M1-01f).
+-r requirements.txt
+httpx==0.28.1
+pytest==9.1.1

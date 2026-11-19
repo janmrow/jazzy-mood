@@ -18,7 +18,7 @@ The page and the API share one origin. The API returns one fixture album
 with local selection only; no decision provider is contacted.
 
 ```sh
-pip install -r backend/requirements.txt
+pip install -r backend/requirements-test.txt
 python3 -m uvicorn backend.app.main:app --port 8000
 ```
 

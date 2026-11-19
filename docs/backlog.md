@@ -81,13 +81,20 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** operations (health and logs)
 - **Result** `GET/HEAD/POST/PUT/PATCH/DELETE/OPTIONS /api` and `/api/{path}` return JSON 404 (`{"detail": "Not Found"}`) instead of the mounted `index.html`, so typo'd API paths cannot mask as a healthy page. The fallback sits after all specific API routes and before the static mount. `check.sh` builds the frontend before pytest so the API tests run against the mounted single-origin app; probes: fallback removed fails with and without `dist`, closing the clean-checkout hole. `./scripts/check.sh` green: pytest 73 passed, Playwright 16 passed.
 
+### M1-01f · Split runtime and test requirements
+
+- **State** Implemented
+- **Depends on** M1-01e
+- **Criteria** D02
+- **Result** `backend/requirements.txt` holds only fastapi and uvicorn (verified: no httpx/pytest import in `backend/app/`); new `backend/requirements-test.txt` adds pytest and httpx for the TestClient. CI and README install the test file only (runtime pulled via `-r`); the future M1-02 image takes runtime only. `./scripts/check.sh` green: pytest 73 passed, Playwright 16 passed.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Open
 - **Depends on** M1-01
 - **Criteria** P01, P02, P07
 
-Build the production-shaped image off the server. Add the minimal Compose setup and the early deployment instructions in [operations](operations.md). Smoke-test the exact image locally. Provide the owner with a reproducible way to deploy it under the included Mikrus subdomain and capture HTTPS, host port reachability and resource observations. The owner runs the server-side step from their operations environment. The milestone handoff identifies any live check still waiting for that step.
+Build the production-shaped image off the server. Add the minimal Compose setup and the early deployment instructions in [operations](operations.md). Smoke-test the exact image locally. Provide the owner with a reproducible way to deploy it under the included Mikrus subdomain and capture HTTPS, host port reachability and resource observations. The owner runs the server-side step from their operations environment. The milestone handoff identifies any live check still waiting for that step. The image installs `backend/requirements.txt` only; `backend/requirements-test.txt` stays in CI and local checks (M1-01f).
 
 ## M2 · Make it worth using
 
