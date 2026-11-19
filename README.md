@@ -1,35 +1,38 @@
 # Music Recommendation
 
+> Status: M0 is docs and data only — no running app yet. The clickable app (one page, one text field, one result) arrives in M1.
+
 Describe what you want to hear and get one album from a curated jazz and hip-hop catalogue. Each pick comes with a short reason and a listening link. Ask for another to explore the same mood.
 
 This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadmap.md) takes it from a small sample to a public release on an existing Mikrus 2.1 with no additional running costs. The product comes first. The project also gives you a real system on which to practise acceptance testing, release checks, observability and recovery.
 
+## Where M0 stands
+
+The M0 sample holds 30 albums in `catalog/m0-sample.csv`, each with a recorded identity source and `proposed` mood tags: drafts pending evidence, not confirmed facts. A clean validator run means schema-clean only. The [catalogue trial](docs/catalogue-trial.md) maps 10 request types against the full sample with a boundary recommendation; result terms (`eligible`, `suitable`, `plausible`, fit 0–2) are defined in [product](docs/product.md#result-terms). `tools/validate_catalog.py` plus 60 pytest tests guard the CSV shape and vocabulary. M0 is accepted in the [backlog](docs/backlog.md) with listening deferred to M2-01; M1 builds the first form-to-result slice.
+
+Product work lives on branch `deliver/m0`; `main` receives it via PR 2 after owner review.
+
 ## Start in this repository
 
-This starter is already committed in this repository. Open this repository in OpenCode at the repository root, where `AGENTS.md` and `.opencode/` are located.
+Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap, catalogue-trial, harness-pilot, pull-requests), `catalog/` (starts in M0), `tools/` (CSV validator), `tests/` (validator tests), and `.gitignore`. `backend/` and `frontend/` arrive with M1.
 
-Branch map: `main` is the shared base. Product work for the active milestone lives on `deliver/m0`. Harness and setup branches hold docs and workflow polish only and never carry product changes. Check `git branch -a` and the backlog header before starting.
+## Contributor setup (agents)
 
-Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap, harness-pilot, pull-requests), and `.gitignore`. `catalog/` starts in M0; `backend/` and `frontend/` arrive with M1. Their absence on this branch is expected. The M0 catalogue trial (`docs/catalogue-trial.md`) lives on the product branch `deliver/m0`.
+This starter is already committed in this repository. Open a terminal in the repository root, where `AGENTS.md` and `.opencode/` are located.
 
-### Day one
+```sh
+opencode
+```
 
-- Prerequisite: OpenCode with this repository open. `/deliver` is the project command defined in `.opencode/commands/deliver.md`. Type it in the OpenCode input, not in a plain shell. Use `/deliver M0` to name the milestone explicitly.
-- Plain-git fallback: without OpenCode, read the backlog header, make a small branch, edit, run `git diff --cached --check`, and hand the diff to the owner. Do not expect the snapshot and review machinery to run outside OpenCode.
-- First commands: `git branch -a`, `git log --oneline -8`, then read `docs/backlog.md`, `docs/product.md`, `docs/delivery.md`.
-- Language: conversation with the owner in Polish; documentation, code, tests, UI copy, commit subjects and bodies, and handoffs in plain English.
-- History note: `docs/harness-pilot.md` records a past workflow trial. Skip it on day one; it is not required to deliver M0.
-- Snapshot note: `docs/delivery.md` asks for `git write-tree` twice to prove the index did not change mid-capture. The two IDs must match before saving `.delivery/<tree_id>.diff`.
+Use [OpenCode V2](https://opencode.ai/docs/migrate-v1/). Connect your coding provider locally if needed and select the exact model you want with `/models`. The repository leaves the model choice to you. If you select [Muse Spark 1.3 Contributor](https://dev.meta.ai/docs/muse-spark), check the model available to your account and use it with materials you are comfortable sharing for training. This choice is independent of the app's runtime model.
 
-### Checks
-
-At M0 there is no check command yet. Required checks are `git diff --cached --check` plus the manual inspection list in the backlog item, recorded as evidence. M1-01 introduces one check entry point and CI; its command will be documented here.
-
-Run **`/deliver`** to start the active milestone. The agent picks a ready item, makes and checks small changes, obtains the required review, and commits locally. When the milestone is ready, it hands you a build or a concrete review exercise. Use `/deliver M0` to name the active milestone explicitly. See [delivery](docs/delivery.md) for acceptance, resuming work and a pilot on a disposable branch.
+Run **`/deliver`** to start the active milestone. The agent picks a ready item, makes and checks small changes, obtains the required review, and commits locally. Delivery stays inside the active milestone: the agent never marks a milestone Accepted and never starts the next milestone's items before the owner accepts the current one. When the milestone is ready, it hands you a build or a concrete review exercise. Use `/deliver M0` to name the active milestone explicitly. See [delivery](docs/delivery.md) for acceptance, resuming work and a pilot on a disposable branch.
 
 ## Your role
 
-- As owner, decide scope and acceptance; as tester, try phone, keyboard, musical fit and failure states, then report observations.
+- As product owner, choose the scope, make tradeoffs and decide when a version is ready to share.
+- As business analyst, turn observations into concrete examples. Describe the desired experience and what an unsuitable result looks like.
+- As quality engineer, try the app on a phone and with a keyboard, explore musical fit and failure states, and review acceptance and release evidence. The agent writes and reviews the code and automated tests.
 
 Example feedback: “The first pick matched my mood. When I asked for another, I wanted a different album with the same feel.” Add the desired outcome and ask the agent to update the criteria, tests and implementation as needed.
 

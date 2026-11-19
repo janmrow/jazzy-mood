@@ -13,6 +13,39 @@ Record new decisions here when they materially change user behaviour, deployment
 | **D05** | Keep the catalogue and local matching sufficient on their own. A typed provider may improve intent understanding with one call per request. | The route still works when a provider is slow, unavailable or free quota ends. The backend can enforce catalogue membership, eligibility and intentional variation. |
 | **D06** | Track requirements and progress in Git. Use one reviewer for ordinary behaviour changes and both for the first complete product slice or changes with larger consequences. The review table in `docs/delivery.md` governs which gate applies. | This keeps the agent autonomous and gives reviewers independent context where it is worth the cost. The [delivery pilot](delivery.md#pilot-the-harness) checks whether the workflow actually runs as intended. |
 | **D07** | Build the app and its documentation in plain English. Track behaviour, tests and outcomes with a small set of stable criteria. | This makes the repo a useful portfolio piece and lets a fresh agent act on written evidence. Broader language support is evaluated from representative inputs. |
+| **D08** | Confirm catalogue tags from reputable sources instead of full listening. `sourced` means two independent reputable sources agree on the tag, or one strong source agrees with MusicBrainz identity; the owner accepted this threshold on 2026-11-19. Release and matching run on `sourced` tags; listening becomes sampling QC, not the gate. | Listening to hundreds of records does not scale to the 500-album target. Revisit if source agreement proves unreliable in sampling QC or if a source changes its terms. |
+
+### Catalogue tag sources (D08)
+
+Tags are confirmed from reputable sources; no full listening is required.
+Each `sourced` tag cites its sources in `tag_basis`. The four approved
+sources, all free of charge:
+
+- **MusicBrainz** — identity (release-group URL, year) from CC0 core
+  data; community tags and genre as corroboration only (supplementary
+  data is CC BY-NC-SA, acceptable for this non-commercial project with
+  attribution). Respect the [API rate limits](https://musicbrainz.org/doc/MusicBrainz_API/Rate_Limiting).
+- **Discogs** — release titles, track listings, identifiers and
+  **credits** are CC0 (credits settle the strict vocal rule); use the
+  [monthly CC0 dumps](https://www.discogs.com/developers/) for bulk and
+  the free API (token, 60 requests/minute authenticated) for spot
+  checks. Do not store API content longer than necessary and never
+  display content more than six hours old per the [API Terms of Use](https://support.discogs.com/hc/articles/360009334593-API-Terms-of-Use);
+  style/genre fields have ambiguous licensing and count only as weak
+  corroboration.
+- **Last.fm API** — crowd tags (mood words) via the free API key, strictly
+  non-commercial use with attribution and a link back per the [API Terms of Service](https://www.last.fm/api/tos);
+  recontact Last.fm before any commercial use. No sub-licensing.
+- **Wikipedia / Wikidata** — personnel facts for instrumental proof and
+  years (Wikidata structured data is CC0; article text is CC BY-SA, so
+  record facts with a link, never republish text).
+
+Threshold: two independent reputable sources agree, or one strong source
+(Discogs credits or monthly dump, Last.fm top tags, Wikipedia personnel)
+agrees with MusicBrainz identity. Conflicts resolve strict: one credible
+`vocal` mention beats three `instrumental` claims. Release and matching
+run on `sourced` tags; listening is sampling QC on import batches, and
+the M0 rows stay `proposed` until the M2-01 upgrade.
 
 ## To resolve with evidence
 

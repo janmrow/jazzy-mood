@@ -1,8 +1,8 @@
 # Backlog
 
-- **Active milestone** M0
-- **Milestone state** In delivery
-- **Accepted milestones** None
+- **Active milestone** M1
+- **Milestone state** Open (M0 accepted by owner on 2026-11-19; listening sampling deferred beyond M0 to M2-01 import batches under D08; E01 boundary taken as trial recommendation unless revised)
+- **Accepted milestones** M0
 - **Product branch** `deliver/m0` holds the M0 sample and trial; harness and setup branches hold workflow and docs polish only and never carry product changes.
 
 The delivery agent may choose and split items inside the active milestone. An item is ready once its dependencies are implemented, any named prerequisite decision is recorded and the work has enough evidence to begin. The owner sets the next milestone at acceptance. See [delivery](delivery.md) for state transitions and [product](product.md) for the `P01`–`P08` criteria.
@@ -13,9 +13,10 @@ Use `Open`, `Implemented` or `Blocked` on work items. Milestone states (`In deli
 
 ### M0-01 · Prepare a sourced catalogue sample
 
-- **State** Open
+- **State** Implemented
 - **Depends on** None
 - **Criteria** P02, P04
+- **Result** 30-row validated sample (13 instrumental, 15 vocal, 2 unknown); `tools/validate_catalog.py` reports OK 30 rows with 30 proposed rows pending the listening check; pytest 60 passed. A clean run means schema-clean only, not musically confirmed.
 
 Create `catalog/m0-sample.csv` with about 30 candidate albums across the proposed music styles. Record a stable candidate ID, artist, title, year when verified, identity source and relevant reuse notes. Add a small vocabulary to describe energy, mood, groove and vocals where evidence supports it. Record the basis for those attributes and allow unknown values. Use a documented convention for multiple tags so later import work is straightforward.
 
@@ -23,9 +24,10 @@ The owner can sort or inspect the sample, open representative identity sources a
 
 ### M0-02 · Try the sample against realistic requests
 
-- **State** Open
+- **State** Implemented
 - **Depends on** M0-01
 - **Criteria** P02, P03, P04
+- **Result** Trial covers M0-001 to M0-030 with 10 cases (vague, strict instrumental, two alternative sets, three gaps, mood contrast, unknown handling, soft preference) plus the catalogue boundary recommendation; all picks fit 1 proposed. M0 rows stay `proposed`; the upgrade to `sourced` lands with the M2-01 import under D08.
 
 Create `docs/catalogue-trial.md` with 8–12 practical English descriptions and examples of suitable candidates from the sample. Include at least one vague request, one strict instrumental constraint, one request with good alternatives and one gap or mismatch. Show why the available data supports each highlighted example. Mark uncertain interpretations for the owner's listening check.
 
