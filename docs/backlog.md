@@ -53,6 +53,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P01, P05, P07
 - **Result** Textarea caps at 500 with a live code-point count matching server length; blank or rejected input shows an inline message and returns focus to the field. Failed requests keep the retry card and show the `X-Request-ID` reference when the server answered. Middleware logs failed requests instead of dropping them. `./scripts/check.sh` green: pytest 71 passed, typecheck and build pass, Playwright 14 passed (7 chromium + 7 mobile).
 
+### M1-01b · Log hygiene on valid and rejected input
+
+- **State** Implemented
+- **Depends on** M1-01a
+- **Criteria** P08
+- **Result** `check.sh` runs uvicorn with `--no-access-log` so the default access format (full request line with query string) cannot leak visitor text outside the audited app logger. New pytest covers the 422 paths (blank, oversized) with a unique phrase and asserts both carry `X-Request-ID`. `./scripts/check.sh` green: pytest 72 passed, Playwright 14 passed.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Open

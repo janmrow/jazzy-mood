@@ -29,7 +29,11 @@ echo "== frontend build =="
 (cd frontend && npm run build)
 
 echo "== browser journey (single origin on ${BASE_URL}) =="
-python3 -m uvicorn backend.app.main:app --port "${PORT}" >/tmp/jazzy-mood-check.log 2>&1 &
+# The default uvicorn access format logs the full request line including
+# any query string, outside the audited app logger. The app middleware is
+# the audited log (route path only, never visitor text), so the access
+# log stays off here; production logging lands with the M1-02 image.
+python3 -m uvicorn backend.app.main:app --port "${PORT}" --no-access-log >/tmp/jazzy-mood-check.log 2>&1 &
 SERVER_PID=$!
 
 for attempt in $(seq 1 60); do

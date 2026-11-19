@@ -106,3 +106,19 @@ def test_visitor_text_stays_out_of_logs(caplog):
     assert response.status_code == 200
     logged = "\n".join(record.getMessage() for record in caplog.records)
     assert unique_phrase not in logged
+
+
+def test_rejected_input_stays_out_of_logs(caplog):
+    unique_phrase = "quartz lantern epilogue 3x8k"
+    with caplog.at_level(logging.INFO, logger="jazzy_mood"):
+        blank = client.post("/api/recommendations", json={"description": "   "})
+        oversized = client.post(
+            "/api/recommendations",
+            json={"description": unique_phrase + "x" * 500},
+        )
+    assert blank.status_code == 422
+    assert oversized.status_code == 422
+    assert blank.headers.get("x-request-id")
+    assert oversized.headers.get("x-request-id")
+    logged = "\n".join(record.getMessage() for record in caplog.records)
+    assert unique_phrase not in logged
