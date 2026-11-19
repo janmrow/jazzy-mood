@@ -1,8 +1,8 @@
 # Backlog
 
-- **Active milestone** M0
-- **Milestone state** Awaiting acceptance (agent work complete; owner boundary decision E01 open; no full listening required under D08)
-- **Accepted milestones** None
+- **Active milestone** M1
+- **Milestone state** Open (M0 accepted by owner on 2026-11-19; listening sampling deferred beyond M0 to M2-01 import batches under D08; E01 boundary taken as trial recommendation unless revised)
+- **Accepted milestones** M0
 - **Product branch** `deliver/m0` holds the M0 sample and trial; harness and setup branches hold workflow and docs polish only and never carry product changes.
 
 The delivery agent may choose and split items inside the active milestone. An item is ready once its dependencies are implemented, any named prerequisite decision is recorded and the work has enough evidence to begin. The owner sets the next milestone at acceptance. See [delivery](delivery.md) for state transitions and [product](product.md) for the `P01`–`P08` criteria.
