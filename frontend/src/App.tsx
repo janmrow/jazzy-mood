@@ -32,6 +32,9 @@ export default function App() {
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorHeadingRef = useRef<HTMLHeadingElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
+  // Synchronous guard: state updates flush after the handler, so two
+  // clicks in one task would both read a stale `status`.
+  const submittingRef = useRef(false);
 
   useEffect(() => {
     if (status === "success") {
@@ -88,17 +91,23 @@ export default function App() {
 
   function onSubmit(event: React.FormEvent) {
     event.preventDefault();
-    if (status === "loading") {
+    if (submittingRef.current) {
       return;
     }
-    void submit(description);
+    submittingRef.current = true;
+    void submit(description).finally(() => {
+      submittingRef.current = false;
+    });
   }
 
   function onRetry() {
-    if (status === "loading") {
+    if (submittingRef.current) {
       return;
     }
-    void submit(description);
+    submittingRef.current = true;
+    void submit(description).finally(() => {
+      submittingRef.current = false;
+    });
   }
 
   const loading = status === "loading";

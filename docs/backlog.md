@@ -60,6 +60,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P08
 - **Result** `check.sh` runs uvicorn with `--no-access-log` so the default access format (full request line with query string) cannot leak visitor text outside the audited app logger. New pytest covers the 422 paths (blank, oversized) with a unique phrase and asserts both carry `X-Request-ID`. `./scripts/check.sh` green: pytest 72 passed, Playwright 14 passed.
 
+### M1-01c · Deterministic single-flight submit
+
+- **State** Implemented
+- **Depends on** M1-01b
+- **Criteria** P05
+- **Result** Synchronous `submittingRef` guard blocks a second submit in the same task (state reads stale until re-render). New e2e dispatches two clicks in one task against a counting route: it fails with 2 calls without the guard and passes with 1. `./scripts/check.sh` green: pytest 72 passed, Playwright 16 passed (8 chromium + 8 mobile).
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Open

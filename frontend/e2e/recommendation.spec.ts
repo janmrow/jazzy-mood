@@ -88,6 +88,50 @@ test("loading limits duplicate submissions", async ({ page }) => {
   await expect(page.getByRole("heading", { name: /blue line trio/i })).toBeVisible();
 });
 
+test("sends a single request on rapid double submit", async ({ page }) => {
+  let calls = 0;
+  await page.goto("/");
+  await page.route("**/api/recommendations", async (route) => {
+    calls += 1;
+    await route.fulfill({
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        album: {
+          id: "FIX-001",
+          artist: "Blue Line Trio",
+          title: "Night Loop",
+          year: 2004,
+          listening_url: "https://example.org/listen",
+          listening_label: "Search listening options",
+          reason: "Fixture demo pick.",
+          tag_status: "fixture"
+        },
+        mode: "local"
+      })
+    });
+  });
+  await page.getByLabel(/what do you want to hear/i).fill(
+    "Late-night jazz with a steady beat and no vocals."
+  );
+  // Two clicks in one task: the second handler runs before React
+  // re-renders, so a guard reading stale state would fire twice.
+  await page.evaluate(() => {
+    const button = document.querySelector('button[type="submit"]');
+    if (button) {
+      button.dispatchEvent(
+        new MouseEvent("click", { bubbles: true, cancelable: true })
+      );
+      button.dispatchEvent(
+        new MouseEvent("click", { bubbles: true, cancelable: true })
+      );
+    }
+  });
+  await expect(page.getByRole("heading", { name: /blue line trio/i })).toBeVisible();
+  expect(calls).toBe(1);
+  await page.unroute("**/api/recommendations");
+});
+
 test("keyboard can reach the result and the listening link", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel(/what do you want to hear/i).focus();
