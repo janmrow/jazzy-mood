@@ -5,22 +5,11 @@ the full M0 sample in `catalog/m0-sample.csv` (M0-001 to M0-030). P02, P03, P04.
 
 ## Terms
 
-- `Eligible`: a catalogue album that passes every hard requirement of the
-  request on its recorded tags. During the trial, proposed tags count;
-  the listening check confirms them before any release use. Unknown never
-  qualifies for a hard requirement.
-- `Suitable`: an eligible album that also fits the soft preferences well
-  on confirmed tags. This is the fit 2 outcome and needs the listening
-  check behind it.
-- `Plausible`: an eligible album whose fit rests on thin or partial
-  evidence, including every match on proposed tags, which score at most
-  fit 1. The listening check decides what becomes suitable.
-- Fit scores follow the release rubric: 0 unsuitable, 1 plausible,
-  2 strong. Until tags are confirmed, correct trial outcomes are plausible
-  picks (fit 1), never claimed as strong.
-
-All tags in the 30-row sample are `proposed`. Every reason below is
-therefore a fit 1 claim that needs the owner listening check.
+Result terms (`Eligible`, `Suitable`, `Plausible`, fit 0–2, `proposed` vs
+`confirmed`) follow [product](product.md#result-terms). Trial-specific
+rules: proposed tags count for ranking here, so every correct outcome
+below is a fit 1 claim that needs the owner listening check; `unknown`
+never qualifies for a hard requirement.
 
 ## Cases
 
@@ -70,14 +59,14 @@ therefore a fit 1 claim that needs the owner listening check.
 8. Unknown handling: for `Instrumental only`, M0-012 (Tourist, vocals
    unknown) and M0-026 (Madlib, vocals unknown) must never be returned.
    Unknown is not a partial match for a hard constraint. P04.
-9. Strictness check: `Pure instrumental hip-hop, no voices at all.` No
-   eligible album in this sample for that narrow provenance subset: the
-   two sample-based records (M0-005, M0-006) carry vocal samples and are
-   tagged vocal, and the uncertain sample-based record (M0-026) is unknown
-   and therefore excluded. Note the 13 instrumentals above all satisfy a
-   plain `instrumental` hard constraint; only the pure sample-based
-   hip-hop subset has no eligible row. Explain the strict reading instead
-   of bending it. P04.
+9. Strictness check: `Pure instrumental hip-hop, no voices at all.` This
+   is a combined request: it asks for the sample-based hip-hop subset of
+   the catalogue AND zero voices. No eligible album exists for that
+   combination: the two sample-based records (M0-005, M0-006) carry vocal
+   samples and are tagged vocal, and the uncertain sample-based record
+   (M0-026) is unknown and therefore excluded. (A plain `instrumental`
+   request is broader: all 13 instrumentals satisfy it.) Explain the
+   strict reading instead of bending it. P04.
 10. Soft preference: `Smooth and steady, nothing harsh.` Plausible picks
     include M0-024 (smooth, steady, instrumental) and M0-029 (smooth,
     steady, vocal). M0-015 is smooth but swung, so it stays eligible only
@@ -101,6 +90,22 @@ therefore a fit 1 claim that needs the owner listening check.
   violates P02.
 - Bad: recommending an album that is not in the catalogue. Only catalogue
   rows are eligible. This violates P02.
+
+## Owner next steps
+
+1. Listen to the 10 cases above; priority rows are M0-005, M0-006 and
+   M0-026 (vocal presence on sample-based records) and M0-012 (unknown
+   vocals). Confirm or correct each proposed tag.
+2. Spot-check 2–3 identity sources (MusicBrainz links in
+   `catalog/m0-sample.csv`) and years, including the 1969 anchor M0-001.
+3. Record each correction with the feedback format below (input,
+   observed, expected, impact).
+4. Decide the catalogue boundary (E01): keep the 1969 record and the
+   edge rows in scope, call pure instrumental hip-hop the first widening
+   priority, and confirm bebop and female vocal jazz stay out of scope.
+5. Accept the milestone by saying `I accept M0. Start M1.` No release use
+   may consume `proposed` rows as truth; M2-01 must enforce
+   `confirmed`-only imports.
 
 ## Owner feedback format
 
@@ -149,6 +154,9 @@ for those fields are decided.
 Validator run is clean for the 30-row sample with every row flagged for
 the listening check: `python3 tools/validate_catalog.py
 catalog/m0-sample.csv` reports `OK checked 30 rows: 30 need review`.
-Pytest reports `25 passed`. The trial above references M0-001 to M0-030.
-Boundaries and tag corrections stay open until the owner completes the
-listening check and accepts the catalogue boundary (E01).
+A clean validator run means schema-clean only; it says nothing about
+musical truth. Pytest reports `34 passed`. The trial above references
+M0-001 to M0-030. Boundaries and tag corrections stay open until the
+owner completes the listening check and accepts the catalogue boundary
+(E01). Release use requires `confirmed` tags; `proposed` rows must never
+be promoted as ground truth, and M2-01 must enforce that gate.

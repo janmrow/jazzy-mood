@@ -16,6 +16,14 @@ Account features, listening history, audio hosting, playlists and a catalogue ed
 
 Use these IDs in the backlog, test names or test descriptions when they clarify the expected result. Each milestone implements the subset named in its work items.
 
+### Result terms
+
+- `Eligible`: a catalogue album that passes every hard requirement of the request on its recorded tags. `Unknown` never qualifies for a hard requirement.
+- `Suitable`: an eligible album that also fits the soft preferences well on confirmed tags. This is the fit 2 outcome.
+- `Plausible`: an eligible album whose fit rests on thin or partial evidence, including every match on proposed tags. Proposed matches score at most fit 1.
+- Fit scores: 0 unsuitable, 1 plausible, 2 strong. Until tags are confirmed, correct outcomes are plausible picks (fit 1), never claimed as strong.
+- `Proposed` tags count for trial ranking so the sample can be exercised before the listening check. Visitor-facing use and release data require `confirmed` tags. Every trial reason must state the proposed status until confirmation lands.
+
 | ID | Expected behaviour | Example to check |
 |---|---|---|
 | **P01** | A visitor can describe a mood, a situation or a sound. The form accepts a nonblank description of up to 500 characters after trimming. Invalid input gets a clear message and never calls the provider. | Submit spaces. Then try `Late-night jazz with a steady beat and no vocals.` |

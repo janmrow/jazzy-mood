@@ -1,6 +1,6 @@
 # Harness pilot
 
-Short pilot of the autonomous workflow before `M0` delivery. Isolated copies only; the real backlog and production data were not touched.
+Historical log of the pilot executed on 2026-11-17; SHAs below are from pilot time and are not updated. Short pilot of the autonomous workflow before `M0` delivery. Isolated copies only; the real backlog and production data were not touched.
 
 - OpenCode v2.3.0, Muse Spark 1.3 Contributor model, 2026-11-17; isolated copies only, real backlog untouched.
 - Config: `default_agent` delivery; push/reset/ssh/scp denied; six review requests ran (A2×2, PT-01×2, broken-link×1, this report×1).
