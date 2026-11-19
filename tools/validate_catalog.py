@@ -23,13 +23,18 @@ Columns (all required in the header):
   ``broken``, ``free``, ``unknown``. ``unknown`` must stand alone.
 - ``vocals``: single label from ``instrumental``, ``vocal``,
   ``unknown``. ``instrumental`` means strictly no vocal sound of any
-  kind, including samples, spoken word, and backing vocals.
+  kind, including rap, sung or spoken parts, samples, dialogue, and
+  backing vocals.
 - ``tag_basis``: basis for the descriptive claims. Required when
   ``tag_status`` is ``confirmed`` or when any descriptive tag is not
   ``unknown``.
 - ``tag_status``: ``confirmed`` or ``proposed``. ``proposed`` means a
   draft pending evidence or a listening check and flags the row for
   review.
+
+No extra columns are accepted. Empty ``;`` segments (``warm;;dark``,
+leading or trailing ``;``) are rejected so the stored tag set cannot
+differ from the validated view.
 
 Validation never proves reuse rights. Rows with ``tag_status`` set to
 ``proposed`` or a ``reuse_note`` containing ``needs-review`` are
@@ -73,8 +78,12 @@ STATUS_VALUES = {"confirmed", "proposed"}
 
 ID_PATTERN = re.compile(r"^[A-Za-z0-9][A-Za-z0-9_-]*$")
 YEAR_PATTERN = re.compile(r"^(\d{4}|unknown)$")
-VOCAL_WORD = re.compile(r"\bvocal(s|ist)?\b", re.IGNORECASE)
-NO_VOCAL_WORD = re.compile(r"\b(no|without|non)[ -]?vocal(s)?\b|\bvocal(s)?-free\b", re.IGNORECASE)
+VOCAL_WORD = re.compile(r"\bvocal(s|ist)?\b|\brap\b|\bsing\b|\bsinging\b|\bsung\b|\bspoken\b|\bsample(d|s)?\b|\bdialogue\b", re.IGNORECASE)
+NO_VOCAL_WORD = re.compile(
+    r"\b(no|without|non)\b[\w\s,;/-]*?\b(vocal(s|ist)?|rap|sing|singing|sung|spoken|sample(d|s)?|dialogue)\b"
+    r"|\b(vocal(s)?|rap|singing|sung|spoken|sample(d|s)?|dialogue)-free\b",
+    re.IGNORECASE,
+)
 
 DESCRIPTIVE = ("energy", "mood", "groove", "vocals")
 
@@ -89,9 +98,12 @@ def split_labels(raw: str) -> list[str]:
 
 
 def check_multi(value: str, allowed: set[str], column: str, where: str) -> list[str]:
-    labels = split_labels(value)
-    if not labels:
+    if not value.strip():
         return [f"{where}: {column} is blank"]
+    parts = value.strip().split(";")
+    if any(not part.strip() for part in parts):
+        return [f"{where}: {column} has an empty segment"]
+    labels = [part.strip() for part in parts]
     problems = [f"{where}: {column} has unknown value {label!r}" for label in labels if label not in allowed]
     if "unknown" in labels and len(labels) > 1:
         problems.append(f"{where}: {column} mixes 'unknown' with other labels")
@@ -173,6 +185,13 @@ def validate_file(path: str) -> tuple[list[str], list[str], int]:
                 return ["no header row found"], [], 0
             header = [name.strip() for name in reader.fieldnames]
             errors = [f"missing required column {name!r}" for name in REQUIRED_COLUMNS if name not in header]
+            seen: dict[str, int] = {}
+            for name in header:
+                if name in seen:
+                    errors.append(f"duplicate column {name!r}")
+                else:
+                    seen[name] = 1
+            errors.extend(f"unexpected column {name!r}" for name in header if name not in REQUIRED_COLUMNS)
             rows = []
             extra_values: list[tuple[int, list[str]]] = []
             for lineno, raw in enumerate(reader, start=2):

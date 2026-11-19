@@ -195,3 +195,65 @@ def test_cli_fails_on_errors(tmp_path):
 def test_cli_missing_file_returns_two(capsys):
     assert main(["/tmp/does-not-exist-jazzy-mood.csv"]) == 2
     assert "cannot read" in capsys.readouterr().out
+
+
+def test_empty_segments_are_rejected(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("mood")] = "warm;;dark"
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any("empty segment" in line for line in errors)
+
+
+def test_trailing_separator_is_rejected(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("groove")] = "steady;"
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any("empty segment" in line for line in errors)
+
+
+def test_duplicate_columns_are_rejected(tmp_path):
+    path = write_csv(tmp_path, f"{HEADER},artist\n{GOOD_ROW},Someone\n")
+    errors, _, _ = validate_file(path)
+    assert any("duplicate column 'artist'" in line for line in errors)
+
+
+def test_unexpected_column_is_rejected(tmp_path):
+    path = write_csv(tmp_path, f"{HEADER},cover_art\n{GOOD_ROW},http://example.org/x\n")
+    errors, _, _ = validate_file(path)
+    assert any("unexpected column 'cover_art'" in line for line in errors)
+
+
+@pytest.mark.parametrize("column", ["identity_source", "reuse_note"])
+def test_blank_provenance_is_rejected(tmp_path, column):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index(column)] = ""
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any(f"{column} is blank" in line for line in errors)
+
+
+def test_proposed_without_basis_is_rejected(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_basis")] = ""
+    fields[HEADER.split(",").index("tag_status")] = "proposed"
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any("non-unknown tags need a tag_basis" in line for line in errors)
+
+
+def test_instrumental_with_rap_basis_is_rejected(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_basis")] = "Features rap verses throughout"
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert any("contradicts" in line for line in errors)
+
+
+def test_instrumental_with_denied_sample_basis_passes(tmp_path):
+    fields = GOOD_ROW.split(",")
+    fields[HEADER.split(",").index("tag_basis")] = "No samples; verified instrumental trio"
+    path = write_csv(tmp_path, f"{HEADER}\n{','.join(fields)}\n")
+    errors, _, _ = validate_file(path)
+    assert errors == []
