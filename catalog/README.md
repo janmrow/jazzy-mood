@@ -19,7 +19,9 @@ plain language.
   `unknown`.
 - `vocals`: one of `instrumental`, `vocal`, `unknown`.
 - `tag_status`: `proposed` (draft pending evidence or a listening
-  check) or `confirmed`.
+  check), `sourced` (two independent reputable sources agree, or one
+  strong source agrees with MusicBrainz identity — see D08), or
+  `confirmed` (owner listening check on top of sources).
 
 ## Multi-tag convention
 
@@ -34,7 +36,8 @@ Use `;` between labels with no empty segments: `warm;gritty` is valid,
 - `unknown` never satisfies a hard constraint such as `instrumental
   only` or `no vocals`.
 - `tag_basis` records the evidence behind the descriptive tags and is
-  required whenever any descriptive tag is not `unknown`. A clean
+  required whenever any descriptive tag is not `unknown`. For `sourced`
+  rows it cites each source (D08). A clean
   validator run means schema-clean only; release use requires
-  `confirmed` tags, and `proposed` rows must never be promoted as
-  ground truth.
+  `sourced` or `confirmed` tags, and `proposed` rows must never be
+  promoted as ground truth.

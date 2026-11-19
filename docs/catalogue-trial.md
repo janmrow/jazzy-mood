@@ -93,13 +93,14 @@ never qualifies for a hard requirement.
 
 ## Owner next steps
 
-1. Listen to the 10 cases above. Priority rows: M0-012 (holds a vocal
-   loop, must stay `unknown`), M0-005, M0-006 and M0-026 (vocal presence
-   on sample-based records under the strict rule), M0-011 (confirm
-   track-by-track, neighbours carry vocals). Re-listen grooves: M0-010
-   (`free` vs steady/broken pulse) and M0-020 (`free` vs steady pocket),
-   plus M0-016 (steady vs swung) and the calm borderline M0-030.
-   Confirm or correct each proposed tag.
+1. Skim the 10 cases, or listen where curious — listening is sampling
+   QC under D08, not a per-record gate. Priority rows if you listen:
+   M0-012 (holds a vocal loop, must stay `unknown`), M0-005, M0-006 and
+   M0-026 (vocal presence on sample-based records under the strict
+   rule), M0-011 (confirm track-by-track, neighbours carry vocals).
+   Grooves worth a re-listen: M0-010 (`free` vs steady/broken pulse)
+   and M0-020 (`free` vs steady pocket), plus M0-016 (steady vs swung)
+   and the calm borderline M0-030.
 2. Spot-check 2–3 identity sources (MusicBrainz links in
    `catalog/m0-sample.csv`) and years — including the 1969 anchor
    M0-001 and the M0-022 year (1994 vs 1995 reissue variance).
@@ -113,7 +114,7 @@ never qualifies for a hard requirement.
    jazz stay out of scope.
 5. Accept the milestone by saying `I accept M0. Start M1.` No release use
    may consume `proposed` rows as truth; M2-01 must enforce
-   `confirmed`-only imports.
+   `sourced`-or-`confirmed`-only imports.
 
 ## Owner feedback format
 
@@ -157,12 +158,14 @@ warm vocal requests but thinner for late-night-only, smooth-only,
 free-groove or swung requests, so do not claim broad repeat coverage
 beyond the tested cases.
 
-Before widening the import, improve the data in this order: first
-complete the owner listening check on all proposed tags, with strict
+Before widening the import, improve the data in this order under D08:
+first collect source backing for all proposed tags (two agreeing sources
+or one strong source plus MusicBrainz, cited in `tag_basis`), with strict
 attention to vocal presence on sample-based records (M0-005, M0-006,
 M0-026) and on M0-012; second confirm years and identity sources for
 the rows the owner spot-checks; third keep the `;` multi-tag convention
 and the unknown handling unchanged so the future importer stays simple.
+Listening becomes sampling QC on import batches, not a per-record gate.
 Do not add listening links or artwork to the sample until reuse terms
 for those fields are decided.
 
@@ -173,7 +176,8 @@ the listening check: `python3 tools/validate_catalog.py
 catalog/m0-sample.csv` reports `OK checked 30 rows: 30 need review`.
 A clean validator run means schema-clean only; it says nothing about
 musical truth. Pytest reports `57 passed`. The trial above references
-M0-001 to M0-030. Boundaries and tag corrections stay open until the
-owner completes the listening check and accepts the catalogue boundary
-(E01). Release use requires `confirmed` tags; `proposed` rows must never
-be promoted as ground truth, and M2-01 must enforce that gate.
+M0-001 to M0-030. The M0 rows stay `proposed`; the upgrade to `sourced`
+lands with the M2-01 import. Boundaries stay open until the owner
+accepts the catalogue boundary (E01) — no full listening required.
+Release use requires `sourced` or `confirmed` tags; `proposed` rows must
+never be promoted as ground truth, and M2-01 must enforce that gate.

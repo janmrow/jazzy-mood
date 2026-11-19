@@ -1,7 +1,7 @@
 # Backlog
 
 - **Active milestone** M0
-- **Milestone state** Awaiting acceptance (agent work complete; owner listening check and boundary decision open)
+- **Milestone state** Awaiting acceptance (agent work complete; owner boundary decision E01 open; no full listening required under D08)
 - **Accepted milestones** None
 - **Product branch** `deliver/m0` holds the M0 sample and trial; harness and setup branches hold workflow and docs polish only and never carry product changes.
 
@@ -27,7 +27,7 @@ The owner can sort or inspect the sample, open representative identity sources a
 - **State** Implemented
 - **Depends on** M0-01
 - **Criteria** P02, P03, P04
-- **Result** Trial covers M0-001 to M0-030 with 10 cases (vague, strict instrumental, two alternative sets, three gaps, mood contrast, unknown handling, soft preference) plus the catalogue boundary recommendation; all picks fit 1 proposed pending the listening check.
+- **Result** Trial covers M0-001 to M0-030 with 10 cases (vague, strict instrumental, two alternative sets, three gaps, mood contrast, unknown handling, soft preference) plus the catalogue boundary recommendation; all picks fit 1 proposed. M0 rows stay `proposed`; the upgrade to `sourced` lands with the M2-01 import under D08.
 
 Create `docs/catalogue-trial.md` with 8–12 practical English descriptions and examples of suitable candidates from the sample. Include at least one vague request, one strict instrumental constraint, one request with good alternatives and one gap or mismatch. Show why the available data supports each highlighted example. Mark uncertain interpretations for the owner's listening check.
 
