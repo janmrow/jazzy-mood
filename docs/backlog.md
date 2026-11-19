@@ -67,6 +67,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P05
 - **Result** Synchronous `submittingRef` guard blocks a second submit in the same task (state reads stale until re-render). New e2e dispatches two clicks in one task against a counting route: it fails with 2 calls without the guard and passes with 1. `./scripts/check.sh` green: pytest 72 passed, Playwright 16 passed (8 chromium + 8 mobile).
 
+### M1-01d · Harden the check harness against stale servers
+
+- **State** Implemented
+- **Depends on** M1-01c
+- **Criteria** workflow rule (check reliability)
+- **Result** `check.sh` refuses a port that already answers `/healthz`, verifies the ready server is its own (process alive plus `Uvicorn running` on that port in its log, with a short retry), uses a unique `mktemp` log shown only on failure, and fails fast when the backend dies. Probe: with a dummy `/healthz` occupant on the port, the script passes pytest/typecheck/build then aborts before any browser run with the port message. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Open
