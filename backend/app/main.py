@@ -85,7 +85,19 @@ async def request_context(request: Request, call_next):
     request_id = uuid.uuid4().hex[:12]
     request.state.request_id = request_id
     started = time.perf_counter()
-    response = await call_next(request)
+    try:
+        response = await call_next(request)
+    except Exception:
+        elapsed_ms = int((time.perf_counter() - started) * 1000)
+        # Log even when the handler fails so the request stays traceable.
+        logger.exception(
+            "request request_id=%s route=%s method=%s status=error elapsed_ms=%s",
+            request_id,
+            request.url.path,
+            request.method,
+            elapsed_ms,
+        )
+        raise
     elapsed_ms = int((time.perf_counter() - started) * 1000)
     # Never log the description, query string or body. Route path only.
     logger.info(

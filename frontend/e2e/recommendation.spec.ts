@@ -20,9 +20,42 @@ test("valid description shows one fixture album", async ({ page }) => {
 
 test("blank description shows a clear message", async ({ page }) => {
   await page.goto("/");
-  await page.getByLabel(/what do you want to hear/i).fill("   ");
+  const field = page.getByLabel(/what do you want to hear/i);
+  await field.fill("   ");
   await page.getByRole("button", { name: /recommend an album/i }).click();
   await expect(page.getByRole("alert")).toContainText(/describe what you want/i);
+  await expect(field).toBeFocused();
+});
+
+test("shows a live character count and caps input at 500", async ({ page }) => {
+  await page.goto("/");
+  const field = page.getByLabel(/what do you want to hear/i);
+  await expect(field).toHaveAttribute("maxlength", "500");
+  await field.fill("Late-night jazz");
+  await expect(page.getByText(/\d+ \/ 500/)).toBeVisible();
+});
+
+test("server-rejected input shows inline guidance with a reference", async ({
+  page
+}) => {
+  await page.goto("/");
+  const field = page.getByLabel(/what do you want to hear/i);
+  await field.fill("A quiet rainy evening.");
+  await page.route("**/api/recommendations", (route) =>
+    route.fulfill({
+      status: 422,
+      headers: {
+        "Content-Type": "application/json",
+        "X-Request-ID": "test-ref-422"
+      },
+      body: "{}"
+    })
+  );
+  await page.getByRole("button", { name: /recommend an album/i }).click();
+  await expect(page.getByRole("alert")).toContainText(/not accepted/i);
+  await expect(page.getByText(/test-ref-422/)).toBeVisible();
+  await expect(field).toBeFocused();
+  await page.unroute("**/api/recommendations");
 });
 
 test("failed request keeps the description and allows retry", async ({ page }) => {

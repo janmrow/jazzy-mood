@@ -65,6 +65,29 @@ textarea:focus-visible {
   margin-top: 0.75rem;
 }
 
+.field-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.hint,
+.counter {
+  font-size: 0.9rem;
+  color: #333;
+  margin: 0;
+}
+
+.inline-error {
+  color: #8a0000;
+  font-weight: 600;
+  margin: 0;
+}
+
+.reference {
+  font-size: 0.9rem;
+}
+
 .card {
   margin-top: 1rem;
   padding: 1rem;
