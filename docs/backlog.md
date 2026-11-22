@@ -104,7 +104,7 @@ The owner can start it locally with documented commands, get a result, and verif
 
 ### M1-02 · Package and smoke-test the HTTPS route
 
-- **State** Open
+- **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
 - **Depends on** M1-01
 - **Criteria** P01, P02, P07
 
