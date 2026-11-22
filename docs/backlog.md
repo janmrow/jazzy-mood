@@ -137,6 +137,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P02, P03
 - **Result** Fixture reasons state the demo ignores the description and always shows the same entry; page banner and card note say resubmits repeat and variety arrives in M2. Pytest asserts the ignores-phrase; e2e asserts the banner and card notes with zero links.
 
+### M1-01n · Redesign the demo screen (Ribbon, dawn)
+
+- **State** Implemented
+- **Depends on** M1-01m
+- **Criteria** P05, P07
+- **Result** Hallmark full redesign at app scope (scope: app screen, no hero): Ribbon dawn tokens plus shared scale and base rules; console panel with live mono counter; record card with hairline rules; three-channel disabled states; retry keeps focus; gate-19 dash fixes in both request references. `./scripts/check.sh` green with zero test edits.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)

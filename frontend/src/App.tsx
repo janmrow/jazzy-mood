@@ -121,22 +121,25 @@ export default function App() {
 
   return (
     <main className="page">
-      <h1>Jazzy Mood</h1>
-      <p className="lede">
-        Describe a mood and see the demo result.
-      </p>
-      <p className="fixture-note">
-        Demo: this tiny fixture ignores your description and always shows the
-        same entry. Real matching and variety arrive in M2.
-      </p>
+      <header className="mast">
+        <h1>Jazzy Mood</h1>
+        <p className="lede">
+          Describe a mood and see the demo result.
+        </p>
+        <p className="fixture-note">
+          Demo: this tiny fixture ignores your description and always shows the
+          same entry. Real matching and variety arrive in M2.
+        </p>
+      </header>
 
-      <form onSubmit={onSubmit} noValidate>
+      <form className="console" onSubmit={onSubmit} noValidate>
         <label htmlFor="description">
           What do you want to hear? (up to 500 characters)
         </label>
         <textarea
           id="description"
           name="description"
+          className="field"
           ref={descriptionRef}
           rows={4}
           autoComplete="off"
@@ -162,13 +165,20 @@ export default function App() {
             </p>
             {requestId ? (
               <p className="reference">
-                Reference {requestId} — include it if you report this problem.
+                Reference {requestId}. Include it if you report this problem.
               </p>
             ) : null}
           </>
         ) : null}
-        <button type="submit" disabled={loading}>
-          {loading ? "Finding an album…" : "Recommend an album"}
+        <button type="submit" className="btn" disabled={loading}>
+          {loading ? (
+            <>
+              <span className="spinner keep-motion" aria-hidden="true" />
+              Finding an album…
+            </>
+          ) : (
+            "Recommend an album"
+          )}
         </button>
       </form>
 
@@ -177,12 +187,13 @@ export default function App() {
       </div>
 
       {status === "success" && album ? (
-        <section aria-label="Recommended album" className="card">
+        <section aria-label="Recommended album" className="card record">
           <h2 ref={resultHeadingRef} tabIndex={-1}>
             {album.artist} — {album.title}
           </h2>
           {album.year != null ? <p>Released: {album.year}</p> : null}
-          <p>{album.reason}</p>
+          <p className="reason">{album.reason}</p>
+          <hr className="record-rule" />
           <p className="hint">
             Resubmitting shows the same demo entry. More picks arrive in M2.
           </p>
@@ -197,14 +208,17 @@ export default function App() {
           <p role="alert">{errorMessage}</p>
           {requestId ? (
             <p className="reference">
-              Reference {requestId} — include it if you report this problem.
+              Reference {requestId}. Include it if you report this problem.
             </p>
           ) : null}
-          <button type="button" ref={retryRef} onClick={onRetry} disabled={loading}>
+          <button type="button" ref={retryRef} className="btn" onClick={onRetry} disabled={loading}>
             Try again
           </button>
         </section>
       ) : null}
+      <footer className="colophon">
+        <p>Demo fixture. The catalogue arrives in M2.</p>
+      </footer>
     </main>
   );
 }

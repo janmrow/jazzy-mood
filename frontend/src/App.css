@@ -1,112 +1,252 @@
+/* Hallmark · shape: app screen · genre: atmospheric · theme: Ribbon (deal 2/3, seed mood-demo-album-tool-b9a6·9a9c74db·2026-11-22·r0) · redesign: full
+ * nav: none, one screen · signature: the console and the record card · states: idle, loading, success, validation error, request error · ribbon: dawn
+ * axes: light/grotesk-sans/chromatic-teal · posture: committed · contrast: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, another demo form; led with the record set like a label and a console with a live measure */
+@import url("./tokens.css");
+@import url("./base.css");
+
 .page {
-  max-width: 40rem;
-  margin: 0 auto;
-  padding: 1.5rem 1rem 3rem;
-  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-  line-height: 1.5;
-  color: #1a1a1a;
+  width: 100%;
+  max-width: 44rem;
+  margin-inline: auto;
+  padding-block: var(--space-xl) var(--space-2xl);
+  padding-inline: var(--space-md);
+}
+
+.mast {
+  padding-block-end: var(--space-lg);
+  border-block-end: var(--rule-hair) solid var(--color-rule);
+}
+
+.mast h1 {
+  font-size: var(--text-2xl);
+  letter-spacing: var(--tracking-display);
 }
 
 .lede {
-  font-size: 1.05rem;
+  margin-block-start: var(--space-sm);
+  color: var(--color-ink-2);
+  font-size: var(--text-lg);
+  line-height: 1.45;
 }
 
 .fixture-note {
-  font-size: 0.95rem;
-  border-left: 0.25rem solid #555;
-  padding-left: 0.75rem;
+  margin-block-start: var(--space-md);
+  padding-inline-start: var(--space-sm);
+  border-inline-start: 2px solid var(--color-accent);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+  line-height: 1.6;
 }
 
-form {
+.console {
+  margin-block-start: var(--space-lg);
+  padding: var(--space-lg);
+  border-radius: var(--radius-card);
+  background: linear-gradient(var(--color-paper-2), var(--color-paper-3));
+  box-shadow: var(--edge-light), var(--shadow-panel);
   display: grid;
-  gap: 0.75rem;
-  margin-top: 1rem;
+  gap: var(--space-md);
 }
 
-label {
-  font-weight: 600;
+.console label {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-md);
+  color: var(--color-ink);
 }
 
-textarea {
+.field {
   box-sizing: border-box;
   width: 100%;
   min-height: 6rem;
-  font-size: 1rem;
-  padding: 0.75rem;
-  border: 0.125rem solid #333;
-  border-radius: 0.375rem;
+  resize: vertical;
+  padding: var(--space-sm) var(--space-md);
+  border: var(--rule-hair) solid var(--color-muted);
+  border-radius: var(--radius-part);
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-size: var(--text-md);
+  line-height: 1.6;
+  outline: 2px solid transparent;
+  outline-offset: -2px;
+  transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
 }
 
-button {
-  justify-self: start;
-  font-size: 1rem;
-  padding: 0.625rem 1rem;
-  border-radius: 0.375rem;
-  border: 0.125rem solid #111;
-  background: #111;
-  color: #fff;
-  cursor: pointer;
+.field::placeholder {
+  color: var(--color-muted);
 }
 
-button:disabled {
-  opacity: 0.65;
-  cursor: wait;
+.field:hover {
+  background: var(--color-paper-2);
 }
 
-button:focus-visible,
-a:focus-visible,
-textarea:focus-visible {
-  outline: 0.2rem solid #005fcc;
-  outline-offset: 0.15rem;
+.field:focus-visible {
+  outline-color: var(--color-focus);
+  border-color: var(--color-ink-2);
 }
 
-.status {
-  min-height: 2rem;
-  margin-top: 0.75rem;
+.field:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.field[aria-invalid="true"] {
+  border-color: var(--color-error);
 }
 
 .field-meta {
   display: flex;
   justify-content: space-between;
-  gap: 1rem;
+  align-items: baseline;
+  gap: var(--space-md);
 }
 
 .hint,
 .counter {
-  font-size: 0.9rem;
-  color: #333;
   margin: 0;
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.counter {
+  font-family: var(--font-outlier);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
 }
 
 .inline-error {
-  color: #8a0000;
-  font-weight: 600;
   margin: 0;
+  color: var(--color-error);
+  font-weight: 500;
 }
 
 .reference {
-  font-size: 0.9rem;
+  margin: 0;
+  font-family: var(--font-outlier);
+  font-size: var(--text-sm);
+  color: var(--color-muted);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xs);
+  min-height: 44px;
+  padding: 0 var(--space-lg);
+  border: var(--rule-hair) solid var(--color-accent);
+  border-radius: var(--radius-pill);
+  background: var(--color-accent);
+  color: var(--color-accent-ink);
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-md);
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+}
+
+.btn:hover {
+  background: var(--color-focus);
+}
+
+.btn:active {
+  transform: translateY(1px);
+}
+
+.btn:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.spinner {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  border-radius: 50%;
+  border: 2px solid color-mix(in oklab, var(--color-accent-ink) 35%, transparent);
+  border-top-color: var(--color-accent-ink);
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.status {
+  min-height: 2rem;
+  margin-block-start: var(--space-md);
+}
+
+.status p {
+  color: var(--color-muted);
 }
 
 .card {
-  margin-top: 1rem;
-  padding: 1rem;
-  border: 0.125rem solid #333;
-  border-radius: 0.5rem;
-  background: #fafafa;
+  margin-block-start: var(--space-md);
+  padding: var(--space-lg);
+  border-radius: var(--radius-card);
+  background: linear-gradient(var(--color-paper-2), var(--color-paper-3));
+  box-shadow: var(--edge-light), var(--shadow-panel);
 }
 
 .card h2 {
-  margin-top: 0;
-  font-size: 1.25rem;
+  font-size: var(--text-2xl);
+  text-wrap: balance;
 }
 
 .card h2:focus {
-  outline: 0.2rem solid #005fcc;
-  outline-offset: 0.15rem;
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.record-rule {
+  margin-block: var(--space-md);
+  border: 0;
+  border-block-start: var(--rule-hair) solid var(--color-rule);
+}
+
+.card .reason {
+  color: var(--color-ink-2);
+  line-height: 1.6;
+}
+
+.card .hint {
+  margin-block-start: var(--space-sm);
 }
 
 .error {
-  border-color: #8a0000;
-  background: #fff5f5;
+  background: linear-gradient(color-mix(in oklab, var(--color-error) 7%, var(--color-paper-2)), var(--color-paper-3));
+  border: var(--rule-hair) solid var(--color-error);
+}
+
+.error h2 {
+  font-size: var(--text-xl);
+}
+
+.colophon {
+  margin-block-start: var(--space-2xl);
+  padding-block-start: var(--space-md);
+  border-block-start: var(--rule-hair) solid var(--color-rule);
+  color: var(--color-muted);
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 40rem) {
+  .page {
+    padding-inline: var(--space-md);
+  }
+
+  .console,
+  .card {
+    padding: var(--space-md);
+  }
+
+  .btn {
+    width: 100%;
+  }
 }
