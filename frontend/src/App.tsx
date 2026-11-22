@@ -180,7 +180,7 @@ export default function App() {
           <h2 ref={resultHeadingRef} tabIndex={-1}>
             {album.artist} — {album.title}
           </h2>
-          {album.year !== null ? <p>Released: {album.year}</p> : null}
+          {album.year != null ? <p>Released: {album.year}</p> : null}
           <p>{album.reason}</p>
         </section>
       ) : null}

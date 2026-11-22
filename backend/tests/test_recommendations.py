@@ -34,7 +34,7 @@ def test_valid_description_returns_one_fixture_album():
     album = body["album"]
     assert album["id"] == FIXTURE_ALBUMS[0]["id"]
     assert album["artist"] and album["title"]
-    assert album["year"] == FIXTURE_ALBUMS[0]["year"]
+    assert album.get("year") is None
     assert "listening_url" not in album
     assert "listening_label" not in album
     assert "fixture" in album["reason"].lower()

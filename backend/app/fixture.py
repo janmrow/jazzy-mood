@@ -25,7 +25,6 @@ class FixtureAlbum(TypedDict):
     id: str
     artist: str
     title: str
-    year: int
     reason: str
     tag_status: str
 
@@ -35,7 +34,6 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "id": "FIX-001",
         "artist": "Blue Line Trio",
         "title": "Night Loop",
-        "year": 2004,
         "reason": (
             "Fixture demo pick: calm instrumental with a steady groove "
             "(demo entry, not a catalogue recommendation)."
@@ -46,7 +44,6 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "id": "FIX-002",
         "artist": "Copper Five",
         "title": "Warm Circuit",
-        "year": 2001,
         "reason": (
             "Fixture demo pick: moderate energy with a warm mood and a steady "
             "groove, vocal (demo entry, not a catalogue recommendation)."
@@ -57,7 +54,6 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "id": "FIX-003",
         "artist": "Paper Planes Quartet",
         "title": "Grit Relay",
-        "year": 1998,
         "reason": (
             "Fixture demo pick: energetic with a gritty mood and a broken groove, "
             "vocal (demo entry, not a catalogue recommendation)."
@@ -77,7 +73,7 @@ def select_album(recent_ids: list[str] | None = None) -> FixtureAlbum:
 
     Returns a copy: mutating the result must never pollute the global
     fixture for later picks in the same process. Records stay flat
-    (str/int only), so a shallow copy suffices; revisit with
+    (str only, no verified year), so a shallow copy suffices; revisit with
     copy.deepcopy if a nested mutable field ever appears.
     """
     seen = {item.strip() for item in (recent_ids or []) if item and item.strip()}

@@ -109,6 +109,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P02
 - **Result** Owner decision 2026-11-22: no listening or search proposal in the M1 demo. `FixtureAlbum` and API `Album` drop `listening_url` and `listening_label`; React card shows artist, title, year and reason only with zero links; pytest asserts both keys absent and e2e asserts zero links (valid, double-submit mock and keyboard paths updated). Listening links return with the catalogue in M2-03.
 
+### M1-01j · Drop synthetic years from the demo
+
+- **State** Implemented
+- **Depends on** M1-01i
+- **Criteria** P02
+- **Result** `FixtureAlbum` drops `year`; API returns `year: null` so the card shows no `Released` line for fixture picks. Verified years return with the catalogue in M2-01. Frontend year guard uses `!= null` for missing values.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)

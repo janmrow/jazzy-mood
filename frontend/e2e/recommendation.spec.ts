@@ -99,7 +99,7 @@ test("sends a single request on rapid double submit", async ({ page }) => {
           id: "FIX-001",
           artist: "Blue Line Trio",
           title: "Night Loop",
-          year: 2004,
+          year: null,
           reason: "Fixture demo pick.",
           tag_status: "fixture"
         },
