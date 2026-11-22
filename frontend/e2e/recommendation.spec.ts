@@ -25,12 +25,14 @@ test("blank description shows a clear message", async ({ page }) => {
   await expect(field).toBeFocused();
 });
 
-test("shows a live character count and caps input at 500", async ({ page }) => {
+test("shows a live character count matching the trimmed limit", async ({ page }) => {
   await page.goto("/");
   const field = page.getByLabel(/what do you want to hear/i);
-  await expect(field).toHaveAttribute("maxlength", "500");
+  await expect(field).not.toHaveAttribute("maxlength", "500");
   await field.fill("Late-night jazz");
-  await expect(page.getByText(/\d+ \/ 500/)).toBeVisible();
+  await expect(page.getByText("15 / 500")).toBeVisible();
+  await field.fill(`  ${"z".repeat(500)}  `);
+  await expect(page.getByText("500 / 500")).toBeVisible();
 });
 
 test("server-rejected input shows inline guidance with a reference", async ({

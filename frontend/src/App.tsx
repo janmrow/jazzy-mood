@@ -111,7 +111,7 @@ export default function App() {
   }
 
   const loading = status === "loading";
-  const count = codePointLength(description);
+  const count = codePointLength(description.trim());
   const describedBy =
     status === "error" && errorKind === "validation"
       ? "description-hint description-error"
@@ -137,7 +137,6 @@ export default function App() {
           name="description"
           ref={descriptionRef}
           rows={4}
-          maxLength={500}
           autoComplete="off"
           placeholder="Late-night jazz with a steady beat and no vocals."
           value={description}

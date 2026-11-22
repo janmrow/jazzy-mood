@@ -116,6 +116,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P02
 - **Result** `FixtureAlbum` drops `year`; API returns `year: null` so the card shows no `Released` line for fixture picks. Verified years return with the catalogue in M2-01. Frontend year guard uses `!= null` for missing values.
 
+### M1-01k · Match the counter to the server limit
+
+- **State** Implemented
+- **Depends on** M1-01j
+- **Criteria** P01
+- **Result** Counter shows trimmed code-point length; `maxlength` removed so emoji and padded input follow the same 1–500 rule the server enforces. E2e asserts no `maxlength` cap and trimmed counts (`14 / 500`, padded 500).
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
