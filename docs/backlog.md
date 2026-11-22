@@ -130,6 +130,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P07
 - **Result** Request errors move keyboard focus to `Try again` instead of the error heading; validation errors still return to the field. E2e asserts retry is focused after an aborted request. Also fixes the M1-01k result typo (`15 / 500`).
 
+### M1-01m · Say the demo is single and fixed
+
+- **State** Implemented
+- **Depends on** M1-01l
+- **Criteria** P02, P03
+- **Result** Fixture reasons state the demo ignores the description and always shows the same entry; page banner and card note say resubmits repeat and variety arrives in M2. Pytest asserts the ignores-phrase; e2e asserts the banner and card notes with zero links.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)

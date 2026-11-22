@@ -38,6 +38,7 @@ def test_valid_description_returns_one_fixture_album():
     assert "listening_url" not in album
     assert "listening_label" not in album
     assert "fixture" in album["reason"].lower()
+    assert "ignores your description" in album["reason"].lower()
     assert album["tag_status"] == "fixture"
     assert "x-request-id" in response.headers
 

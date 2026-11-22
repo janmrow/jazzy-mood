@@ -35,7 +35,8 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "artist": "Blue Line Trio",
         "title": "Night Loop",
         "reason": (
-            "Fixture demo pick: calm instrumental with a steady groove "
+            "Fixture demo pick: calm instrumental with a steady groove. "
+            "This demo ignores your description and always shows the same entry "
             "(demo entry, not a catalogue recommendation)."
         ),
         "tag_status": "fixture",
@@ -46,7 +47,8 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "title": "Warm Circuit",
         "reason": (
             "Fixture demo pick: moderate energy with a warm mood and a steady "
-            "groove, vocal (demo entry, not a catalogue recommendation)."
+            "groove, vocal. This demo ignores your description and always shows "
+            "the same entry (demo entry, not a catalogue recommendation)."
         ),
         "tag_status": "fixture",
     },
@@ -56,7 +58,8 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "title": "Grit Relay",
         "reason": (
             "Fixture demo pick: energetic with a gritty mood and a broken groove, "
-            "vocal (demo entry, not a catalogue recommendation)."
+            "vocal. This demo ignores your description and always shows the same "
+            "entry (demo entry, not a catalogue recommendation)."
         ),
         "tag_status": "fixture",
     },

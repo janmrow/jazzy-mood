@@ -123,11 +123,11 @@ export default function App() {
     <main className="page">
       <h1>Jazzy Mood</h1>
       <p className="lede">
-        Describe a mood and get one album from a small demo collection.
+        Describe a mood and see the demo result.
       </p>
       <p className="fixture-note">
-        Demo data: the result comes from a tiny fixture, not the full
-        catalogue.
+        Demo: this tiny fixture ignores your description and always shows the
+        same entry. Real matching and variety arrive in M2.
       </p>
 
       <form onSubmit={onSubmit} noValidate>
@@ -183,6 +183,9 @@ export default function App() {
           </h2>
           {album.year != null ? <p>Released: {album.year}</p> : null}
           <p>{album.reason}</p>
+          <p className="hint">
+            Resubmitting shows the same demo entry. More picks arrive in M2.
+          </p>
         </section>
       ) : null}
 
