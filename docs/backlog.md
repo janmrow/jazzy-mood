@@ -95,6 +95,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** D02, D05
 - **Result** `FixtureAlbum` TypedDict mirrors the API `Album` keys with a parity test; `select_album` returns a copy so a caller mutation cannot pollute later picks (covered by a mutation test). `./scripts/check.sh` green: pytest 75 passed, Playwright 16 passed.
 
+### M1-01h · Honest demo copy
+
+- **State** Implemented
+- **Depends on** M1-01g
+- **Criteria** P02
+- **Result** Listening links say where they go (`Search YouTube for listening options`); reasons use plain words (`demo entry, not a catalogue recommendation`) instead of team jargon; README promises the demo, not the catalogue. `./scripts/check.sh` green: pytest 75 passed, Playwright 16 passed.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Open

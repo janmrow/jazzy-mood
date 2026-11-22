@@ -13,7 +13,7 @@ test("valid description shows one fixture album", async ({ page }) => {
   await page.getByRole("button", { name: /recommend an album/i }).click();
   await expect(page.getByRole("heading", { name: /blue line trio/i })).toBeVisible();
   await expect(page.getByText(/fixture demo pick/i)).toBeVisible();
-  const link = page.getByRole("link", { name: /search listening options/i });
+  const link = page.getByRole("link", { name: /search youtube for listening options/i });
   await expect(link).toBeVisible();
   await expect(link).toHaveAttribute("href", /https:\/\//);
 });
@@ -103,7 +103,7 @@ test("sends a single request on rapid double submit", async ({ page }) => {
           title: "Night Loop",
           year: 2004,
           listening_url: "https://example.org/listen",
-          listening_label: "Search listening options",
+          listening_label: "Search YouTube for listening options",
           reason: "Fixture demo pick.",
           tag_status: "fixture"
         },
@@ -144,6 +144,6 @@ test("keyboard can reach the result and the listening link", async ({ page }) =>
   await expect(heading).toBeFocused();
   await page.keyboard.press("Tab");
   await expect(
-    page.getByRole("link", { name: /search listening options/i })
+    page.getByRole("link", { name: /search youtube for listening options/i })
   ).toBeFocused();
 });

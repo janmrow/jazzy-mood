@@ -39,10 +39,10 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "title": "Night Loop",
         "year": 2004,
         "listening_url": "https://www.youtube.com/results?search_query=Blue+Line+Trio+Night+Loop",
-        "listening_label": "Search listening options",
+        "listening_label": "Search YouTube for listening options",
         "reason": (
             "Fixture demo pick: calm instrumental with a steady groove "
-            "(fixture tags, not catalogue evidence)."
+            "(demo entry, not a catalogue recommendation)."
         ),
         "tag_status": "fixture",
     },
@@ -52,10 +52,10 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "title": "Warm Circuit",
         "year": 2001,
         "listening_url": "https://www.youtube.com/results?search_query=Copper+Five+Warm+Circuit",
-        "listening_label": "Search listening options",
+        "listening_label": "Search YouTube for listening options",
         "reason": (
             "Fixture demo pick: moderate energy with a warm mood and a steady "
-            "groove, vocal (fixture tags, not catalogue evidence)."
+            "groove, vocal (demo entry, not a catalogue recommendation)."
         ),
         "tag_status": "fixture",
     },
@@ -65,10 +65,10 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "title": "Grit Relay",
         "year": 1998,
         "listening_url": "https://www.youtube.com/results?search_query=Paper+Planes+Quartet+Grit+Relay",
-        "listening_label": "Search listening options",
+        "listening_label": "Search YouTube for listening options",
         "reason": (
             "Fixture demo pick: energetic with a gritty mood and a broken groove, "
-            "vocal (fixture tags, not catalogue evidence)."
+            "vocal (demo entry, not a catalogue recommendation)."
         ),
         "tag_status": "fixture",
     },

@@ -2,7 +2,7 @@
 
 > Status: M1-01 delivers the first form-to-result slice on a tiny fixture. The full catalogue arrives in M2.
 
-Describe what you want to hear and get one album from a curated jazz and hip-hop catalogue. Each pick comes with a short reason and a listening link. Ask for another to explore the same mood.
+Describe what you want to hear and get one demo album from a tiny fixture, with a short reason and a search link. The curated catalogue and repeat picks arrive in M2.
 
 This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadmap.md) takes it from a small sample to a public release on an existing Mikrus 2.1 with no additional running costs. The product comes first. The project also gives you a real system on which to practise acceptance testing, release checks, observability and recovery.
 
