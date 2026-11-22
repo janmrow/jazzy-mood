@@ -151,6 +151,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P05, P07
 - **Result** Disabled field and button ignore hover (no misleading affordance) and carry a third channel (dashed border) beside opacity and cursor; button has an explicit instant `:focus-visible` ring; result heading uses `:focus-visible`; spinner no longer opts out of reduced-motion. `./scripts/check.sh` green.
 
+### M1-01p · Self-host the demo faces
+
+- **State** Implemented
+- **Depends on** M1-01o
+- **Criteria** P08
+- **Result** Three latin woff2 faces (Figtree, Instrument Sans, JetBrains Mono, ~81 kB) ship from `frontend/src/fonts/` with `font-display: swap`; Google Fonts links removed from `index.html`, so the page opens zero third-party connections. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
