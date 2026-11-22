@@ -207,6 +207,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P05, P07
 - **Result** Primary hover moves to the deep amber (was visually inert against focus); shape guard requires non-blank id, artist, title and reason. E2e drives both malformed shapes in one retry flow with call counting. `./scripts/check.sh` green.
 
+### M1-01x · Pin request IDs on health and 404 paths
+
+- **State** Implemented
+- **Depends on** M1-01w
+- **Criteria** P05, P08
+- **Result** Pytest asserts `X-Request-ID` on `/healthz` and on every unknown-API 404 shape (GET/POST/OPTIONS/HEAD), pinning the middleware order for log correlation. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)

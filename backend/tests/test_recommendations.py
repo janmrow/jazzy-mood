@@ -22,6 +22,7 @@ def test_healthz_is_ok_without_provider():
     response = client.get("/healthz")
     assert response.status_code == 200
     assert response.json() == {"status": "ok"}
+    assert response.headers.get("x-request-id")
 
 
 def test_valid_description_returns_one_fixture_album():
@@ -194,8 +195,10 @@ def test_unknown_api_paths_return_json_404_not_index():
         assert response.status_code == 404
         assert response.headers["content-type"].startswith("application/json")
         assert response.json() == {"detail": "Not Found"}
+        assert response.headers.get("x-request-id")
     head_response = client.head("/api/no-such-route")
     assert head_response.status_code == 404
+    assert head_response.headers.get("x-request-id")
 
 
 def test_fixture_selection_returns_copies():
