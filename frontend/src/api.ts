@@ -3,8 +3,6 @@ export interface Album {
   artist: string;
   title: string;
   year: number | null;
-  listening_url: string;
-  listening_label: string;
   reason: string;
   tag_status: string;
 }

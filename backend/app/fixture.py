@@ -26,8 +26,6 @@ class FixtureAlbum(TypedDict):
     artist: str
     title: str
     year: int
-    listening_url: str
-    listening_label: str
     reason: str
     tag_status: str
 
@@ -38,8 +36,6 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "artist": "Blue Line Trio",
         "title": "Night Loop",
         "year": 2004,
-        "listening_url": "https://www.youtube.com/results?search_query=Blue+Line+Trio+Night+Loop",
-        "listening_label": "Search YouTube for listening options",
         "reason": (
             "Fixture demo pick: calm instrumental with a steady groove "
             "(demo entry, not a catalogue recommendation)."
@@ -51,8 +47,6 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "artist": "Copper Five",
         "title": "Warm Circuit",
         "year": 2001,
-        "listening_url": "https://www.youtube.com/results?search_query=Copper+Five+Warm+Circuit",
-        "listening_label": "Search YouTube for listening options",
         "reason": (
             "Fixture demo pick: moderate energy with a warm mood and a steady "
             "groove, vocal (demo entry, not a catalogue recommendation)."
@@ -64,8 +58,6 @@ FIXTURE_ALBUMS: list[FixtureAlbum] = [
         "artist": "Paper Planes Quartet",
         "title": "Grit Relay",
         "year": 1998,
-        "listening_url": "https://www.youtube.com/results?search_query=Paper+Planes+Quartet+Grit+Relay",
-        "listening_label": "Search YouTube for listening options",
         "reason": (
             "Fixture demo pick: energetic with a gritty mood and a broken groove, "
             "vocal (demo entry, not a catalogue recommendation)."

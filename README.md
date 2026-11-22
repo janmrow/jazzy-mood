@@ -2,7 +2,7 @@
 
 > Status: M1-01 delivers the first form-to-result slice on a tiny fixture. The full catalogue arrives in M2.
 
-Describe what you want to hear and get one demo album from a tiny fixture, with a short reason and a search link. The curated catalogue and repeat picks arrive in M2.
+Describe what you want to hear and get one demo album from a tiny fixture, with a short reason and no listening or search link. Listening links arrive with the curated catalogue in M2.
 
 This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadmap.md) takes it from a small sample to a public release on an existing Mikrus 2.1 with no additional running costs. The product comes first. The project also gives you a real system on which to practise acceptance testing, release checks, observability and recovery.
 
@@ -36,7 +36,7 @@ python3 -m uvicorn backend.app.main:app --port 8000
 ```
 
 Open `http://localhost:8000`, submit `Late-night jazz with a steady beat
-and no vocals.`, and expect one fixture card with a search listening link.
+and no vocals.`, and expect one fixture card with no listening or search link.
 Blank input shows a clear message. If the request fails, the description
 stays in place with a retry button.
 

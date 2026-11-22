@@ -1,8 +1,8 @@
 import { expect, test } from "@playwright/test";
 
 // Main journey for the M1 first slice: form submission shows one fixture
-// card. Covers P01 (blank input feedback), P02 (one eligible album with a
-// link), P05 (failed request keeps the text and allows retry) and the
+// card. Covers P01 (blank input feedback), P02 (one demo album, no
+// listening or search link), P05 (failed request keeps the text and allows retry) and the
 // narrow-viewport plus keyboard path in P07.
 
 test("valid description shows one fixture album", async ({ page }) => {
@@ -13,9 +13,7 @@ test("valid description shows one fixture album", async ({ page }) => {
   await page.getByRole("button", { name: /recommend an album/i }).click();
   await expect(page.getByRole("heading", { name: /blue line trio/i })).toBeVisible();
   await expect(page.getByText(/fixture demo pick/i)).toBeVisible();
-  const link = page.getByRole("link", { name: /search youtube for listening options/i });
-  await expect(link).toBeVisible();
-  await expect(link).toHaveAttribute("href", /https:\/\//);
+  await expect(page.getByRole("link")).toHaveCount(0);
 });
 
 test("blank description shows a clear message", async ({ page }) => {
@@ -102,8 +100,6 @@ test("sends a single request on rapid double submit", async ({ page }) => {
           artist: "Blue Line Trio",
           title: "Night Loop",
           year: 2004,
-          listening_url: "https://example.org/listen",
-          listening_label: "Search YouTube for listening options",
           reason: "Fixture demo pick.",
           tag_status: "fixture"
         },
@@ -132,7 +128,7 @@ test("sends a single request on rapid double submit", async ({ page }) => {
   await page.unroute("**/api/recommendations");
 });
 
-test("keyboard can reach the result and the listening link", async ({ page }) => {
+test("keyboard can reach the result", async ({ page }) => {
   await page.goto("/");
   await page.getByLabel(/what do you want to hear/i).focus();
   await page.keyboard.type("A quiet rainy evening, some groove.");
@@ -142,8 +138,5 @@ test("keyboard can reach the result and the listening link", async ({ page }) =>
   const heading = page.getByRole("heading", { name: /—/ });
   await expect(heading).toBeVisible();
   await expect(heading).toBeFocused();
-  await page.keyboard.press("Tab");
-  await expect(
-    page.getByRole("link", { name: /search youtube for listening options/i })
-  ).toBeFocused();
+  await expect(page.getByRole("link")).toHaveCount(0);
 });

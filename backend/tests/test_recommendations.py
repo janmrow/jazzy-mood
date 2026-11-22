@@ -2,7 +2,7 @@
 
 Derives assertions from product behaviour: blank and oversized input is
 rejected before selection, a valid description returns exactly one
-fixture album with a reason and a listening link, recent IDs exclude the
+fixture album with a reason and no listening or search link, recent IDs exclude the
 first pick, and visitor text never reaches the logs.
 """
 
@@ -35,8 +35,8 @@ def test_valid_description_returns_one_fixture_album():
     assert album["id"] == FIXTURE_ALBUMS[0]["id"]
     assert album["artist"] and album["title"]
     assert album["year"] == FIXTURE_ALBUMS[0]["year"]
-    assert album["listening_url"].startswith("https://")
-    assert album["listening_label"]
+    assert "listening_url" not in album
+    assert "listening_label" not in album
     assert "fixture" in album["reason"].lower()
     assert album["tag_status"] == "fixture"
     assert "x-request-id" in response.headers

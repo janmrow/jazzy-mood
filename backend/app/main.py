@@ -66,8 +66,6 @@ class Album(BaseModel):
     artist: str
     title: str
     year: int | None = None
-    listening_url: str
-    listening_label: str
     reason: str
     tag_status: str
 

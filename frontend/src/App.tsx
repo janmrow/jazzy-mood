@@ -182,11 +182,6 @@ export default function App() {
           </h2>
           {album.year !== null ? <p>Released: {album.year}</p> : null}
           <p>{album.reason}</p>
-          <p>
-            <a href={album.listening_url} target="_blank" rel="noreferrer">
-              {album.listening_label}: {album.artist} — {album.title}
-            </a>
-          </p>
         </section>
       ) : null}
 
