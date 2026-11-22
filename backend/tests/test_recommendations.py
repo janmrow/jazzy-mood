@@ -123,6 +123,28 @@ def test_oversized_recent_ids_are_rejected():
     assert response.status_code == 422
 
 
+def test_exactly_64_char_recent_ids_are_accepted():
+    response = client.post(
+        "/api/recommendations",
+        json={"description": VALID, "recent_ids": ["x" * 64]},
+    )
+    assert response.status_code == 200
+
+
+def test_unhandled_error_returns_json_500_with_request_id(monkeypatch):
+    import backend.app.main as main_module
+
+    def _boom(_recent_ids):
+        raise RuntimeError("boom")
+
+    monkeypatch.setattr(main_module, "select_album", _boom)
+    quiet = TestClient(app, raise_server_exceptions=False)
+    response = quiet.post("/api/recommendations", json={"description": VALID})
+    assert response.status_code == 500
+    assert response.json() == {"detail": "Internal Server Error"}
+    assert response.headers.get("x-request-id")
+
+
 def test_empty_fixture_returns_503(monkeypatch):
     import backend.app.main as main_module
 
