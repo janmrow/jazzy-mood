@@ -25,17 +25,23 @@ export interface RecommendationResult {
 
 export async function requestRecommendation(
   description: string,
-  recentIds: string[] = []
+  recentIds: string[] = [],
+  timeoutMs = 15000
 ): Promise<RecommendationResult> {
   let response: Response;
+  const controller = new AbortController();
+  const timer = setTimeout(() => controller.abort(), timeoutMs);
   try {
     response = await fetch("/api/recommendations", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ description, recent_ids: recentIds })
+      body: JSON.stringify({ description, recent_ids: recentIds }),
+      signal: controller.signal
     });
   } catch {
     throw new RecommendationError("Request failed before a response arrived.");
+  } finally {
+    clearTimeout(timer);
   }
   const requestId = response.headers.get("X-Request-ID");
   if (!response.ok) {
@@ -46,6 +52,13 @@ export async function requestRecommendation(
     failure.requestId = requestId;
     throw failure;
   }
-  const data = (await response.json()) as RecommendationResponse;
+  let data: RecommendationResponse;
+  try {
+    data = (await response.json()) as RecommendationResponse;
+  } catch {
+    const failure = new RecommendationError("Request returned an unreadable response.");
+    failure.requestId = requestId;
+    throw failure;
+  }
   return { album: data.album, mode: data.mode, requestId };
 }

@@ -158,6 +158,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P08
 - **Result** Three latin woff2 faces (Figtree, Instrument Sans, JetBrains Mono, ~81 kB) ship from `frontend/src/fonts/` with `font-display: swap`; Google Fonts links removed from `index.html`, so the page opens zero third-party connections. `./scripts/check.sh` green.
 
+### M1-01q · Harden the request path and live feedback
+
+- **State** Implemented
+- **Depends on** M1-01p
+- **Criteria** P05, P07
+- **Result** `requestRecommendation` aborts stalled requests after 15 s and turns malformed JSON into a request error keeping `X-Request-ID`; success keeps its reference and shows it on the card; loading moves keyboard focus to the announcement; the counter joins `aria-describedby`; dead error-heading ref removed. E2e asserts the success reference. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)

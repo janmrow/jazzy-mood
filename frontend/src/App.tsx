@@ -30,15 +30,19 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState("");
   const [requestId, setRequestId] = useState<string | null>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
-  const errorHeadingRef = useRef<HTMLHeadingElement>(null);
   const retryRef = useRef<HTMLButtonElement>(null);
+  const statusRef = useRef<HTMLParagraphElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   // Synchronous guard: state updates flush after the handler, so two
   // clicks in one task would both read a stale `status`.
   const submittingRef = useRef(false);
 
   useEffect(() => {
-    if (status === "success") {
+    if (status === "loading") {
+      // The field and the action disable during the request, so keep
+      // keyboard focus on the loading announcement instead of the body.
+      statusRef.current?.focus();
+    } else if (status === "success") {
       resultHeadingRef.current?.focus();
     } else if (status === "error") {
       // A validation problem is fixed in the field, so focus moves back
@@ -69,6 +73,7 @@ export default function App() {
     try {
       const result = await requestRecommendation(currentDescription.trim(), []);
       setAlbum(result.album);
+      setRequestId(result.requestId);
       setErrorKind(null);
       setStatus("success");
     } catch (error) {
@@ -116,8 +121,8 @@ export default function App() {
   const count = codePointLength(description.trim());
   const describedBy =
     status === "error" && errorKind === "validation"
-      ? "description-hint description-error"
-      : "description-hint";
+      ? "description-hint description-count description-error"
+      : "description-hint description-count";
 
   return (
     <main className="page">
@@ -154,7 +159,7 @@ export default function App() {
           <p id="description-hint" className="hint">
             Up to 500 characters.
           </p>
-          <p className="counter">
+          <p id="description-count" className="counter">
             {count} / {MAX_DESCRIPTION}
           </p>
         </div>
@@ -183,7 +188,11 @@ export default function App() {
       </form>
 
       <div aria-live="polite" className="status">
-        {loading ? <p>Looking for one album. Please wait…</p> : null}
+        {loading ? (
+          <p ref={statusRef} tabIndex={-1}>
+            Looking for one album. Please wait…
+          </p>
+        ) : null}
       </div>
 
       {status === "success" && album ? (
@@ -193,6 +202,11 @@ export default function App() {
           </h2>
           {album.year != null ? <p>Released: {album.year}</p> : null}
           <p className="reason">{album.reason}</p>
+          {requestId ? (
+            <p className="reference">
+              Reference {requestId}. Include it if you report this problem.
+            </p>
+          ) : null}
           <hr className="record-rule" />
           <p className="hint">
             Resubmitting shows the same demo entry. More picks arrive in M2.
@@ -202,9 +216,7 @@ export default function App() {
 
       {status === "error" && errorKind === "request" ? (
         <section aria-label="Request problem" className="card error">
-          <h2 ref={errorHeadingRef} tabIndex={-1}>
-            We could not finish that request
-          </h2>
+          <h2>We could not finish that request</h2>
           <p role="alert">{errorMessage}</p>
           {requestId ? (
             <p className="reference">

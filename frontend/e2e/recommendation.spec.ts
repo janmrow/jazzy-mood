@@ -15,6 +15,7 @@ test("valid description shows one fixture album", async ({ page }) => {
   await expect(page.getByText(/fixture demo pick/i)).toBeVisible();
   await expect(page.getByText(/ignores your description/i).first()).toBeVisible();
   await expect(page.getByText(/same demo entry/i)).toBeVisible();
+  await expect(page.getByText(/Reference/i)).toBeVisible();
   await expect(page.getByRole("link")).toHaveCount(0);
 });
 
