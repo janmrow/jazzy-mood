@@ -186,6 +186,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P05, P07
 - **Result** Second Hallmark full redesign at app scope: print-black ground, amber safelight primary, condensed poster capitals, zero radius, hairline sheet rows; Sofia Sans Extra Condensed and Barlow self-hosted; fonts carry no third party. `./scripts/check.sh` green with zero test edits.
 
+### M1-01u · Point the field at the live radius token
+
+- **State** Implemented
+- **Depends on** M1-01t
+- **Criteria** P07
+- **Result** `.field` uses `var(--radius-card)` (zero under Darkroom) instead of the removed `--radius-part`; no visual change, no dead token reference. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
