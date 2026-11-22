@@ -6,7 +6,7 @@ Record new decisions here when they materially change user behaviour, deployment
 
 | ID | Decision | Reason and revisit trigger |
 | --- | --- | --- |
-| **D01** | Deliver one recommendation from an anonymous form. Use one album per result, linked out for listening. | A simple experience supports quick discovery and keeps scope small. Revisit the album boundary if M0 playtests strongly favour tracks. |
+| **D01** | Deliver one recommendation from an anonymous form. Use one album per result, linked out for listening. (M1 demo exception by owner decision 2026-11-22: no link until M2-03.) | A simple experience supports quick discovery and keeps scope small. Revisit the album boundary if M0 playtests strongly favour tracks. |
 | **D02** | Use React, TypeScript and Vite for the frontend and Python with FastAPI for the backend. Ship one Compose service. | This exposes the browser/API boundary and supports the owner's learning goals while keeping the deployed topology small. Changes need a concrete product or operations reason. |
 | **D03** | Use SQLite on local storage for the first release. | The small catalogue is read often and updated occasionally. This keeps data setup and recovery simple and still supports SQL and migrations. Revisit PostgreSQL if observed write contention, multiple instances or an agreed learning experiment warrants it. |
 | **D04** | Use the existing Mikrus 2.1 and its named HTTPS subdomain. Design for zero incremental running cost. | Reuse paid-for capacity and validate deployment early. Consider an upgrade only after measuring headroom and identifying a bottleneck that needs it. A purchase is the owner's decision. |

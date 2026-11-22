@@ -1,8 +1,8 @@
 # Music Recommendation
 
-> Status: M0 is docs and data only — no running app yet. The clickable app (one page, one text field, one result) arrives in M1.
+> Status: M1-01 delivers the first form-to-result slice on a tiny fixture. The full catalogue arrives in M2.
 
-Describe what you want to hear and get one album from a curated jazz and hip-hop catalogue. Each pick comes with a short reason and a listening link. Ask for another to explore the same mood.
+Describe what you want to hear and see the same demo album from a tiny fixture, with a short reason and no listening or search link. This demo ignores your description; real matching, listening links and repeat picks arrive in M2.
 
 This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadmap.md) takes it from a small sample to a public release on an existing Mikrus 2.1 with no additional running costs. The product comes first. The project also gives you a real system on which to practise acceptance testing, release checks, observability and recovery.
 
@@ -10,11 +10,53 @@ This repository starts at **M0, the catalogue trial**. The [roadmap](docs/roadma
 
 The M0 sample holds 30 albums in `catalog/m0-sample.csv`, each with a recorded identity source and `proposed` mood tags: drafts pending evidence, not confirmed facts. A clean validator run means schema-clean only. The [catalogue trial](docs/catalogue-trial.md) maps 10 request types against the full sample with a boundary recommendation; result terms (`eligible`, `suitable`, `plausible`, fit 0–2) are defined in [product](docs/product.md#result-terms). `tools/validate_catalog.py` plus 60 pytest tests guard the CSV shape and vocabulary. M0 is accepted in the [backlog](docs/backlog.md) with listening deferred to M2-01; M1 builds the first form-to-result slice.
 
-Product work lives on branch `deliver/m0`; `main` receives it via PR 2 after owner review.
+Product work lives on branch `deliver/m1`; `main` receives it after owner review.
+
+## Run the first slice (M1-01)
+
+The page and the API share one origin. The API returns one fixture album
+with local selection only; no decision provider is contacted.
+
+```sh
+pip install -r backend/requirements-test.txt
+python3 -m uvicorn backend.app.main:app --port 8000 --no-access-log
+```
+
+In another terminal, for frontend development with live reload:
+
+```sh
+cd frontend && npm install && npm run dev
+```
+
+Open `http://localhost:5173`. For the single-origin build served by the API:
+
+```sh
+cd frontend && npm install && npm run build
+python3 -m uvicorn backend.app.main:app --port 8000 --no-access-log
+```
+
+Open `http://localhost:8000`, submit `Late-night jazz with a steady beat
+and no vocals.`, and expect the same fixture card with no listening or search link.
+This demo ignores the description; resubmitting shows the same entry.
+Blank input shows a clear message. If the request fails, the description
+stays in place with a retry button.
+
+## Checks
+
+One command runs pytest, frontend type checking, the production build and
+the browser journey against the single-origin backend:
+
+```sh
+./scripts/check.sh
+```
+
+CI runs the same command on push and pull request (see
+`.github/workflows/ci.yml`). Routine checks use fixture data and a disabled
+provider.
 
 ## Start in this repository
 
-Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap, catalogue-trial, harness-pilot, pull-requests), `catalog/` (starts in M0), `tools/` (CSV validator), `tests/` (validator tests), and `.gitignore`. `backend/` and `frontend/` arrive with M1.
+Repository layout: `README.md`, `AGENTS.md`, `opencode.jsonc`, `.opencode/` (agents and the `/deliver` command), `docs/` (backlog, delivery, product, quality, architecture, decisions, operations, roadmap, catalogue-trial, harness-pilot, pull-requests), `catalog/` (M0 sample), `backend/` (FastAPI slice with a synthetic fixture), `frontend/` (React page and Playwright journey), `tools/` (CSV validator), `tests/` (validator tests), `backend/tests/` (API checks), `scripts/check.sh` (project check), `.github/workflows/ci.yml`, and `.gitignore`.
 
 ## Contributor setup (agents)
 
