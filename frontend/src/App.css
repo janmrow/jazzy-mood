@@ -1,7 +1,7 @@
-/* Hallmark · shape: app screen · genre: atmospheric · theme: Ribbon (deal 2/3, seed mood-demo-album-tool-b9a6·9a9c74db·2026-11-22·r0) · redesign: full
- * nav: none, one screen · signature: the console and the record card · states: idle, loading, success, validation error, request error · ribbon: dawn
- * axes: light/grotesk-sans/chromatic-teal · posture: committed · contrast: pass · v2.0.0 */
-/* Hallmark · pre-emit critique: P4 H4 E4 S4 R4 V4 · weakest: S, another demo form; led with the record set like a label and a console with a live measure */
+/* Hallmark · shape: app screen · genre: atmospheric · theme: Darkroom (deal 1/3, seed funk-jazz-vinyl-catalogue-a1f4·9a9c74db·2026-11-22·r0) · redesign: full
+ * nav: none, one screen · signature: the console and the record sheet · states: idle, loading, success, validation error, request error · darkroom: amber
+ * axes: dark/display-condensed/chromatic-amber · posture: restrained · contrast: pass · v2.0.0 */
+/* Hallmark · pre-emit critique: P4 H4 E4 S3 R5 V4 · weakest: S, another demo form; led with the poster wordmark and the sheet, not the panel */
 @import url("./tokens.css");
 @import url("./base.css");
 
@@ -19,15 +19,21 @@
 }
 
 .mast h1 {
-  font-size: var(--text-2xl);
+  font-family: var(--font-display);
+  font-weight: 200;
+  font-size: var(--text-3xl);
+  line-height: 1;
   letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  font-synthesis: none;
 }
 
 .lede {
   margin-block-start: var(--space-sm);
   color: var(--color-ink-2);
+  font-weight: 300;
   font-size: var(--text-lg);
-  line-height: 1.45;
+  line-height: 1.5;
 }
 
 .fixture-note {
@@ -43,15 +49,14 @@
   margin-block-start: var(--space-lg);
   padding: var(--space-lg);
   border-radius: var(--radius-card);
-  background: linear-gradient(var(--color-paper-2), var(--color-paper-3));
-  box-shadow: var(--edge-light), var(--shadow-panel);
+  background: var(--color-paper-2);
   display: grid;
   gap: var(--space-md);
 }
 
 .console label {
   font-family: var(--font-body);
-  font-weight: 500;
+  font-weight: 400;
   font-size: var(--text-md);
   color: var(--color-ink);
 }
@@ -81,10 +86,6 @@
   background: var(--color-paper-2);
 }
 
-.field:disabled:hover {
-  background: var(--color-paper);
-}
-
 .field:focus-visible {
   outline-color: var(--color-focus);
   border-color: var(--color-ink-2);
@@ -94,6 +95,10 @@
   opacity: 0.55;
   cursor: not-allowed;
   border-style: dashed;
+}
+
+.field:disabled:hover {
+  background: var(--color-paper);
 }
 
 .field[aria-invalid="true"] {
@@ -115,7 +120,6 @@
 }
 
 .counter {
-  font-family: var(--font-outlier);
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -123,12 +127,11 @@
 .inline-error {
   margin: 0;
   color: var(--color-error);
-  font-weight: 500;
+  font-weight: 400;
 }
 
 .reference {
   margin: 0;
-  font-family: var(--font-outlier);
   font-size: var(--text-sm);
   color: var(--color-muted);
 }
@@ -137,23 +140,27 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: var(--space-xs);
-  min-height: 44px;
+  gap: var(--space-sm);
+  min-height: 48px;
   padding: 0 var(--space-lg);
   border: var(--rule-hair) solid var(--color-accent);
   border-radius: var(--radius-pill);
   background: var(--color-accent);
   color: var(--color-accent-ink);
-  font-family: var(--font-body);
-  font-weight: 500;
-  font-size: var(--text-md);
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-lg);
   line-height: 1;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  font-synthesis: none;
   cursor: pointer;
-  transition: background-color var(--dur-micro) var(--ease-out), transform var(--dur-micro) var(--ease-out);
+  transition: background-color var(--dur-micro) var(--ease-out), border-color var(--dur-micro) var(--ease-out);
 }
 
 .btn:hover {
   background: var(--color-focus);
+  border-color: var(--color-focus);
 }
 
 .btn:focus-visible {
@@ -161,19 +168,20 @@
   outline-offset: 2px;
 }
 
-.btn:disabled:hover {
-  background: var(--color-accent);
-}
-
 .btn:active {
-  transform: translateY(1px);
+  background: var(--color-accent-deep);
+  border-color: var(--color-accent-deep);
 }
 
 .btn:disabled {
   opacity: 0.55;
   cursor: not-allowed;
-  transform: none;
   border-style: dashed;
+}
+
+.btn:disabled:hover {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
 }
 
 .spinner {
@@ -205,12 +213,17 @@
   margin-block-start: var(--space-md);
   padding: var(--space-lg);
   border-radius: var(--radius-card);
-  background: linear-gradient(var(--color-paper-2), var(--color-paper-3));
-  box-shadow: var(--edge-light), var(--shadow-panel);
+  background: var(--color-paper-2);
 }
 
 .card h2 {
+  font-family: var(--font-display);
+  font-weight: 200;
   font-size: var(--text-2xl);
+  line-height: 1;
+  letter-spacing: var(--tracking-display);
+  text-transform: uppercase;
+  font-synthesis: none;
   text-wrap: balance;
 }
 
@@ -219,23 +232,29 @@
   outline-offset: 2px;
 }
 
+.card .reason {
+  margin-block-start: var(--space-md);
+  padding-block-start: var(--space-md);
+  border-block-start: var(--rule-hair) solid var(--color-rule);
+  color: var(--color-ink-2);
+  line-height: 1.6;
+}
+
+.card .reference {
+  margin-block-start: var(--space-sm);
+}
+
 .record-rule {
   margin-block: var(--space-md);
   border: 0;
   border-block-start: var(--rule-hair) solid var(--color-rule);
 }
 
-.card .reason {
-  color: var(--color-ink-2);
-  line-height: 1.6;
-}
-
 .card .hint {
-  margin-block-start: var(--space-sm);
+  margin: 0;
 }
 
 .error {
-  background: linear-gradient(color-mix(in oklab, var(--color-error) 7%, var(--color-paper-2)), var(--color-paper-3));
   border: var(--rule-hair) solid var(--color-error);
 }
 
