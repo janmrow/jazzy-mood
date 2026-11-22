@@ -56,6 +56,7 @@ test("server-rejected input shows inline guidance with a reference", async ({
   );
   await page.getByRole("button", { name: /recommend an album/i }).click();
   await expect(page.getByRole("alert")).toContainText(/not accepted/i);
+  await expect(page.getByRole("alert")).toContainText(/1 to 500/);
   await expect(page.getByText(/test-ref-422/)).toBeVisible();
   await expect(field).toBeFocused();
   await page.unroute("**/api/recommendations");
