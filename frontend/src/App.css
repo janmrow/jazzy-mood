@@ -159,8 +159,8 @@
 }
 
 .btn:hover {
-  background: var(--color-focus);
-  border-color: var(--color-focus);
+  background: var(--color-accent-deep);
+  border-color: var(--color-accent-deep);
 }
 
 .btn:focus-visible {

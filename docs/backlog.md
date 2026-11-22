@@ -200,6 +200,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P05
 - **Result** `requestRecommendation` validates the album shape (id, artist, title, reason as strings) and turns a wrong-shaped 200 into the request-error path with description kept, retry focused and `X-Request-ID` shown. E2e covers a malformed 200. `./scripts/check.sh` green.
 
+### M1-01w · Harden hover and empty-shape branches
+
+- **State** Implemented
+- **Depends on** M1-01v
+- **Criteria** P05, P07
+- **Result** Primary hover moves to the deep amber (was visually inert against focus); shape guard requires non-blank id, artist, title and reason. E2e drives both malformed shapes in one retry flow with call counting. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)

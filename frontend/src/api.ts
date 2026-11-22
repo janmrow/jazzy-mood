@@ -66,7 +66,11 @@ export async function requestRecommendation(
     typeof album.id !== "string" ||
     typeof album.artist !== "string" ||
     typeof album.title !== "string" ||
-    typeof album.reason !== "string"
+    typeof album.reason !== "string" ||
+    !album.id.trim() ||
+    !album.artist.trim() ||
+    !album.title.trim() ||
+    !album.reason.trim()
   ) {
     const failure = new RecommendationError("Request returned an unusable response.");
     failure.requestId = requestId;
