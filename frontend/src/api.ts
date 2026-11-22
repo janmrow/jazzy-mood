@@ -60,5 +60,17 @@ export async function requestRecommendation(
     failure.requestId = requestId;
     throw failure;
   }
-  return { album: data.album, mode: data.mode, requestId };
+  const album = data?.album as Album | undefined;
+  if (
+    !album ||
+    typeof album.id !== "string" ||
+    typeof album.artist !== "string" ||
+    typeof album.title !== "string" ||
+    typeof album.reason !== "string"
+  ) {
+    const failure = new RecommendationError("Request returned an unusable response.");
+    failure.requestId = requestId;
+    throw failure;
+  }
+  return { album, mode: data.mode, requestId };
 }

@@ -61,6 +61,25 @@ test("server-rejected input shows inline guidance with a reference", async ({
   await page.unroute("**/api/recommendations");
 });
 
+test("malformed response keeps the description and allows retry", async ({ page }) => {
+  const description = "Late-night jazz with a steady beat and no vocals.";
+  await page.goto("/");
+  await page.getByLabel(/what do you want to hear/i).fill(description);
+  await page.route("**/api/recommendations", async (route) => {
+    await route.fulfill({
+      status: 200,
+      headers: { "Content-Type": "application/json", "X-Request-ID": "test-ref-bad-shape" },
+      body: JSON.stringify({ album: { id: "FIX-001" }, mode: "local" })
+    });
+  });
+  await page.getByRole("button", { name: /recommend an album/i }).click();
+  await expect(page.getByRole("alert")).toContainText(/still here/i);
+  await expect(page.getByLabel(/what do you want to hear/i)).toHaveValue(description);
+  await expect(page.getByRole("button", { name: /try again/i })).toBeFocused();
+  await expect(page.getByText(/test-ref-bad-shape/)).toBeVisible();
+  await page.unroute("**/api/recommendations");
+});
+
 test("failed request keeps the description and allows retry", async ({ page }) => {
   const description = "Something energetic and sample-heavy.";
   await page.goto("/");

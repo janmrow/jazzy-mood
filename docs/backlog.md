@@ -193,6 +193,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P07
 - **Result** `.field` uses `var(--radius-card)` (zero under Darkroom) instead of the removed `--radius-part`; no visual change, no dead token reference. `./scripts/check.sh` green.
 
+### M1-01v · Reject unusable recommendation shapes
+
+- **State** Implemented
+- **Depends on** M1-01u
+- **Criteria** P05
+- **Result** `requestRecommendation` validates the album shape (id, artist, title, reason as strings) and turns a wrong-shaped 200 into the request-error path with description kept, retry focused and `X-Request-ID` shown. E2e covers a malformed 200. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
