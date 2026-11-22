@@ -34,6 +34,7 @@ logger = logging.getLogger("jazzy_mood")
 
 MAX_DESCRIPTION = 500
 MAX_RECENT_IDS = 20
+MAX_RECENT_ID_LENGTH = 64
 
 
 class RecommendationRequest(BaseModel):
@@ -58,6 +59,8 @@ class RecommendationRequest(BaseModel):
         cleaned = [item.strip() for item in value if isinstance(item, str) and item.strip()]
         if len(cleaned) != len(value):
             raise ValueError("Recent IDs must be nonblank strings.")
+        if any(len(item) > MAX_RECENT_ID_LENGTH for item in cleaned):
+            raise ValueError("Recent IDs must be 64 characters or fewer each.")
         return cleaned
 
 
@@ -95,7 +98,11 @@ async def request_context(request: Request, call_next):
             request.method,
             elapsed_ms,
         )
-        raise
+        failure = JSONResponse(
+            status_code=500, content={"detail": "Internal Server Error"}
+        )
+        failure.headers["X-Request-ID"] = request_id
+        return failure
     elapsed_ms = int((time.perf_counter() - started) * 1000)
     # Never log the description, query string or body. Route path only.
     logger.info(
@@ -122,6 +129,8 @@ def healthz():
 @app.post("/api/recommendations", response_model=RecommendationResponse)
 def recommend(payload: RecommendationRequest, request: Request):
     request_id = getattr(request.state, "request_id", "-")
+    if not FIXTURE_ALBUMS:
+        return JSONResponse(status_code=503, content={"detail": "No demo entries available"})
     album = select_album(payload.recent_ids)
     # Structured event without visitor text. P08: description never logged.
     logger.info(
@@ -136,6 +145,7 @@ def recommend(payload: RecommendationRequest, request: Request):
 # static mount: Starlette matches in registration order, so anything
 # defined after it would be shadowed by this catch-all.
 @app.api_route("/api", methods=["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
+@app.api_route("/api/", methods=["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
 @app.api_route("/api/{path:path}", methods=["GET", "HEAD", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"])
 async def api_fallback():
     """Explicit JSON 404 for unknown API paths.

@@ -165,6 +165,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P05, P07
 - **Result** `requestRecommendation` aborts stalled requests after 15 s and turns malformed JSON into a request error keeping `X-Request-ID`; success keeps its reference and shows it on the card; loading moves keyboard focus to the announcement; the counter joins `aria-describedby`; dead error-heading ref removed. E2e asserts the success reference. `./scripts/check.sh` green.
 
+### M1-01r · Harden backend edges and the runbook
+
+- **State** Implemented
+- **Depends on** M1-01q
+- **Criteria** P01, P05, P08
+- **Result** Unhandled errors return JSON 500 with `X-Request-ID`; empty fixture returns 503; `/api/` trailing slash returns JSON 404; recent IDs over 64 chars are rejected with blanks and padding covered; README runs use `--no-access-log`. Pytest covers each new branch. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)

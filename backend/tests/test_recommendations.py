@@ -97,6 +97,41 @@ def test_too_many_recent_ids_are_rejected():
     assert response.status_code == 422
 
 
+def test_blank_recent_ids_are_rejected():
+    response = client.post(
+        "/api/recommendations", json={"description": VALID, "recent_ids": ["   "]}
+    )
+    assert response.status_code == 422
+    assert response.headers.get("x-request-id")
+
+
+def test_padded_recent_ids_are_trimmed_and_accepted():
+    first_id = FIXTURE_ALBUMS[0]["id"]
+    response = client.post(
+        "/api/recommendations",
+        json={"description": VALID, "recent_ids": [f"  {first_id}  "]},
+    )
+    assert response.status_code == 200
+    assert response.json()["album"]["id"] == FIXTURE_ALBUMS[1]["id"]
+
+
+def test_oversized_recent_ids_are_rejected():
+    response = client.post(
+        "/api/recommendations",
+        json={"description": VALID, "recent_ids": ["x" * 65]},
+    )
+    assert response.status_code == 422
+
+
+def test_empty_fixture_returns_503(monkeypatch):
+    import backend.app.main as main_module
+
+    monkeypatch.setattr(main_module, "FIXTURE_ALBUMS", [])
+    response = client.post("/api/recommendations", json={"description": VALID})
+    assert response.status_code == 503
+    assert response.headers.get("x-request-id")
+
+
 def test_visitor_text_stays_out_of_logs(caplog):
     unique_phrase = "breezy apricot umbrella 7q9z"
     with caplog.at_level(logging.INFO, logger="jazzy_mood"):
@@ -130,6 +165,7 @@ def test_unknown_api_paths_return_json_404_not_index():
         client.get("/api/no-such-route"),
         client.post("/api/no-such-route", json={"description": "x"}),
         client.get("/api"),
+        client.get("/api/"),
         client.options("/api/no-such-route"),
     ]
     for response in responses:

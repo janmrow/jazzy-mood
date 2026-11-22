@@ -19,7 +19,7 @@ with local selection only; no decision provider is contacted.
 
 ```sh
 pip install -r backend/requirements-test.txt
-python3 -m uvicorn backend.app.main:app --port 8000
+python3 -m uvicorn backend.app.main:app --port 8000 --no-access-log
 ```
 
 In another terminal, for frontend development with live reload:
@@ -32,7 +32,7 @@ Open `http://localhost:5173`. For the single-origin build served by the API:
 
 ```sh
 cd frontend && npm install && npm run build
-python3 -m uvicorn backend.app.main:app --port 8000
+python3 -m uvicorn backend.app.main:app --port 8000 --no-access-log
 ```
 
 Open `http://localhost:8000`, submit `Late-night jazz with a steady beat
