@@ -121,7 +121,14 @@ The owner can start it locally with documented commands, get a result, and verif
 - **State** Implemented
 - **Depends on** M1-01j
 - **Criteria** P01
-- **Result** Counter shows trimmed code-point length; `maxlength` removed so emoji and padded input follow the same 1–500 rule the server enforces. E2e asserts no `maxlength` cap and trimmed counts (`14 / 500`, padded 500).
+- **Result** Counter shows trimmed code-point length; `maxlength` removed so emoji and padded input follow the same 1–500 rule the server enforces. E2e asserts no `maxlength` cap and trimmed counts (`15 / 500`, padded 500).
+
+### M1-01l · Focus retry after a failed request
+
+- **State** Implemented
+- **Depends on** M1-01k
+- **Criteria** P07
+- **Result** Request errors move keyboard focus to `Try again` instead of the error heading; validation errors still return to the field. E2e asserts retry is focused after an aborted request. Also fixes the M1-01k result typo (`15 / 500`).
 
 ### M1-02 · Package and smoke-test the HTTPS route
 

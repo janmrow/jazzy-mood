@@ -66,6 +66,7 @@ test("failed request keeps the description and allows retry", async ({ page }) =
   await page.getByRole("button", { name: /recommend an album/i }).click();
   await expect(page.getByRole("alert")).toContainText(/still here/i);
   await expect(page.getByLabel(/what do you want to hear/i)).toHaveValue(description);
+  await expect(page.getByRole("button", { name: /try again/i })).toBeFocused();
   await page.unroute("**/api/recommendations");
   await page.getByRole("button", { name: /try again/i }).click();
   await expect(page.getByRole("heading", { name: /—/ })).toBeVisible();

@@ -31,6 +31,7 @@ export default function App() {
   const [requestId, setRequestId] = useState<string | null>(null);
   const resultHeadingRef = useRef<HTMLHeadingElement>(null);
   const errorHeadingRef = useRef<HTMLHeadingElement>(null);
+  const retryRef = useRef<HTMLButtonElement>(null);
   const descriptionRef = useRef<HTMLTextAreaElement>(null);
   // Synchronous guard: state updates flush after the handler, so two
   // clicks in one task would both read a stale `status`.
@@ -41,11 +42,12 @@ export default function App() {
       resultHeadingRef.current?.focus();
     } else if (status === "error") {
       // A validation problem is fixed in the field, so focus moves back
-      // to the textarea. A failed request keeps the retry button path.
+      // to the textarea. A failed request focuses retry so keyboard users
+      // can act without an extra Tab.
       if (errorKind === "validation") {
         descriptionRef.current?.focus();
       } else {
-        errorHeadingRef.current?.focus();
+        retryRef.current?.focus();
       }
     }
   }, [status, errorKind]);
@@ -195,7 +197,7 @@ export default function App() {
               Reference {requestId} — include it if you report this problem.
             </p>
           ) : null}
-          <button type="button" onClick={onRetry} disabled={loading}>
+          <button type="button" ref={retryRef} onClick={onRetry} disabled={loading}>
             Try again
           </button>
         </section>
