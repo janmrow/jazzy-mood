@@ -88,6 +88,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** D02
 - **Result** `backend/requirements.txt` holds only fastapi and uvicorn (verified: no httpx/pytest import in `backend/app/`); new `backend/requirements-test.txt` adds pytest and httpx for the TestClient. CI and README install the test file only (runtime pulled via `-r`); the future M1-02 image takes runtime only. `./scripts/check.sh` green: pytest 73 passed, Playwright 16 passed.
 
+### M1-01g · Type the fixture and return copies
+
+- **State** Implemented
+- **Depends on** M1-01f
+- **Criteria** D02, D05
+- **Result** `FixtureAlbum` TypedDict mirrors the API `Album` keys with a parity test; `select_album` returns a copy so a caller mutation cannot pollute later picks (covered by a mutation test). `./scripts/check.sh` green: pytest 75 passed, Playwright 16 passed.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Open

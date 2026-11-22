@@ -137,3 +137,24 @@ def test_unknown_api_paths_return_json_404_not_index():
         assert response.json() == {"detail": "Not Found"}
     head_response = client.head("/api/no-such-route")
     assert head_response.status_code == 404
+
+
+def test_fixture_selection_returns_copies():
+    from backend.app.fixture import select_album
+
+    all_ids = [album["id"] for album in FIXTURE_ALBUMS]
+    for recent in ([], all_ids):
+        picked = select_album(recent)
+        picked["artist"] = "MUTATED"
+    assert select_album([])["artist"] == FIXTURE_ALBUMS[0]["artist"]
+    assert select_album(all_ids)["artist"] == FIXTURE_ALBUMS[0]["artist"]
+    assert FIXTURE_ALBUMS[0]["artist"] != "MUTATED"
+
+
+def test_fixture_matches_api_contract():
+    from backend.app.main import Album
+
+    for album in FIXTURE_ALBUMS:
+        validated = Album(**album)
+        assert validated.id == album["id"]
+        assert album["tag_status"] == "fixture"
