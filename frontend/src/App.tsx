@@ -173,7 +173,7 @@ export default function App() {
         <button type="submit" className="btn" disabled={loading}>
           {loading ? (
             <>
-              <span className="spinner keep-motion" aria-hidden="true" />
+              <span className="spinner" aria-hidden="true" />
               Finding an album…
             </>
           ) : (

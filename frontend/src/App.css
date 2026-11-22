@@ -81,6 +81,10 @@
   background: var(--color-paper-2);
 }
 
+.field:disabled:hover {
+  background: var(--color-paper);
+}
+
 .field:focus-visible {
   outline-color: var(--color-focus);
   border-color: var(--color-ink-2);
@@ -89,6 +93,7 @@
 .field:disabled {
   opacity: 0.55;
   cursor: not-allowed;
+  border-style: dashed;
 }
 
 .field[aria-invalid="true"] {
@@ -151,6 +156,15 @@
   background: var(--color-focus);
 }
 
+.btn:focus-visible {
+  outline: 2px solid var(--color-focus);
+  outline-offset: 2px;
+}
+
+.btn:disabled:hover {
+  background: var(--color-accent);
+}
+
 .btn:active {
   transform: translateY(1px);
 }
@@ -159,6 +173,7 @@
   opacity: 0.55;
   cursor: not-allowed;
   transform: none;
+  border-style: dashed;
 }
 
 .spinner {
@@ -199,7 +214,7 @@
   text-wrap: balance;
 }
 
-.card h2:focus {
+.card h2:focus-visible {
   outline: 2px solid var(--color-focus);
   outline-offset: 2px;
 }

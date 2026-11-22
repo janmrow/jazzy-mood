@@ -144,6 +144,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P05, P07
 - **Result** Hallmark full redesign at app scope (scope: app screen, no hero): Ribbon dawn tokens plus shared scale and base rules; console panel with live mono counter; record card with hairline rules; three-channel disabled states; retry keeps focus; gate-19 dash fixes in both request references. `./scripts/check.sh` green with zero test edits.
 
+### M1-01o · Harden control states and focus visibility
+
+- **State** Implemented
+- **Depends on** M1-01n
+- **Criteria** P05, P07
+- **Result** Disabled field and button ignore hover (no misleading affordance) and carry a third channel (dashed border) beside opacity and cursor; button has an explicit instant `:focus-visible` ring; result heading uses `:focus-visible`; spinner no longer opts out of reduced-motion. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
