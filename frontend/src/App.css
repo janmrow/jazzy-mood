@@ -275,9 +275,22 @@
     padding-inline: var(--space-md);
   }
 
+  .mast h1 {
+    font-size: var(--text-2xl);
+  }
+
   .console,
   .card {
     padding: var(--space-md);
+  }
+
+  .card h2 {
+    font-size: var(--text-xl);
+  }
+
+  .field-meta {
+    flex-wrap: wrap;
+    row-gap: var(--space-xs);
   }
 
   .btn {

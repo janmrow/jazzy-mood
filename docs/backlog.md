@@ -228,6 +228,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P02
 - **Result** P02 example cell notes no link is shown in the M1 demo; e2e pins the `1 to 500` server-rejection wording. `./scripts/check.sh` green.
 
+### M1-01aa · Calm the phone layout
+
+- **State** Implemented
+- **Depends on** M1-01z
+- **Criteria** P07
+- **Result** Poster heads step down at 40rem (mast 2xl, card xl) and the hint/counter row wraps instead of squeezing. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
