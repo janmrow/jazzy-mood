@@ -235,6 +235,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Criteria** P07
 - **Result** Poster heads step down at 40rem (mast 2xl, card xl) and the hint/counter row wraps instead of squeezing. `./scripts/check.sh` green.
 
+### M1-01ab · Drop dead scaffold rules and tokens
+
+- **State** Implemented
+- **Depends on** M1-01aa
+- **Criteria** P07
+- **Result** `base.css` loses the unused `[data-slot]` photo machinery; `tokens.css` loses the unused outlier/shadow/grain tokens (`--display-weight` stays: `base.css` headings read it with a 700 fallback). No visual change; shared scale and resets stay. `./scripts/check.sh` green.
+
 ### M1-02 · Package and smoke-test the HTTPS route
 
 - **State** Blocked (2026-11-22: no container runtime in the agent environment — `docker` CLI absent, no `/var/run/docker.sock`; SSH/SCP denied by workspace policy — so the image cannot be built or smoke-tested here; Mikrus subdomain mapping plus host-port/HTTPS/resource observations are owner-run steps per operations)
