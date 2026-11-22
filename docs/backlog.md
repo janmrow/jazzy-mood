@@ -3,7 +3,7 @@
 - **Active milestone** M1
 - **Milestone state** Open (M0 accepted by owner on 2026-11-19; listening sampling deferred beyond M0 to M2-01 import batches under D08; E01 boundary taken as trial recommendation unless revised)
 - **Accepted milestones** M0
-- **Product branch** `deliver/m0` holds the M0 sample and trial; harness and setup branches hold workflow and docs polish only and never carry product changes.
+- **Product branches** `deliver/m0` holds the M0 sample and trial; `deliver/m1` holds the M1 slice. Harness and setup branches hold workflow and docs polish only and never carry product changes.
 
 The delivery agent may choose and split items inside the active milestone. An item is ready once its dependencies are implemented, any named prerequisite decision is recorded and the work has enough evidence to begin. The owner sets the next milestone at acceptance. See [delivery](delivery.md) for state transitions and [product](product.md) for the `P01`–`P08` criteria.
 
@@ -107,7 +107,7 @@ The owner can start it locally with documented commands, get a result, and verif
 - **State** Implemented
 - **Depends on** M1-01h
 - **Criteria** P02
-- **Result** Owner decision 2026-11-22: no listening or search proposal in the M1 demo. `FixtureAlbum` and API `Album` drop `listening_url` and `listening_label`; React card shows artist, title, year and reason only with zero links; pytest asserts both keys absent and e2e asserts zero links (valid, double-submit mock and keyboard paths updated). Listening links return with the catalogue in M2-03.
+- **Result** Owner decision 2026-11-22: no listening or search proposal in the M1 demo. `FixtureAlbum` and API `Album` drop `listening_url` and `listening_label`; React card shows artist, title and reason only with zero links (year already dropped in M1-01j); pytest asserts both keys absent and e2e asserts zero links (valid, double-submit mock and keyboard paths updated). Listening links and verified years return with the catalogue in M2-03/M2-01.
 
 ### M1-01j · Drop synthetic years from the demo
 
@@ -213,6 +213,13 @@ The owner can start it locally with documented commands, get a result, and verif
 - **Depends on** M1-01w
 - **Criteria** P05, P08
 - **Result** Pytest asserts `X-Request-ID` on `/healthz` and on every unknown-API 404 shape (GET/POST/OPTIONS/HEAD), pinning the middleware order for log correlation. `./scripts/check.sh` green.
+
+### M1-01y · Fix stale docs and dash copy
+
+- **State** Implemented
+- **Depends on** M1-01x
+- **Criteria** P02, D01
+- **Result** Product, D01 and architecture carry explicit M1 demo exceptions (no link/year, no matching, no second pick until M2); M1-01i result fixed for the dropped year; backlog names both product branches; UI uses `1 to 500` instead of the en dash. `./scripts/check.sh` green.
 
 ### M1-02 · Package and smoke-test the HTTPS route
 

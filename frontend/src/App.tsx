@@ -84,7 +84,7 @@ export default function App() {
       if (failure.status === 422) {
         setErrorKind("validation");
         setErrorMessage(
-          "The description was not accepted. Please keep it to 1–500 characters."
+          "The description was not accepted. Please keep it to 1 to 500 characters."
         );
       } else {
         setErrorKind("request");
